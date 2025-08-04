@@ -1,0 +1,208 @@
+{% extends "user/nav_footer.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='user/produit.css') }}">
+{% endblock%}
+{% block contene%}
+<div class="pra">
+  <div class="intro-section">
+    <h2>Bienvenue dans la section des produits</h2>
+    <p>
+      Sur <strong>NAFTi.shop</strong>, nous vous proposons une large gamme de produits liés au monde des hydrocarbures
+      et des services techniques pour véhicules, accompagnés d’explications scientifiques simplifiées et d’illustrations
+      pour chaque article.
+      Notre objectif est de faciliter la compréhension de l’utilisation de chaque produit et de vous offrir un contenu
+      riche, fiable et adapté aux besoins du client moderne.
+    </p>
+    <p>
+      Que vous soyez à la recherche de carburant de qualité, de lubrifiants pour optimiser la performance de votre
+      moteur, ou encore d’outils spécialisés pour le nettoyage, vous trouverez tout ce qu’il vous faut classé par
+      catégories.
+      Chaque produit est présenté avec des informations techniques précises, des conseils d’utilisation, ainsi que des
+      images réalistes pour simplifier votre expérience d’achat.
+    </p>
+    <p>
+      Explorez notre collection et découvrez les dernières innovations et produits certifiés par
+      <strong>Naftal</strong>, pour un service optimal sur la route et dans votre quotidien.
+    </p>
+  </div>
+
+  <!-- Bloc d’introduction des produits -->
+  <section class="products-details">
+
+    <!-- Catégorie Carburants -->
+    <div class="product-category">
+      <div class="product-text">
+        <h2>Carburants</h2>
+        <p class="objective"><strong>Objectif :</strong> Assurer une énergie de combustion optimale et stable pour les
+          moteurs thermiques, tout en respectant les normes environnementales et de performance (indice d’octane/cétane,
+          teneur en soufre, etc.).</p>
+        <p class="description">
+          Mélanges d'hydrocarbures (essence, gasoil, GPL carburant) issus du raffinage du pétrole, conçus pour offrir
+          rendement énergétique, propreté de combustion et compatibilité avec les moteurs modernes.
+        </p>
+        <p class="examples"><strong>Exemples :</strong> Super Sans Plomb (RON 95), Gasoil 10 ppm, GPL carburant.
+          <br><strong>Pour découvrir nos produits, <a href="{{ url_for('produit_cat', nom_categorie='carburant') }}">cliquez ici</a></strong>
+      </div>
+      <div class="product-image">
+        <img src="{{url_for('static',filename='uploads/carburant.webp')}}" alt="Photo Carburants NAFTAL">
+      </div>
+    </div>
+    <!-- Catégorie Gaz butane -->
+    <div class="product-category">
+      <div class="product-text">
+        <h2>Gaz butane</h2>
+        <p class="objective"><strong>Objectif :</strong> Fournir un combustible gazeux stable et sûr pour usages
+          domestiques et industriels (cuisson, chauffage), avec un dispositif de stockage et régulation conforme aux
+          normes GPL.</p>
+        <p class="description">
+          Hydrocarbure saturé (C₄H₁₀) stocké sous pression modérée dans des bouteilles ou citernes. Formulé et contrôlé
+          pour garantir sécurité, pureté et performance calorifique.
+        </p>
+        <p class="examples"><strong>Exemples :</strong> Bouteille de butane 13 kg, mini-bouteille 6 kg, solutions GPL.
+          <br><strong>Pour découvrir nos produits,<a href="{{ url_for('produit_cat', nom_categorie='gaz') }}">cliquez ici</a></strong>
+        </p>
+      </div>
+      <div class="product-image">
+        <img src="{{url_for('static',filename='uploads/gaz.jpg')}}" alt="Photo Gaz Butane NAFTAL">
+      </div>
+    </div>
+
+
+    <!-- Catégorie Lubrifiants -->
+    <div class="product-category">
+      <div class="product-text">
+        <h2>Lubrifiants</h2>
+        <p class="objective"><strong>Objectif :</strong> Réduire les frottements, protéger contre l’usure, dissiper la
+          chaleur et maintenir la propreté interne des organes, pour prolonger la durée de vie et l’efficacité des
+          moteurs et systèmes hydrauliques.</p>
+        <p class="description">
+          Huiles (minérales ou synthétiques) et graisses formulées avec des additifs (antioxydants, anti-usure,
+          détergents, anti-mousse) répondant aux normes API, ACEA, SAE, etc., pour différents usages (moteur,
+          transmission, hydraulique, graissage multi-usage).
+        </p>
+        <p class="examples"><strong>Exemples :</strong> Huile moteur NAFTAL SAE 15W-40, huile hydraulique HLP 46,
+          graisse Lithium EP2 multi-usage.
+          <br><strong>Pour découvrir nos produits,<a href="{{ url_for('produit_cat',
+             nom_categorie='lubrifiants') }}">cliquez ici</a></strong>
+        </p>
+      </div>
+
+      <div class="product-image">
+        <img src="{{url_for('static',filename='uploads/huiles_moteur.jpg')}}" alt="Photo Lubrifiants NAFTAL">
+      </div>
+    </div>
+
+
+    <!-- Catégorie Batteries -->
+    <div class="product-category">
+      <div class="product-text">
+        <h2>Batteries</h2>
+        <p class="objective"><strong>Objectif :</strong> Assurer un démarrage fiable et une alimentation électrique
+          stable des systèmes électroniques et d’accessoires des véhicules thermiques, avec une longévité et résistance
+          aux cycles de charge/décharge.</p>
+        <p class="description">
+          Accumulateurs électrochimiques (principalement plomb-acide) conçus pour fournir un courant de démarrage élevé,
+          résistants aux vibrations et avec un entretien minimal (ou sans entretien selon type).
+        </p>
+        <p class="examples"><strong>Exemples :</strong> Batterie plomb-acide 12V – 60Ah pour voiture, batterie Heavy
+          Duty 12V – 120Ah pour camions. <br><strong>Pour découvrir nos produits, <a href="{{ url_for('produit_cat',
+             nom_categorie='batterie') }}">cliquez
+              ici</a></strong></p>
+      </div>
+
+      <div class="product-image">
+        <img src="{{url_for('static',filename='user/bat3.jpeg')}}" alt="Photo Batteries NAFTAL">
+      </div>
+    </div>
+
+    <!-- Catégorie Pneumatiques -->
+    <div class="product-category">
+      <div class="product-text">
+        <h2>Pneumatiques</h2>
+        <p class="objective"><strong>Objectif :</strong> Offrir sécurité, adhérence et confort de conduite en toutes
+          conditions, avec une durabilité adaptée aux charges et types de routes, tout en optimisant la consommation de
+          carburant.</p>
+        <p class="description">
+          Pneus composés de caoutchoucs spécifiques et renforts métalliques/textiles, conçus selon les normes (taille,
+          indice de charge, vitesse), pour usages tourisme, utilitaire ou poids lourd, et adaptés aux saisons
+          (été/hiver/all-season).
+        </p>
+        <p class="examples"><strong>Exemples :</strong> Pneus tourisme 195/65 R15, utilitaires 225/70 R16C, poids lourd
+          295/80 R22.5. <br><strong>Pour découvrir nos produits,  <a href="{{ url_for('produit_cat',
+             nom_categorie='pneumatiques') }}">cliquez ici</a></strong>
+        </p>
+      </div>
+      <div class="product-image">
+        <img src="{{url_for('static',filename='uploads/pneu.jpg')}}" alt="Photo Pneumatiques NAFTAL">
+      </div>
+    </div>
+
+    <!-- Catégorie Produits d’entretien -->
+    <div class="product-category">
+      <div class="product-text">
+        <h2>Produits d’entretien</h2>
+        <p class="objective"><strong>Objectif :</strong> Maintenir la propreté, l’esthétique et la fonctionnalité des
+          véhicules, en protégeant les surfaces et composants (mécaniques et intérieurs), pour prolonger leur durée de
+          vie et assurer la satisfaction utilisateur.</p>
+        <p class="description">
+          Gamme de produits chimiques et accessoires : nettoyants injecteurs, liquides lave-glace, détergents de freins,
+          shampoing auto, polish carrosserie, désinfectants habitacle, lubrifiants de maintenance légère, etc. Formulés
+          pour efficacité et compatibilité avec matériaux courants (peinture, plastiques, caoutchouc, métaux).
+        </p>
+        <p class="examples"><strong>Exemples :</strong> Nettoyant injecteurs haute performance, liquide lave-glace
+          antigel -20°C, polish céramique protecteur, spray anti-grincement. <br><strong>Pour découvrir nos produits,
+             <a href="{{ url_for('produit_cat', nom_categorie='entretien') }}">cliquez ici</a></strong></p>
+      </div>
+      <div class="product-image">
+        <img src="{{url_for('static',filename='user/images.jpeg')}}" alt="Photo Produits d’Entretien NAFTAL">
+      </div>
+    </div>
+
+    <!-- Catégorie Refroidissement -->
+    <div class="product-category">
+      <div class="product-text">
+        <h2>Refroidissement</h2>
+        <p class="objective"><strong>Objectif :</strong> Réguler la température du moteur pour éviter la surchauffe ou
+          le gel, tout en protégeant le circuit contre la corrosion et la cavitation, afin de garantir performances et
+          longévité optimales.</p>
+        <p class="description">
+          Liquides caloporteurs à base d’éthylène glycol ou propylène glycol, avec additifs anticorrosion, anticalcaire
+          et inhibiteurs de cavitation, formulés selon normes (ASTM, AFNOR) et adaptés aux spécificités des moteurs
+          modernes.
+        </p>
+        <p class="examples"><strong>Exemples :</strong> Liquide de refroidissement G12+, antigel -35°C concentré,
+          liquide universel longue durée (LLC). <br><strong>Pour découvrir nos produits, 
+             <a href="{{ url_for('produit_cat', nom_categorie='refroidissement') }}">cliquez
+              ici</a></strong></p>
+      </div>
+
+      <div class="product-image">
+        <img src="{{url_for('static',filename='uploads/re.jpg')}}" alt="Photo Refroidissement NAFTAL">
+      </div>
+    </div>
+
+    <!-- Catégorie Détendeurs -->
+    <div class="product-category">
+      <div class="product-text">
+        <h2>Détendeurs</h2>
+        <p class="objective"><strong>Objectif :</strong> Assurer la sécurité et la constance de la pression du gaz
+          (butane, propane) délivré aux équipements, en évitant les surpressions et fuites, conformément aux normes de
+          sécurité GPL.</p>
+        <p class="description">
+          Dispositifs de régulation de pression avec systèmes de sécurité anti-retour et détection de fuite, conçus pour
+          différents débits et pressions d’entrée/sortie, pour usage domestique ou professionnel.
+        </p>
+        <p class="examples"><strong>Exemples :</strong> Détendeur butane basse pression 28 mbar, détendeur propane 37
+          mbar avec sécurité automatique. <br><strong>Pour découvrir nos produits, <a href="{{ url_for('produit_cat', nom_categorie='detendeur') }}">cliquez
+              ici</a></strong></p>
+      </div>
+      <div class="product-image">
+        <img src="{{url_for('static',filename='uploads/images.jpeg')}}" alt="Photo Détendeurs NAFTAL">
+      </div>
+    </div>
+
+  </section>
+
+</div>
+{% endblock %}
+   

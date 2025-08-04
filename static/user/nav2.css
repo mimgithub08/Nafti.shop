@@ -1,0 +1,23 @@
+.element {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0 15px;
+  padding: 0;
+}
+
+.element a {
+text-decoration: none;
+color: #003366;
+font-weight: 900;
+font-size: 14px;
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+
+.element li a:hover {
+  color: #F0B618;
+}
+
+
+

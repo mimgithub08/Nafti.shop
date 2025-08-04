@@ -1,0 +1,205 @@
+{% extends "user/nav_footer.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='user/index.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+{% endblock %}
+
+{% block contene %}
+        <div class="container-index">
+        <div class="slider-container-index">
+            {% if photos %}
+            <div class="categorie-slider-index">
+  {% for photo in photos %}
+<div class="image-wrapper">
+  <img src="{{ url_for('static', filename='uploads/' ~ photo) }}" alt="Catégorie" class="category-img">
+
+  {% if loop.index in [2] %}
+    <a href="{{ url_for('page_of_produit') }}" class="btn-overlay">Voir plus</a>
+  {% endif %}
+</div>
+{% endfor %}
+            </div>
+            {% else %}
+            <p>Aucune image disponible pour les catégories.</p>
+            {% endif %}
+        </div>
+        </div>
+
+
+<div class="title-line">
+  <span>DECOUVRIR NOS PRODUITS</span>
+</div>
+
+<div class="categorie-container">
+  <div class="categorie-slider">
+
+    <div class="categorie-card">
+      <div class="categorie-icon"><i class="fa-solid fa-gas-pump"></i></div>
+      <div class="categorie-content">
+        <li><a href="{{ url_for('produit_cat', nom_categorie='carburant') }}">Carburant</a></li>
+      </div>
+    </div>
+
+    <div class="categorie-card">
+      <div class="categorie-icon"><i class="fa-solid fa-fire"></i></div>
+      <div class="categorie-content">
+        <li><a href="{{ url_for('produit_cat', nom_categorie='gaz') }}">Gaz butane</a></li>
+      </div>
+    </div>
+
+    <div class="categorie-card">
+      <div class="categorie-icon"><i class="fa-solid fa-oil-can"></i></div>
+      <div class="categorie-content">
+        <li><a href="{{ url_for('produit_cat', nom_categorie='lubrifiants') }}">Lubrifiants</a></li>
+      </div>
+    </div>
+
+    <div class="categorie-card">
+      <div class="categorie-icon"><i class="fa-solid fa-car-battery"></i></div>
+      <div class="categorie-content">
+        <li><a href="{{ url_for('produit_cat', nom_categorie='batterie') }}">Batteries</a></li>
+      </div>
+    </div>
+
+    <div class="categorie-card">
+      <div class="categorie-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+      <div class="categorie-content">
+        <li><a href="{{ url_for('produit_cat', nom_categorie='entretien') }}">Produits d'entretien</a></li>
+      </div>
+    </div>
+
+    <div class="categorie-card">
+      <div class="categorie-icon"><i class="fa-solid fa-temperature-low"></i></div>
+      <div class="categorie-content">
+        <li><a href="{{ url_for('produit_cat', nom_categorie='refroidissement') }}">Liquide de refroidissement</a></li>
+      </div>
+    </div>
+
+    <div class="categorie-card">
+      <div class="categorie-icon"><i class="fa-solid fa-gauge-high"></i></div>
+      <div class="categorie-content">
+        <li><a href="{{ url_for('produit_cat', nom_categorie='detendeur') }}">Détendeur de gaz butane</a></li>
+      </div>
+    </div>
+
+    
+    <div class="categorie-card">
+      <div class="categorie-icon"><i class="fa-solid fa-car"></i></div>
+      <div class="categorie-content">
+        <li><a href="{{ url_for('produit_cat', nom_categorie='pneumatiques') }}">Pneumatiques</a></li>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container-section">
+  <div class="title-line">
+    <span>PRODUITS A L'UNE</span>
+  </div>
+  <div class="produits-container" id="produits-container">
+    {% include "user/card.html" %}
+  </div>
+</div>
+
+
+        
+        
+<div class="carte-cib">
+   <img src="{{ url_for('static', filename='uploads/slider-removebg-preview.png') }}" alt="pub">
+<div class="pragraphe">
+<p>
+  La carte  <span>CIB Naftal</span>
+  <br> c’est plus qu’un moyen de paiement 
+   <br> c’est un gain de <span>temps</span> et de  <span>tranquillité</span>
+   </p>
+   <br><a href="#"> <button> plus info ici </button></a> 
+ 
+  </div>
+
+</div>
+ <section class="produits-populaires">
+    
+<div class="title-line">
+  <span>Nos actualités</span>
+</div>
+    <div class="cards">
+        <div class="card"> 
+            <img src="#" alt="Huile Moteur">
+            <h3> Naftal alimente aussi le ciel:</h3>
+            <p>partenariat stratégique avec l’aviation</p>
+            <a href="#">lire plus</a>
+        </div>
+        <div class="card">
+            <img src="#" alt="Gaz Butane">
+            <h3>Naftal élargit son réseau: </h3>
+            <p>plus proche de vous</p>
+            <a href="#">lire plus</a>
+        </div>
+        <div class="card">
+            <img src="#" alt="Batterie">
+            <h3>Naftal enrichit son offre :</h3>
+            <p>nouvelles huiles moteur et kits GPL made in Algeria</p>
+            <a href="#">lire plus</a>
+        </div>
+    </div>
+<div class="nftal-khadmate">
+<div class="pragraphe">
+<p>
+  <span>
+ telecharger <br>
+ nftal-khadmate app
+  </span><br>
+  disponible sur google-play,appstore
+</p>
+<div class="nftal-khadmate-image"></a>
+
+<a href="https://play.google.com/store/apps/details?id=com.naftal.apps.naftalkhadamat&hl=en">
+ <img src="{{ url_for('static', filename='uploads/disp.jpg') }}" alt="pub"   target="_blank">
+</a>
+<a href="https://apps.apple.com/dz/app/naftal-khadamat/id6476059039" target="_blank">
+  <img src="{{ url_for('static', filename='uploads/disp2.jpg') }}" alt="pub"></a>
+</div>
+</div>
+   <img src="{{ url_for('static', filename='uploads/khadamat.png') }}" alt="pub">
+</div>
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+
+<script>
+$(document).ready(function () {
+  $('.categorie-slider-index').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    centerMode: false,
+    variableWidth: false,
+    responsive: [
+      { breakpoint: 992, settings: { slidesToShow: 1 } },
+      { breakpoint: 600, settings: { slidesToShow: 1 } }
+    ]
+  });
+
+  $('.categorie-slider').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: false,
+    autoplay: false,
+    centerMode: false,
+    variableWidth: false,
+    responsive: [
+      { breakpoint: 992, settings: { slidesToShow: 2 } },
+      { breakpoint: 600, settings: { slidesToShow: 1 } }
+    ]
+  });
+})
+
+</script>
+
+{% endblock %}

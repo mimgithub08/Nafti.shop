@@ -1,0 +1,37 @@
+{% extends "user/nav_footer.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='user/contact.css') }}">
+{% endblock %}
+{% block contene %}
+<div class="contact">
+    <h2>Contactez-nous</h2>
+
+    <p>
+      Besoin d’aide ou de renseignements ? <br>
+      <strong>Nous sommes à votre écoute.</strong><br>
+      NeftiShop, toujours à portée de main. Appelez-nous ou suivez-nous sur les réseaux.
+    </p>
+
+    <p class="phone">📞 33 05 </p>
+    <p class="fb"> page facebook : <a href="https://www.facebook.com/NaftalSpaNews" target="_blank">Naftal Spa-نفطال
+      </a></p>
+  </div>
+  <div class="naftal-khadamat">
+    <p>
+      En plus de cette application, <strong>Naftal</strong> met à votre disposition une autre plateforme mobile :
+      <span class="app-name">Naftal Khadamat</span>, pour découvrir l’ensemble de ses produits et services, vous
+      informer,
+      et rester connecté à l’essentiel.
+      <br>
+      click sur la photo pour la telecharge
+    </p>
+    <br>
+    <br>
+    <div class="Khadamat_photo">
+    <a href="https://play.google.com/store/apps/details?id=com.naftal.apps.naftalkhadamat&hl=en"
+        target="_blank">
+      <img src="{{ url_for('static', filename='uploads/Screenshot from 2025-06-07 18-39-02.png') }}"></a>
+    </div>
+  </div>
+
+{% endblock %}

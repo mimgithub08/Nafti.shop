@@ -1,0 +1,44 @@
+{% extends "admin/search.html" %}
+{% block content %}
+{% if message %}
+<p class="message active">{{ message }}</p>
+{% endif %}
+<!-- read db -->
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Catégorie</th>
+                <th>prix</th>
+                <th>Description</th>
+                <th style="width: 1px; height: 1px;">Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.nom_produit }}</td>
+                <td>{{ produit.categorie }}</td>
+                <td>{{ produit.prix }}</td>
+                <td>{{ produit.description }}</td>
+                <td>
+
+                    {% if produit.photo %}
+                    <img src="{{ url_for('static', filename=produit.photo) }}" width="100">
+                    {% else %}
+                    Pas d'image
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

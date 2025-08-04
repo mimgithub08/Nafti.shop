@@ -1,0 +1,85 @@
+{% extends "admin/search.html" %}
+{% block content %}
+
+
+{% if message %}
+<p class="message active">{{ message }}</p>
+{% endif %}
+
+
+
+<!--search-->
+{% if produit %}
+<h2>Produit trouvé:</h2>
+<table border="1" cellpadding="10">
+  <tr>
+    <th>ID</th>
+    <th>Nom</th>
+    <th>Catégorie</th>
+    <th>prix</th>
+    <th>Description</th>
+    <th>Photo</th>
+  </tr>
+  <tr>
+    <td>{{ produit.id }}</td>
+    <td>{{ produit.nom_produit }}</td>
+    <td>{{ produit.categorie }}</td>
+    <td>{{ produit.prix }}</td>
+    <td>{{ produit.description }}</td>
+    <td>
+      {% if produit.photo %}
+      <img src="{{ url_for('static', filename=produit.photo) }}" class="product-img" alt="{{ produit.nom_produit }}"
+        width="120px">
+      {% else %}
+      Aucune
+      {% endif %}
+    </td>
+  </tr>
+</table>
+{% elif query %}
+<!-- 404-->
+<p style="color: orange;">Aucun produit correspondant à « {{ query }} ».</p>
+{% endif %}
+
+
+<!-- read db -->
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Catégorie</th>
+        <th>prix</th>
+        <th>Description</th>
+        <th>Photo</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for produit in produits %}
+      <tr>
+        <td>{{ produit.id }}</td>
+        <td>{{ produit.nom_produit }}</td>
+        <td>{{ produit.categorie }}</td>
+        <td>{{ produit.prix }}</td>
+        <td>{{ produit.description }}</td>
+        <td>
+          {% if produit.photo %}
+          <img src="{{ url_for('static', filename=produit.photo) }}" class="product-img" alt="{{ produit.nom_produit }}"
+            width="120px">
+          {% else %}
+          Pas d'image
+          {% endif %}
+        </td>
+        <td>
+          <form action="{{ url_for('delete_produit', id=produit.id) }}" method="POST" style="display:inline-block;">
+            <button class="btn-del" type="submit">Supprimer</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

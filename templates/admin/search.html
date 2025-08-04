@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{{url_for('static',filename='mgoood.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='mod_page.css')}}">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="{{ url_for('static', filename='uploads/logo_o.jpg') }}" alt="Logo" class="logo-img">
+      <a href="{{ url_for('afficher_produits') }}">Naftal Vitrine</a>
+    </div>
+    <div class="search">
+      <form method="POST" action="{{ url_for('chercher_produits') }}">
+        <input type="text" name="query" placeholder="Entrez nom ou ID">
+        <button type="submit"> <i class="fa-solid fa-magnifying-glass"
+            style="color: #ffffff;"></i></button>
+      </form>
+    </div>
+  </header>
+
+  <nav class="bg">
+
+    <button id="toggleBtn">
+      <i class="fa fa-bars"></i>
+      <span class="title">gestion du produits {{title}}</span>
+    </button>
+
+
+    <div class="sidebar" id="sidebar">
+      <div class="element">
+        <ul>
+          <li><a href="{{ url_for('ajouter_produit') }}">Ajouter </a></li>
+          <li><a href="{{ url_for('suppremer_produit') }}">Supprimer </a></li>
+          <li><a href="{{ url_for('changer_details') }}">Modifier </a></li>
+          <li><a href="{{ url_for('afficher_produits') }}">les produits</a></li>
+          <li><a href="{{ url_for('logout') }}">deconnecter</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!--search-->
+  <div class="result">
+    {% if produit %}
+    <span class="title-res">Produit trouvé:</span>
+    <table border="1" cellpadding="1">
+      <thead>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Catégorie</th>
+        <th>prix</th>
+        <th>Description</th>
+        <th>Photo</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ produit.id }}</td>
+          <td>{{ produit.nom_produit }}</td>
+          <td>{{ produit.categorie }}</td>
+          <td>{{ produit.prix }}</td>
+          <td>{{ produit.description }}</td>
+          <td>
+            {% if produit.photo %}
+            <img src="{{ url_for('static', filename=produit.photo) }}" width="100">
+            {% else %}
+            Aucune
+            {% endif %}
+          </td>
+          <td>
+            <form action="{{ url_for('delete_produit', id=produit.id) }}" method="POST" style="display:inline-block;">
+              <button class="btn-del" type="submit">Supprimer</button>
+            </form>
+            <a href="{{ url_for('modifier_produit', id=produit.id) }}">
+              <button class="btn-mod" type="button">Modifier</button>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    {% elif query %}
+    <!-- 404-->
+    <p class="messege " style="color: orange;">Aucun produit correspondant à « {{ query }} ».</p>
+    {% endif %}
+  </div>
+  {% block content %}
+  {% endblock %}
+
+
+
+
+  <!-- Script Toggle -->
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
+    const icon = toggleBtn.querySelector("i");
+
+    toggleBtn.addEventListener('click', function () {
+      sidebar.classList.toggle('show');
+      toggleBtn.classList.toggle("clicked");
+
+      icon.classList.toggle("fa-bars");
+      icon.classList.toggle("fa-times");
+    });
+  </script>
+  </script>
+  <!-- to move the title + tbale -->
+  <script>
+    document.getElementById("toggleBtn").addEventListener("click", function () {
+      document.body.classList.toggle("sidebar-active");
+
+    });
+  </script>
+
+</body>
+
+</html>

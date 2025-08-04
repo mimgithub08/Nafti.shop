@@ -1,0 +1,67 @@
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='user/card.css') }}">
+{% endblock %}
+
+<div class="container-product">
+  {% for produit in produits %}
+    <div class="product2" data-name="p-{{ produit.id }}" data-prix="{{ produit.prix }}">
+      {% if produit.photo %}
+        <img src="{{ url_for('static', filename=produit.photo) }}" alt="{{ produit.nom_produit }}">
+      {% else %}
+        <p>Pas d'image</p>
+      {% endif %}
+      <h3>{{ produit.nom_produit }}</h3>
+      <div class="price">{{ produit.prix }} DA</div>
+    </div>
+  {% endfor %}
+
+  <div class="product2-preview" id="previewBox">
+    {% for produit in produits %}
+      <div class="preview" data-target="p-{{ produit.id }}">
+        <span class="close-preview">×</span>
+        {% if produit.photo %}
+          <img src="{{ url_for('static', filename=produit.photo) }}" alt="{{ produit.nom_produit }}">
+        {% else %}
+          <p>Pas d'image</p>
+        {% endif %}
+        <h3>{{ produit.nom_produit }}</h3>
+        <p>{{ produit.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  const products = document.querySelectorAll('.product2');
+  const previewBox = document.getElementById('previewBox');
+  const previews = document.querySelectorAll('.preview');
+  const closeBtns = document.querySelectorAll('.close-preview');
+
+  products.forEach(product => {
+    product.addEventListener('click', () => {
+      const name = product.getAttribute('data-name');
+      previewBox.classList.add('active');
+      previews.forEach(preview => {
+        preview.classList.remove('active');
+        if (preview.getAttribute('data-target') === name) {
+          preview.classList.add('active');
+        }
+      });
+    });
+  });
+
+  closeBtns.forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      previewBox.classList.remove('active');
+      previews.forEach(p => p.classList.remove('active'));
+    });
+  });
+
+  previewBox.addEventListener('click', e => {
+    if (e.target === previewBox) {
+      previewBox.classList.remove('active');
+      previews.forEach(p => p.classList.remove('active'));
+    }
+  });
+</script>

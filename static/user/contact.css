@@ -1,0 +1,64 @@
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin-top: 60px;
+  background-color: #ffffff;
+ 
+}
+.contact {
+      padding: 40px;
+      color: #003366;
+      text-align: center;
+    }
+
+    .contact p {
+      margin-bottom: 2px;
+      font-size: 16px;
+    }
+
+    .contact .phone {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .naftal-khadamat {
+      color: #003366;
+      padding: 40px 20px;
+      text-align: center;
+      font-family: "Roboto", sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      transition: all 0.3s ease-in-out;
+    }
+
+
+    .naftal-khadamat .app-name {
+      color: #007acc;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 18px;
+    }
+
+
+    .naftal-khadamat .app-name {
+      color: #007acc;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    .Khadamat_photo img {
+      width: 220px;
+      max-width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .Khadamat_photo img:hover {
+      transform: scale(1.05);
+    }

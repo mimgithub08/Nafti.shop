@@ -1,0 +1,158 @@
+.bg {
+  margin-top: 50px;
+  display: flex;
+   background-color:#f5f5f5;
+}  
+.sidebar {
+  width: 250px!important;
+  background-color:#f5f5f5;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  margin-right: 20px;
+  margin-bottom: 30px;
+}
+
+
+
+.sidebar ul.produit {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul.produit li {
+  margin: 10px 0;
+}
+
+.sidebar ul.produit li a {
+  text-decoration: none;
+  color: #003366;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.sidebar ul.produit li a:hover {
+  color:#ffcc00;
+}
+
+.range-double {
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.range-double .labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.range-double .sliders {
+  position: relative;
+  height: 50px;
+}
+
+.range-double input[type="range"] {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  -webkit-appearance: none;
+  background: none;
+}
+
+.range-double input[type="range"]::-webkit-slider-thumb {
+  pointer-events: all;
+  width: 18px;
+  height: 18px;
+  margin-top: -6px; 
+  border-radius: 50%;
+  background: #007bff;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 10;
+}
+
+
+.range-double input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: #ccc;
+  border-radius: 3px;
+}
+
+
+
+.filter-line {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radio-group input[type="radio"] {
+  margin: 0;
+ 
+}
+
+.radio-group label {
+  color: #333;
+  margin: 0;
+}
+.sidebar label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  display: inline-block;
+   text-transform: uppercase;
+}
+
+
+.range-sliders {
+  position: relative;
+  height: 50px;
+}
+
+/*-------------------------------------------------------------------------------------*/
+.title h3{
+    font-size: 28px;
+  color: #003366;
+  text-transform: uppercase;
+  border-bottom: 3px solid #ffcc00; 
+  display: inline-block;
+  padding-bottom: 8px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 1px;
+}
+.title h2{
+  font-size: 19px;
+  color: #003366;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ffcc00; 
+  display: inline-block;
+  padding-bottom: 8px;
+  margin-top: 1px;
+  margin-bottom: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 1px;
+}
+.produits-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; 
+  padding: 20px;
+}

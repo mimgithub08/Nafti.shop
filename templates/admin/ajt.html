@@ -1,0 +1,73 @@
+{% extends "admin/search.html" %}
+{% block content %}
+    {% if message %}
+        <div class="message {% if '✅' in message %}success{% else %}error{% endif %}">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <div class="table-container">
+        <form id="product-form" action="/admin/ajouter" method="POST" enctype="multipart/form-data">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Produit</th> 
+                        <th>Nom du Produit</th>
+                        <th>Catégorie</th>
+                        <th>Prix (DA)</th>
+                        <th>Description</th>
+                        <th>Photo</th>
+                    </tr>
+                </thead>
+                <tbody id="product-body">
+                    <!-- Ligne d'ajout -->
+                    <tr>
+                        <td><input type="number" name="id[]" placeholder="Ex: 101" required></td> 
+                        <td><input type="text" name="nom_produit[]" placeholder="Ex: Super Sans Plomb" required></td>
+                        <td>
+                            <select name="categorie[]" required>
+                                <option value="">-- Choisir --</option>
+                                <option value="carburant">Carburant</option>
+                                <option value="gaz">Gaz Butane</option>
+                                <option value="lubrifiant">Lubrifiants</option>
+                                <option value="batterie">Batteries</option>
+                                <option value="detendeur">Détendeur</option>
+                                <option value="pneumatiques">Pneumatiques</option>
+                                <option value="entretien">Produits d'entretien</option>
+                                <option value="refroidissement">Liquide de refroidissement</option>
+                            </select>
+                        </td>
+                        <td><input type="number" name="prix[]" placeholder="3000" min="0" required></td>
+                        <td><textarea name="description[]" placeholder="Décrire le produit..."></textarea></td>
+                        <td><input type="file" name="photo[]" accept="image/*"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="button-row">
+                <button type="submit" class="btn-submit"> Ajouter</button>
+                <button type="button" class="btn-add" onclick="ajouterLigne()"> Ajouter une ligne</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function ajouterLigne() {
+            const tbody = document.getElementById('product-body');
+            const ligne = tbody.rows[0].cloneNode(true);
+
+            // Réinitialise les champs
+            const inputs = ligne.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (input.type === 'file') {
+                    input.value = '';
+                } else if (input.tagName.toLowerCase() === 'select') {
+                    input.selectedIndex = 0;
+                } else {
+                    input.value = '';
+                }
+            });
+
+            tbody.appendChild(ligne);
+        }
+    </script>
+{% endblock %}

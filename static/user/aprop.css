@@ -1,0 +1,157 @@
+  * {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin-top: 60px;
+  background-color: #ffffff;
+ 
+}
+/* Section Pourquoi Naftal */
+.why-naftal {
+  padding: 50px 30px;
+  background-color: #f9fbfd;
+  text-align: center;
+  
+}
+
+.why-naftal h2 {
+  font-size: 28px;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.why-naftal hr {
+  width: 60px;
+  height: 4px;
+  background-color: #F0B618;
+  margin: 0 auto 20px;
+  border: none;
+  border-radius: 4px;
+}
+
+.why-naftal .description {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 500;
+ color: #003366;
+}
+
+.why-naftal .desc{
+  color: #003366;
+}
+.why-naftal ul.avantages {
+  list-style: none;
+  margin-top: 20px;
+  text-align: left;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.why-naftal ul.avantages li {
+  margin-bottom: 12px;
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.6;
+   color: #003366;
+}
+
+.why-naftal ul.avantages li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #F0B618;
+  font-weight: bold;
+}
+
+.why-naftal .message-fin {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 600;
+   color: #003366;
+}
+
+/* Section Produits Populaires */
+.produits-populaires {
+  padding: 50px 30px;
+  background-color: #f2f4f8;
+  text-align: center;
+}
+
+.produits-populaires h2 {
+  font-size: 28px;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.produits-populaires hr {
+  width: 60px;
+  height: 3px;
+  background-color: #F0B618;
+  margin: 0 auto 20px;
+  border: none;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.card {
+  width: 260px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 15px;
+  transition: transform 0.3s ease;
+  border-top: 4px solid #F0B618;
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.card h3 {
+  font-size: 18px;
+  margin: 12px 0 5px;
+  color: #003366;
+}
+
+.card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+/* Bouton */
+.btn-container {
+  margin-top: 35px;
+}
+
+.btn-voir-plus {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: #F0B618;
+  color: #003366;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-voir-plus:hover {
+  background-color: #003366;
+  color: #ffffff;
+}

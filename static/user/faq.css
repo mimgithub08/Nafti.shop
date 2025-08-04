@@ -1,0 +1,74 @@
+  * {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin-top: 60px;
+  background-color: #ffffff;
+ 
+}
+.accordion {
+
+      background: #FEFFF5;
+      color: #003366;
+      cursor: pointer;
+      padding: 20px 40px;
+      width: 80%;
+      margin: 1px auto;
+      text-align: left;
+      border: 0.01px solid #ccc;
+      font-size: 16px;
+      font-weight: 900;
+      border-radius: 10px;
+      box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+      transition: max-height 0.4s ease;
+      overflow: hidden;
+      max-height: 70px;
+      position: relative;
+    }
+
+    .accordion .answer {
+      color: #003366;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease, max-height 0.4s ease;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+
+    .accordion.active {
+      max-height: 300px;
+    }
+
+    .accordion.active .answer {
+      max-height: 200px;
+      opacity: 1;
+    }
+
+    .accordion .icon {
+      position: absolute;
+      right: 10px;
+      top: 22px;
+      font-size: 18px;
+      transition: transform 0.4s ease;
+    }
+
+    .accordion.active .icon {
+      transform: rotate(180deg);
+    }
+.title h2 {
+  font-size: 28px;
+  color: #003366;
+  text-transform: uppercase;
+  border-bottom: 3px solid #ffcc00; 
+  display: inline-block;
+  padding-bottom: 8px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+   margin-left: 20px;
+  letter-spacing: 1px;
+}

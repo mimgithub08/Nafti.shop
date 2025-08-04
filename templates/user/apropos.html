@@ -1,0 +1,57 @@
+{% extends "user/nav_footer.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='user/aprop.css') }}">
+{% endblock %}
+{% block contene %}
+<section class="why-naftal">
+    <h2>Pourquoi  Nafti Vitrine ?</h2>
+    <hr>
+    <p class="description">
+        Les produits de <strong>Naftal</strong> sont le fruit d’une expertise nationale reconnue, répondant aux normes de qualité les plus strictes,
+        pour garantir la performance, la sécurité et la fiabilité.
+    </p>
+
+    <p class="desc">
+        Afin de faciliter l’accès à ses produits et renforcer la relation de confiance avec ses clients, <strong>Naftal</strong> a mis en place la plateforme <strong>Nafti Vitrine</strong>.
+        Elle permet à tous les utilisateurs de <strong>découvrir facilement les produits disponibles</strong> et d’avoir <strong>toutes les informations nécessaires</strong> avant tout achat.
+    </p>
+
+    <ul class="avantages">
+        <li><strong>✔ Qualité certifiée :</strong> Tous les produits sont testés et conformes aux standards internationaux.</li>
+        <li><strong>✔ Prix compétitifs :</strong> Accessibles à tous les clients sans compromettre la performance.</li>
+        <li><strong>✔ Large gamme :</strong> Carburants, lubrifiants, gaz, batteries, accessoires... tout est disponible.</li>
+        <li><strong>✔ Réseau étendu :</strong> Disponibilité dans toutes les stations-service à travers le pays.</li>
+        <li><strong>✔ Confiance & transparence :</strong> Produits directement depuis la source officielle Naftal, avec fiches détaillées pour chaque article.</li>
+    </ul>
+
+    <p class="message-fin">
+        Avec <strong>Nafti Vitrine</strong>, découvrez, informez-vous et choisissez les produits Naftal en toute confiance. 
+    </p>
+</section>
+<section class="produits-populaires">
+    <h2>Produits populaires chez Naftal</h2>
+    <hr>
+    <div class="cards">
+        <div class="card">
+            <img src="static/uploads/huile_moteur.jpg" alt="Huile Moteur">
+            <h3>Huile moteur 20W50</h3>
+            <p>Lubrifiant haute performance pour moteurs à essence et diesel.</p>
+        </div>
+        <div class="card">
+            <img src="static/uploads/bouteille_gaz.jpg" alt="Gaz Butane">
+            <h3>Bouteille Gaz Butane 13kg</h3>
+            <p>Énergie domestique fiable pour vos besoins quotidiens.</p>
+        </div>
+        <div class="card">
+            <img src="static/uploads/batterie.jpg" alt="Batterie">
+            <h3>Batterie 12V Naftal</h3>
+            <p>Durabilité et performance pour votre véhicule.</p>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <a href="{{ url_for('page_of_produit') }}" class="btn-voir-plus">Voir tous les produits</a>
+    </div>
+</section>
+
+{% endblock %}
