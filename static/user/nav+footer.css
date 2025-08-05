@@ -84,7 +84,7 @@ background-color: #0056b3;
 
 
 .footer {
-background-color :#aaaaaa;	
+background-color: rgba(170, 170, 170, 0.6);
 padding: 20px;
 color: #fff;
 text-align: center;
@@ -163,3 +163,17 @@ transform: scale(1.05);
   
 }
 
+.media {
+  height: 80px;
+ display: flex;
+align-items: center;
+justify-content: center;
+gap: 30px;
+
+}
+.fa-brands.fa-x-twitter,
+.fa-brands.fa-square-facebook,
+.fa-brands.fa-youtube {
+  font-size: 35px;
+  margin-bottom: 1px;
+  }

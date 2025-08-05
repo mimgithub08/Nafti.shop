@@ -13,10 +13,6 @@
   {% for photo in photos %}
 <div class="image-wrapper">
   <img src="{{ url_for('static', filename='uploads/' ~ photo) }}" alt="Catégorie" class="category-img">
-
-  {% if loop.index in [2] %}
-    <a href="{{ url_for('page_of_produit') }}" class="btn-overlay">Voir plus</a>
-  {% endif %}
 </div>
 {% endfor %}
             </div>
@@ -111,10 +107,11 @@
 <div class="pragraphe">
 <p>
   La carte  <span>CIB Naftal</span>
-  <br> c’est plus qu’un moyen de paiement 
+  <br> c’est plus qu’un moyen de<span> paiement </span>
    <br> c’est un gain de <span>temps</span> et de  <span>tranquillité</span>
    </p>
-   <br><a href="#"> <button> plus info ici </button></a> 
+  
+   <br><a href="#">plus info ici </a> 
  
   </div>
 
@@ -164,6 +161,7 @@
 </div>
    <img src="{{ url_for('static', filename='uploads/khadamat.png') }}" alt="pub">
 </div>
+
 <!-- JS -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>

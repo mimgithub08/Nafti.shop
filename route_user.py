@@ -26,7 +26,7 @@ class Produit(db.Model):
     photo = db.Column(db.String(200), nullable=True)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/search', methods=['GET', 'POST'])
 def chercher_du_produits():
     produits = []
     message = ""
@@ -62,7 +62,7 @@ def chercher_du_produits():
     return render_template('user/result.html', produits=produits, message=message)
 
 
-@app.route('/index')
+@app.route('/')
 def homepage():
     produits_aleatoires = Produit.query.order_by(func.random()).limit(18).all()
     photos= ['slider.png','sliderindex.png']

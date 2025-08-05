@@ -185,57 +185,58 @@ padding-top: 85px;
   gap: 20px;
   padding: 20px;
 }
-.carte-cib{
-  margin: 15% 0;
+.carte-cib {
+   margin-top: 10% ;
+  margin-bottom: 50px;;
   position: relative;
-  display:flex;
+  display: flex;
   align-items: center;
-  justify-items: center;
-  height: 300px;
-
+  justify-content: center;  
+  gap: 180px; 
+  height: 350px;
+  background-color: #003366;
+  padding: 0 5%;
 }
-  .carte-cib img {
-    position: absolute;
-    transform: translateX(25%);
-    z-index: 2;
-  }
 
-  .carte-cib .pragraphe {
-    position: relative;
-    background-color: #003366;
-    width: 100%;
-    z-index: 1;
-    direction: rtl;      
-    text-align: center; 
-    height: 350px;
-  }
-  .carte-cib .pragraphe p{
-  margin: 40px 0;
-  font-family: "Roboto", sans-serif;
-  font-size: xxx-large;
-  font-weight: bolder;
+.carte-cib img {
+   z-index: 2;
+  
+}
+
+
+ .carte-cib .pragraphe {
+ display: flex;
+  flex-direction: column; 
+  justify-content: center;
   color: #f9f9f9;
+  font-family: "Roboto", sans-serif;
+  max-width: 40%;
+}
 
-  transform: translateX(40%);
+.carte-cib .pragraphe p {
+  font-size: xx-large;
+  font-weight: bolder;
+ text-transform: uppercase;
   text-align: left;
-  text-transform: capitalize;
-  }
-.carte-cib .pragraphe span{
+}
+.carte-cib .pragraphe p span{
   color:#F0B618;
 }
-.carte-cib .pragraphe button{
+.carte-cib .pragraphe a{
   background-color: #f9f9f9;
   color: #003366;
-  font-size: xx-large;
-font-weight: 500;
-  width:250px;
-  height: 50px;
+  font-size: 1.5rem;
+  font-weight: bolder;
   cursor: pointer;
   text-transform: capitalize;
-  transform: translateX(40%);
-  border-radius: 15px;
+  transform: none;
+  width: 200px;
+  padding: 5px;
+  text-align: center;
+  
 }
-.carte-cib .pragraphe button:hover{
+
+.carte-cib .pragraphe a:hover{
   background-color: #003366;
   color: #f9f9f9;
 
@@ -249,7 +250,7 @@ font-weight: 500;
   align-items: center;
   justify-content: center;  
   gap: 180px; 
-  height: 300px;
+  height: 310px;
   background-color: #003366;
   padding: 0 5%;
   
@@ -257,6 +258,7 @@ font-weight: 500;
 
 .nftal-khadmate > img {
   z-index: 2;
+  transform: translateY(-12px);
 }
 
 .nftal-khadmate .pragraphe {
