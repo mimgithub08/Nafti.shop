@@ -338,3 +338,66 @@ padding-top: 85px;
   object-fit: cover;
   border-radius: 8px;
 }
+@media (max-width: 768px) {
+
+  .carte-cib, .nftal-khadmate {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .carte-cib img,
+  .nftal-khadmate > img {
+    width: 80%;
+    height: auto;
+  }
+
+  .carte-cib .pragraphe,
+  .nftal-khadmate .pragraphe {
+    max-width: 100%;
+    font-size: 16px;
+    align-items: center;
+  }
+
+  .carte-cib .pragraphe p,
+  .nftal-khadmate .pragraphe p,
+  .nftal-khadmate .pragraphe p span {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .carte-cib .pragraphe a,
+  .nftal-khadmate .pragraphe a {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .cards {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    width: 90%;
+    margin: auto;
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .title-line span {
+    font-size: 20px;
+  }
+
+  .btn-overlay {
+    font-size: 14px;
+    padding: 8px 16px;
+    left: 50%;
+    bottom: 20px;
+  }
+
+}

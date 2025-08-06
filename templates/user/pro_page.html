@@ -55,7 +55,7 @@
         <div class="title">
             <h3> nos produit:</h3>
         </div>
-       <div class="produits-container" id="produits-container">
+       <div class="produits-container" id="produits" >
     {% include "user/card.html" %}
   </div>
     </div>
@@ -91,7 +91,7 @@ const inputMin = document.getElementById('prix-min');
 const inputMax = document.getElementById('prix-max');
 const minLabel = document.getElementById('prix-min-label');
 const maxLabel = document.getElementById('prix-max-label');
-const produitsContainer = document.getElementById('produits-container');
+const produitsContainer = document.getElementById('produits');
 const categorie = "{{ categorie }}"; 
 
 function getSelectedOrder() {
@@ -110,7 +110,7 @@ function updateLabels() {
   minLabel.textContent = min + " DA";
   maxLabel.textContent = max + " DA";
 
-  const order = getSelectedOrder(); // ✅
+  const order = getSelectedOrder();
 
   fetch(`/filtrer_ajax?categorie=${categorie}&prix_min=${min}&prix_max=${max}&order=${order}`)
     .then(response => response.text())

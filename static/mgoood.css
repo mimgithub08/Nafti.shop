@@ -21,21 +21,20 @@ z-index: 999;
 height: 50px;
 background-color: white;
 }  
-a {
-font-family: 'Lato', sans-serif;
-text-decoration: none;
-color: #003366;
-font-weight: 900;
-font-size: 14px;
-letter-spacing: 1px;
-text-transform: uppercase;
-}    
+  
 .logo {
 display: flex;
 align-items: center;
 font-size: 400;
 }
-
+.logo a{
+  color:#003366;
+  text-decoration: none;
+  font-weight: bolder;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: "Roboto", sans-serif;
+}
 .logo-img {
 width: 40px;
 height: auto;
@@ -110,9 +109,9 @@ text-align: center;
 thead th {
 position: sticky;
 top: 0;
-background-color: #003366; /* أو أي لون يليق */
+background-color: #003366; 
 color: white;
-z-index: 2; /* باش يطلع فوق الباقي */
+z-index: 2; 
 }
 
 td {
@@ -234,11 +233,15 @@ font-size: 15px;
 letter-spacing: 1px;
 text-transform: uppercase;
 line-height: 1;
+font-weight: bolder;
+
 }
  
 .sidebar ul li a:hover {
 background-color: #003366;
 border-radius: 5px;
+font-weight: bold;
+
 }
 #toggleBtn {
 display: flex;
@@ -294,6 +297,64 @@ height: 55px;
 background-color: white;
 border-color: transparent; 
 }
+.accordion {
+cursor: pointer;
+text-align: left;
+transition: max-height 0.4s ease;
+overflow: hidden;
+max-height: 30px;
+padding: 2px;
+}
+.accordion .labelle{
+color:white;
+font-family: 'Lato', sans-serif;
+font-size: 15px;
+font-weight: bold;
+letter-spacing: 1px;
+text-transform: uppercase;
+line-height: 1;
+
+}
+.accordion .categorie ul a{
+  font-size: small;
+  font-weight: 700;
+  opacity: 1;
+  opacity: 0.7;
+}
+.accordion .categorie ul a:hover{
+  color:#F0B618;
+}
+.accordion .categorie{
+color:white;
+overflow-y: auto;          /* Active le scroll vertical */
+overflow-x: hidden;  
+max-height: 0;
+}
+
+.accordion.active {
+max-height: 900px;
+}
+.accordion.active .categorie{
+max-height: 300px;
+opacity: 1;
+}
+.accordion .categorie::-webkit-scrollbar {
+height: 15px;
+width: 8px;
+margin-left: 3px;
+}
+
+.accordion .categorie::-webkit-scrollbar-thumb {
+background-color: #CCC;
+border-radius: 1px;
+}
+
+.accordion .categorie::-webkit-scrollbar-track {
+background-color:#888;
+}
+.accordion.active  span .fas.fa-chevron-down {
+transform: rotate(180deg);
+}
 /*----------------------------------------redult-------------------------------------------------------------------*/
 .result {
 margin-top: 5%;
@@ -330,4 +391,13 @@ margin-left: 50px;
 }
 .voir_photo:hover{
   transform: translateY(2px); 
+}
+@media screen and (max-width: 768px) {
+  .accordion .labelle {
+    font-size: 14px;
+  }
+
+  .accordion .categorie {
+    max-height: 150px;
+  }
 }

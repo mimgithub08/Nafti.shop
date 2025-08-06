@@ -12,18 +12,27 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
 db = SQLAlchemy(app)
-
 class Produit(db.Model):
     __tablename__ = 'p23'
     id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     nom_produit = db.Column(db.String(100), nullable=False)
     categorie = db.Column(db.String(50), nullable=False)
     prix = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(1000), nullable=True)
+    description = db.Column(db.Integer,db.ForeignKey('carburant.desc_id'),nullable=True) 
     photo = db.Column(db.String(200), nullable=True)
 
+
+class details_carburant(db.Model):
+    __tablename__ = 'carburant'
+    desc_id=db.Column(db.Integer, primary_key=True, autoincrement=False)
+    indice_octane=db.Column(db.Integer, nullable=False)
+    moteurs=db.Column(db.String(1000), nullable=False)
+    avantage=db.Column(db.String(1000),nullable=False)
+    additifs=db.Column(db.String(1000),nullable=False)
+    normes=db.Column(db.String(1000),nullable=False)
+    recomendation=db.Column(db.String(1000),nullable=False)
+ 
 
 @app.route('/admin', methods=['GET', 'POST'])
 def login():
@@ -33,7 +42,7 @@ def login():
         password = request.form['password']
         if username == 'admin' and password == '12345':
             session['is_admin'] = True
-            return redirect(url_for('afficher_produits'))  
+            return redirect(url_for('afficher_produits',nom_categorie='all'))  
         else:
             error = " Identifiants incorrects"
     return render_template('admin/log.html', error=error)
@@ -177,12 +186,16 @@ def suppremer_produit():
          return redirect(url_for('login')) 
    produits = Produit.query.all()
    return render_template('admin/dellet_page.html', produits=produits)
-@app.route('/admin/affiche')
-def afficher_produits():
-  if not session.get('is_admin'):
-         return redirect(url_for('login')) 
-  produits = Produit.query.all()
-  return render_template('admin/voir.html', produits=produits)
+
+@app.route('/admin/affiche/<nom_categorie>')
+def afficher_produits(nom_categorie):
+    if not session.get('is_admin'):
+        return redirect(url_for('login')) 
+    if nom_categorie=='all':
+      produits = Produit.query.all()
+    else:  
+     produits = Produit.query.filter_by(categorie=nom_categorie).all()
+    return render_template('admin/voir.html', produits=produits)
 
 @app.route('/admin/logout')
 def logout():

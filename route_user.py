@@ -22,10 +22,21 @@ class Produit(db.Model):
     nom_produit = db.Column(db.String(100), nullable=False)
     categorie = db.Column(db.String(50), nullable=False)
     prix = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(1000), nullable=True)
+    description = db.Column(db.Integer,db.ForeignKey('carburant.desc_id', onupdate='CASCADE', ondelete='SET NULL'),
+    nullable=True)
     photo = db.Column(db.String(200), nullable=True)
 
 
+class details_carburant(db.Model):
+    __tablename__ = 'carburant'
+    desc_id=db.Column(db.Integer, primary_key=True, autoincrement=False)
+    indice_octane=db.Column(db.Integer, nullable=False)
+    moteurs=db.Column(db.String(1000), nullable=False)
+    avantage=db.Column(db.String(1000),nullable=False)
+    additifs=db.Column(db.String(1000),nullable=False)
+    normes=db.Column(db.String(1000),nullable=False)
+    recomendation=db.Column(db.String(1000),nullable=False)
+    
 @app.route('/search', methods=['GET', 'POST'])
 def chercher_du_produits():
     produits = []
@@ -72,13 +83,13 @@ def homepage():
 def page_of_footer(nom_page):
     pages_valides = ['faq', 'contact', 'apropos']
     if nom_page in pages_valides:
-        return render_template(f'user/{nom_page}.html',show_search=True)
+        return render_template(f'user/{nom_page}.html')
     else:
         return "Page non trouvée", 404
 
 @app.route('/produit')
 def page_of_produit():
- return render_template(f'user/produit.html',show_search=True)
+ return render_template(f'user/produit.html')
 
 @app.route('/filtrer_ajax')
 def filtrer_ajax():

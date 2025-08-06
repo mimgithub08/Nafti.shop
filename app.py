@@ -1,5 +1,5 @@
-from route_user import app
-from route_user import db
+from route_admin import app
+from route_admin import db
 
 if __name__ == '__main__':
     with app.app_context():
