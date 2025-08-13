@@ -17,15 +17,12 @@
     <th>Nom</th>
     <th>Catégorie</th>
     <th>prix</th>
-    <th>Description</th>
     <th>Photo</th>
   </tr>
   <tr>
     <td>{{ produit.id }}</td>
     <td>{{ produit.nom_produit }}</td>
-    <td>{{ produit.categorie }}</td>
     <td>{{ produit.prix }}</td>
-    <td>{{ produit.description }}</td>
     <td>
       {% if produit.photo %}
       <img src="{{ url_for('static', filename=produit.photo) }}" class="product-img" alt="{{ produit.nom_produit }}"
@@ -49,9 +46,9 @@
       <tr>
         <th>ID</th>
         <th>Nom</th>
-        <th>Catégorie</th>
+       
         <th>prix</th>
-        <th>Description</th>
+       
         <th>Photo</th>
         <th>Action</th>
       </tr>
@@ -61,9 +58,9 @@
       <tr>
         <td>{{ produit.id }}</td>
         <td>{{ produit.nom_produit }}</td>
-        <td>{{ produit.categorie }}</td>
+        
         <td>{{ produit.prix }}</td>
-        <td>{{ produit.description }}</td>
+        
         <td>
           {% if produit.photo %}
           <img src="{{ url_for('static', filename=produit.photo) }}" class="product-img" alt="{{ produit.nom_produit }}"

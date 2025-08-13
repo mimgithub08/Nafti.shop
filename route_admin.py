@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from werkzeug.utils import secure_filename
 from flask import session
+from sqlalchemy.dialects.postgresql import ARRAY
 
 
 app = Flask(__name__)
@@ -13,26 +14,134 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 db = SQLAlchemy(app)
+class Categorie(db.Model):
+    __tablename__ = 'categorie'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    
+    produits = db.relationship('Produit', backref='categorie', lazy=True)
+
+
 class Produit(db.Model):
     __tablename__ = 'p23'
     id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     nom_produit = db.Column(db.String(100), nullable=False)
-    categorie = db.Column(db.String(50), nullable=False)
     prix = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.Integer,db.ForeignKey('carburant.desc_id'),nullable=True) 
+    cat_num = db.Column(db.Integer, db.ForeignKey('categorie.id', onupdate='CASCADE', ondelete='SET NULL'), nullable=True)
     photo = db.Column(db.String(200), nullable=True)
 
-
-class details_carburant(db.Model):
+    #relationship (ORM)
+    carburant = db.relationship('DetailsCarburant', backref='produit')
+    gaz = db.relationship('DetailsGaz', backref='produit')
+    lub = db.relationship('DetailsLub', backref='produit')
+    batterie = db.relationship('DetailsBat', backref='produit')
+    pneu = db.relationship('DetailsPneu', backref='produit')
+    entretien = db.relationship('DetailsEntre', backref='produit')
+    refroidissement = db.relationship('DetailsRefroi', backref='produit')
+    detendeur = db.relationship('DetailsDet', backref='produit')
+class DetailsCarburant(db.Model):
     __tablename__ = 'carburant'
-    desc_id=db.Column(db.Integer, primary_key=True, autoincrement=False)
-    indice_octane=db.Column(db.Integer, nullable=False)
-    moteurs=db.Column(db.String(1000), nullable=False)
-    avantage=db.Column(db.String(1000),nullable=False)
-    additifs=db.Column(db.String(1000),nullable=False)
-    normes=db.Column(db.String(1000),nullable=False)
-    recomendation=db.Column(db.String(1000),nullable=False)
- 
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='CASCADE'), primary_key=True)
+    type = db.Column(db.String(1000), nullable=False)
+    moteurs = db.Column(db.String(1000), nullable=False)
+    avantage = db.Column(db.String(1000), nullable=False)
+    additifs = db.Column(db.String(1000), nullable=False)
+    normes = db.Column(db.String(1000), nullable=False)
+    recomendation = db.Column(db.String(1000), nullable=False)
+
+class DetailsGaz(db.Model):
+    __tablename__ = 'gaz'
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    type = db.Column(db.String(1000), nullable=False)
+    utiliser = db.Column(db.String(1000), nullable=False)
+    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    avantage = db.Column(db.String(1000), nullable=False)
+    additifs = db.Column(db.String(1000), nullable=False)
+    normes = db.Column(db.String(1000), nullable=False)
+    recomendation = db.Column(db.String(1000), nullable=False)
+
+class DetailsLub(db.Model):
+    __tablename__ = 'lubrifiants'
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    type = db.Column(db.String(1000), nullable=False)
+    utiliser = db.Column(db.String(1000), nullable=False)
+    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    avantage = db.Column(db.String(1000), nullable=False)
+    normes = db.Column(db.String(1000), nullable=False)
+    recomendation = db.Column(db.String(1000), nullable=False)
+
+class DetailsBat(db.Model):
+    __tablename__ = 'batteries'
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    type = db.Column(db.String(1000), nullable=False)
+    utiliser = db.Column(db.String(1000), nullable=False)
+    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    avantage = db.Column(db.String(1000), nullable=False)
+    normes = db.Column(db.String(1000), nullable=False)
+    recomendation = db.Column(db.String(1000), nullable=False)
+
+class DetailsPneu(db.Model):
+    __tablename__ = 'pneu'
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    type = db.Column(db.String(1000), nullable=False)
+    utiliser = db.Column(db.String(1000), nullable=False)
+    avantage = db.Column(db.String(1000), nullable=False)
+    dimention = db.Column(db.String(1000), nullable=False)
+    recomendation = db.Column(db.String(1000), nullable=False)
+
+class DetailsEntre(db.Model):
+    __tablename__ = 'entretien'
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    type = db.Column(db.String(1000), nullable=False)
+    utiliser = db.Column(db.String(1000), nullable=False)
+    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    avantage = db.Column(db.String(1000), nullable=False)
+    composant = db.Column(db.String(1000), nullable=False)
+    instruction = db.Column(db.String(1000), nullable=False)
+    recomendation = db.Column(db.String(1000), nullable=False)
+
+class DetailsRefroi(db.Model):
+    __tablename__ = 'refroidissement'
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    type = db.Column(db.String(1000), nullable=False)
+    utiliser = db.Column(db.String(1000), nullable=False)
+    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    avantage = db.Column(db.String(1000), nullable=False)
+    composant = db.Column(db.String(1000), nullable=False)
+    norm = db.Column(db.String(1000), nullable=False)
+    recomendation = db.Column(db.String(1000), nullable=False)
+
+class DetailsDet(db.Model):
+    __tablename__ = 'detendeur'
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    type = db.Column(db.String(1000), nullable=False)
+    utiliser = db.Column(db.String(1000), nullable=False)
+    compatibilite = db.Column(db.String(1000), nullable=False)
+    avantage = db.Column(db.String(1000), nullable=False)
+    composant = db.Column(db.String(1000), nullable=False)
+    norm = db.Column(db.String(1000), nullable=False)
+    recomendation = db.Column(db.String(1000), nullable=False)
+
+@app.route('/admin/choiser/<table_name>')
+def choiserune(table_name):
+    tables = [
+        "carburant",
+        "pneumatique",
+        "refroidissement",
+        "entretien",
+        "gaz",
+        "batteries",
+        "lubrifiant",
+        "detendeur"
+    ]
+
+    if table_name in tables:
+        return render_template(f'admin/{table_name}.html')
+    else:
+        return "Page non trouvée", 404
+@app.route('/admin/voila')
+def quide():
+    return render_template('admin/choiser.html')
 
 @app.route('/admin', methods=['GET', 'POST'])
 def login():
@@ -47,43 +156,71 @@ def login():
             error = " Identifiants incorrects"
     return render_template('admin/log.html', error=error)
 
+
+    
 @app.route('/admin/ajouter', methods=['GET', 'POST'])
 def ajouter_produit():
     if not session.get('is_admin'):
          return redirect(url_for('login')) 
     message = ""
     if request.method == 'POST':
+        form_type = int(request.form.get("form_type"))
         try:
-            ids = request.form.getlist('id[]')
-            noms = request.form.getlist('nom_produit[]')
-            categories = request.form.getlist('categorie[]')
-            prixs = request.form.getlist('prix[]')
-            descs = request.form.getlist('description[]')
-            photos = request.files.getlist('photo[]')
+            if form_type == 1:
+                ids = request.form.getlist('id[]')
+                noms = request.form.getlist('nom_produit[]')
+                types= request.form.getlist('type[]')
+                moteurss = request.form.getlist('moteurs')
+                avantages= request.form.getlist('avantage[]')
+                additifss=request.form.getlist('additifs[]')
+                normess=request.form.getlist('normes[]')
+                recommandations = request.form.getlist('recommandation[]')
+                prixs = request.form.getlist('prix[]')
+                photos = request.files.getlist('photo[]')
 
-            for i in range(len(noms)):
-                id = int(ids[i]) if ids[i].strip() else None
-                nom = noms[i]
-                categorie = categories[i]
-                prix = int(prixs[i]) if prixs[i] else 0
-                desc = descs[i]
-                photo = photos[i]
+                for i in range(len(noms)):
+                    id = int(ids[i]) if ids[i].strip() else None
+                    nom = noms[i]
+                    type=types[i]
+                    moteurs =moteurss
+                    avantage=avantages[i]
+                    additifs=additifss[i]
+                    normes= normess[i]
+                    recommandation=recommandations[i]
+                    prix = int(prixs[i]) if prixs[i] else 0
+                    photo = photos[i]
 
-                photo_path = None
-                if photo and photo.filename:
-                    filename = secure_filename(photo.filename)
-                    photo_path = os.path.join('uploads', filename)
-                    photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    photo_path = None
+                    if photo and photo.filename:
+                        filename = secure_filename(photo.filename)
+                        photo_path = os.path.join('uploads', filename)
+                        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-                produit = Produit(
-                    id=id,
-                    nom_produit=nom,
-                    categorie=categorie,
-                    prix=prix,
-                    description=desc,
-                    photo=photo_path
-                )
-                db.session.add(produit)
+                    produit = Produit(
+                        id=id,
+                        nom_produit=nom,
+                        cat_num =1,
+                        prix=prix,
+                        photo=photo_path
+                    )
+                    
+                    db.session.add(produit)
+                    db.session.flush() 
+                    carburant_desc=DetailsCarburant(
+                        product_id =produit.id,
+                        type =type,
+                        moteurs =moteurs,
+                        avantage =avantage, 
+                        additifs = additifs,
+                        normes = normes,
+                        recomendation =recommandation
+
+                    )
+                    
+                    db.session.add(carburant_desc)
+            
+
+               
 
             db.session.commit()
             message = "✅ Tous les produits ont été ajoutés avec succès !"
@@ -91,6 +228,7 @@ def ajouter_produit():
 
         except Exception as e:
             message = f"❌ Erreur : {str(e)}"
+
     
     return render_template('admin/ajt.html', message=message)
 
@@ -142,9 +280,9 @@ def modifier_produit(id):
     if request.method == 'POST':
         try:
             produit.nom_produit = request.form['nom_produit']
-            produit.categorie = request.form['categorie']
+         #   produit.categorie = request.form['categorie']
             produit.prix = int(request.form['prix']) 
-            produit.description = request.form['description']
+           # produit.description = request.form['description']
             
             photo = request.files['photo']
             if photo and photo.filename: 
@@ -194,7 +332,7 @@ def afficher_produits(nom_categorie):
     if nom_categorie=='all':
       produits = Produit.query.all()
     else:  
-     produits = Produit.query.filter_by(categorie=nom_categorie).all()
+     produits = Produit.query.filter_by( cat_num=nom_categorie).all()
     return render_template('admin/voir.html', produits=produits)
 
 @app.route('/admin/logout')

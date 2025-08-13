@@ -1,0 +1,47 @@
+{% extends "admin/search.html" %}
+{% block content %}
+    {% if message %}
+        <div class="message {% if '✅' in message %}success{% else %}error{% endif %}">
+            {{ message }}
+        </div>
+    {% endif %}
+    <div class="box">
+        <div class="sub_title">ajouter produit au</div> 
+      <div class="accor">
+    <div class="lab">categorie<i class="fas fa-chevron-down"></i></div>
+    <div class="categorie">
+  <ul class="categories-list">
+  <li><a href="{{ url_for('choiserune', table_name='carburant') }}">Carburant</a></li>
+  <hr>
+  <li><a href="{{ url_for('choiserune', table_name='gaz') }}">Gaz Butane</a></li>
+  <hr>
+  <li><a href="{{ url_for('choiserune', table_name='lubrifiant') }}">Lubrifiants</a></li>
+  <hr>
+  <li><a href="{{ url_for('choiserune', table_name='batteries') }}">Batteries</a></li>
+  <hr>
+  <li><a href="{{ url_for('choiserune', table_name='detendeur') }}">Détendeur</a></li>
+  <hr>
+  <li><a href="{{ url_for('choiserune', table_name='pneumatique') }}">Pneumatiques</a></li>
+  <hr>
+  <li><a href="{{ url_for('choiserune', table_name='entretien') }}">Produits d'entretien</a></li>
+  <hr>
+  <li><a href="{{ url_for('choiserune', table_name='refroidissement') }}">Liquide de refroidissement</a></li>
+  <hr>
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+
+                            
+
+  <script>
+    document.querySelectorAll('.accor').forEach(acc => {
+  acc.addEventListener('click', () => {
+    acc.classList.toggle('active');
+  });
+});
+
+  </script>
+{% endblock%}

@@ -10,9 +10,7 @@
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
-                <th>Catégorie</th>
-                <th>prix</th>
-                <th>Description</th>
+                <th>prix</th> 
                 <th style="width: 1px; height: 1px;">Photo</th>
             </tr>
         </thead>
@@ -21,9 +19,7 @@
             <tr>
                 <td>{{ produit.id }}</td>
                 <td>{{ produit.nom_produit }}</td>
-                <td>{{ produit.categorie }}</td>
                 <td>{{ produit.prix }}</td>
-                <td>{{ produit.description }}</td>
                 <td>
 
                     {% if produit.photo %}

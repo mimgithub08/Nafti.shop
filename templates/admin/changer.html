@@ -8,9 +8,9 @@
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
-                <th>Catégorie</th>
+               
                 <th>prix</th>
-                <th>Description</th>
+               
                 <th>Photo</th>
                 <th>Action</th>
             </tr>
@@ -20,9 +20,8 @@
             <tr>
                 <td>{{ produit.id }}</td>
                 <td>{{ produit.nom_produit }}</td>
-                <td>{{ produit.categorie }}</td>
                 <td>{{ produit.prix }}</td>
-                <td>{{ produit.description }}</td>
+            
                 <td>
                     {% if produit.photo %}
                         <img src="{{ url_for('static', filename=produit.photo) }}" class="product-img" alt="{{ produit.nom_produit }}" width="120px">
@@ -36,9 +35,9 @@
                         type="button"
                         data-id="{{ produit.id }}"
                         data-nom="{{ produit.nom_produit }}"
-                        data-categorie="{{ produit.categorie }}"
+                       
                         data-prix="{{ produit.prix }}"
-                        data-description="{{ produit.description }}"
+                       
                     >
                         Modifier
                     </button>
@@ -64,18 +63,18 @@
       <label>Nom du produit</label>
       <input type="text" name="nom_produit" id="inputNom" required>
       </div>
-      <div class="cate-div5">
+     <!-- <div class="cate-div5">
       <label>Catégorie</label>
       <input type="text" name="categorie" id="inputCategorie" required>
-      </div>
+      </div>-->
       <div class="cate-div4">
       <label>Prix</label>
       <input type="number" name="prix" id="inputPrix" required>
       </div>
-      <div class="cate-div3">
+      <!--  <div class="cate-div3">
       <label>Description</label>
       <textarea name="description" id="inputDescription" required></textarea>
-      </div>
+      </div>-->
       <div class="cate-div2">
         <label>Photo actuelle:</label><br>
         {% if produit.photo %}

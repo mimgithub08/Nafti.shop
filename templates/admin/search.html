@@ -31,14 +31,14 @@
 
     <button id="toggleBtn">
       <i class="fa fa-bars"></i>
-      <span class="title">gestion du produits {{title}}</span>
+      <span class="title">gestion du produits </span>
     </button>
 
 
     <div class="sidebar" id="sidebar">
       <div class="element">
         <ul>
-          <li><a href="{{ url_for('ajouter_produit') }}">Ajouter </a></li>
+          <li><a href="{{ url_for('quide') }}">Ajouter </a></li>
           <li><a href="{{ url_for('suppremer_produit') }}">Supprimer </a></li>
           <li><a href="{{ url_for('changer_details') }}">Modifier </a></li>
           <li>
@@ -46,27 +46,27 @@
     <span class="labelle">categorie<i class="fas fa-chevron-down"></i></span>
     <div class="categorie">
   <ul class="categories-list">
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='carburant') }}">Carburant</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=1) }}">Carburant</a></li>
   <hr>
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='gaz') }}">Gaz Butane</a></li>
-  <hr>
-
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='Lubrifiants') }}">Lubrifiants</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=2) }}">Gaz Butane</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='Batteries') }}">Batteries</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=3) }}">Lubrifiants</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='Détendeur') }}">Détendeur</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=4) }}">Batteries</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='Pneumatiques') }}">Pneumatiques</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=5) }}">Détendeur</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='entretien') }}">Produits d'entretien</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=6) }}">Pneumatiques</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='refroidissement') }}">Liquide de refroidissement</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=7) }}">Produits d'entretien</a></li>
+  <hr>
+
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=8) }}">Liquide de refroidissement</a></li>
   <hr>
 
   <li><a href="{{ url_for('afficher_produits', nom_categorie='all') }}">Tous les produits</a></li>
@@ -97,9 +97,7 @@
         <tr>
           <td>{{ produit.id }}</td>
           <td>{{ produit.nom_produit }}</td>
-          <td>{{ produit.categorie }}</td>
           <td>{{ produit.prix }}</td>
-          <td>{{ produit.description }}</td>
           <td>
             {% if produit.photo %}
             <img src="{{ url_for('static', filename=produit.photo) }}" width="100">

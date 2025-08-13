@@ -1,11 +1,4 @@
-{% extends "admin/search.html" %}
-{% block content %}
-    {% if message %}
-        <div class="message {% if '✅' in message %}success{% else %}error{% endif %}">
-            {{ message }}
-        </div>
-    {% endif %}
-
+{%include "admin/choiser.html"%}
 
     <div class="table-container">
         <form id="product-form" action="/admin/ajouter" method="POST" enctype="multipart/form-data">
@@ -14,9 +7,19 @@
                     <tr>
                         <th>ID Produit</th> 
                         <th>Nom du Produit</th>
-                        <th>Description</th>
+                        <th>type</th> 
+                        <th>moteurs </th>
+                        <th>avantage</th>
+                        <th>additifs</th>
+                        <th> normes</th>
+                        <th>recomendation</th>
                         <th>Prix (DA)</th>
                         <th>Photo</th>
+    
+ 
+    
+   
+   
                     </tr>
                 </thead>
                 <tbody id="product-body">
@@ -24,13 +27,24 @@
                     <tr>
                         <td><input type="number" name="id[]" placeholder="Ex: 101" required></td> 
                         <td><input type="text" name="nom_produit[]" placeholder="Ex: Super Sans Plomb" required></td>
-                        <td><input type="text" name="Description" placeholder="hi" required></td>
+                        <td><input type="text" name="type[]" placeholder="" required></td>
+                       
+                        <td> 
+                                <input type="checkbox" name="moteurs" value="diesel"> Diesel
+                                <input type="checkbox" name="moteurs" value="essence"> Essence
+                                <input type="checkbox" name="moteurs" value="hybride"> Hybride
+                        </td>
+                        <td><input type="text" name="avantage[]" placeholder="" required></td>
+                        <td><input type="text" name="additifs[]" placeholder="" required></td>
+                        <td><input type="text" name="normes[]" placeholder="" required></td>
+                        <td><input type="text" name="recommandation[]" placeholder="" required></td>
                         <td><input type="number" name="prix[]" placeholder="3000" min="0" required></td>
                         <td><input type="file" name="photo[]" accept="image/*"></td>
                     </tr>
                 </tbody>
             </table>
             <div class="button-row">
+                 <input type="hidden" name="form_type" value="1">
                 <button type="submit" class="btn-submit"> Ajouter</button>
                 <button type="button" class="btn-add" onclick="ajouterLigne()"> Ajouter une ligne</button>
             </div>
@@ -57,4 +71,3 @@
             tbody.appendChild(ligne);
         }
     </script>
-{% endblock %}
