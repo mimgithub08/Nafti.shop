@@ -29,11 +29,7 @@
                         <td><input type="text" name="nom_produit[]" placeholder="Ex: Super Sans Plomb" required></td>
                         <td><input type="text" name="type[]" placeholder="" required></td>
                        
-                        <td> 
-                                <input type="checkbox" name="moteurs" value="diesel"> Diesel
-                                <input type="checkbox" name="moteurs" value="essence"> Essence
-                                <input type="checkbox" name="moteurs" value="hybride"> Hybride
-                        </td>
+                       <td><input type="text" name="moteurs[]" placeholder="Ex: disel" required></td>
                         <td><input type="text" name="avantage[]" placeholder="" required></td>
                         <td><input type="text" name="additifs[]" placeholder="" required></td>
                         <td><input type="text" name="normes[]" placeholder="" required></td>
@@ -44,7 +40,7 @@
                 </tbody>
             </table>
             <div class="button-row">
-                 <input type="hidden" name="form_type" value="1">
+                 <input type="hidden" name="form_type" value="carburant">
                 <button type="submit" class="btn-submit"> Ajouter</button>
                 <button type="button" class="btn-add" onclick="ajouterLigne()"> Ajouter une ligne</button>
             </div>
