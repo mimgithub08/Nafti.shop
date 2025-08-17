@@ -43,7 +43,7 @@ class DetailsCarburant(db.Model):
     __tablename__ = 'carburant'
     product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='CASCADE'), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
-    moteurs = db.Column(db.String(1000), nullable=False)
+    moteurs = db.Column(db.String(1000))
     avantage = db.Column(db.String(1000), nullable=False)
     additifs = db.Column(db.String(1000), nullable=False)
     normes = db.Column(db.String(1000), nullable=False)
@@ -53,8 +53,8 @@ class DetailsGaz(db.Model):
     __tablename__ = 'gaz'
     product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
-    utiliser = db.Column(db.String(1000), nullable=False)
-    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    utilliser = db.Column(db.String(1000), nullable=False)
+    moteurs = db.Column(ARRAY(db.String))
     avantage = db.Column(db.String(1000), nullable=False)
     additifs = db.Column(db.String(1000), nullable=False)
     normes = db.Column(db.String(1000), nullable=False)
@@ -65,7 +65,7 @@ class DetailsLub(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
-    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    moteurs = db.Column(ARRAY(db.String))
     avantage = db.Column(db.String(1000), nullable=False)
     normes = db.Column(db.String(1000), nullable=False)
     recomendation = db.Column(db.String(1000), nullable=False)
@@ -75,7 +75,7 @@ class DetailsBat(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
-    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    moteurs = db.Column(ARRAY(db.String))
     avantage = db.Column(db.String(1000), nullable=False)
     normes = db.Column(db.String(1000), nullable=False)
     recomendation = db.Column(db.String(1000), nullable=False)
@@ -94,7 +94,7 @@ class DetailsEntre(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
-    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    moteurs = db.Column(ARRAY(db.String))
     avantage = db.Column(db.String(1000), nullable=False)
     composant = db.Column(db.String(1000), nullable=False)
     instruction = db.Column(db.String(1000), nullable=False)
@@ -105,7 +105,7 @@ class DetailsRefroi(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
-    moteurs = db.Column(ARRAY(db.String), nullable=False)
+    moteurs = db.Column(ARRAY(db.String))
     avantage = db.Column(db.String(1000), nullable=False)
     composant = db.Column(db.String(1000), nullable=False)
     norm = db.Column(db.String(1000), nullable=False)
@@ -164,13 +164,13 @@ def ajouter_produit():
          return redirect(url_for('login')) 
     message = ""
     if request.method == 'POST':
-        form_type = int(request.form.get("form_type"))
+        form_type = str(request.form.get("form_type"))
         try:
-            if form_type == 1:
+            if form_type == "carburant":
                 ids = request.form.getlist('id[]')
                 noms = request.form.getlist('nom_produit[]')
                 types= request.form.getlist('type[]')
-                moteurss = request.form.getlist('moteurs')
+                moteurss = request.form.getlist('moteurs[]')
                 avantages= request.form.getlist('avantage[]')
                 additifss=request.form.getlist('additifs[]')
                 normess=request.form.getlist('normes[]')
@@ -182,7 +182,7 @@ def ajouter_produit():
                     id = int(ids[i]) if ids[i].strip() else None
                     nom = noms[i]
                     type=types[i]
-                    moteurs =moteurss
+                    moteurs =moteurss[i]
                     avantage=avantages[i]
                     additifs=additifss[i]
                     normes= normess[i]
@@ -216,12 +216,378 @@ def ajouter_produit():
                         recomendation =recommandation
 
                     )
-                    
                     db.session.add(carburant_desc)
-            
+                    
 
+            elif  form_type == "gaz":
+                ids = request.form.getlist('id[]')
+                noms = request.form.getlist('nom_produit[]')
+                types= request.form.getlist('type[]')
+                utillisers= request.form.getlist('utilliser[]')
+                avantages= request.form.getlist('avantage[]')
+                additifss=request.form.getlist('additifs[]')
+                normess=request.form.getlist('normes[]')
+                recommandations = request.form.getlist('recommandation[]')
+                prixs = request.form.getlist('prix[]')
+                photos = request.files.getlist('photo[]')
+
+                for j in range(len(noms)):
+                    id = int(ids[j]) if ids[j].strip() else None
+                    nom = noms[j]
+                    type=types[j]
+                    utilliser=utillisers[j]
+                    avantage=avantages[j]
+                    additifs=additifss[j]
+                    normes= normess[j]
+                    recommandation=recommandations[j]
+                    prix = int(prixs[j]) if prixs[j] else 0
+                    photo = photos[j]
+
+                    photo_path = None
+                    if photo and photo.filename:
+                        filename = secure_filename(photo.filename)
+                        photo_path = os.path.join('uploads', filename)
+                        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    produit = Produit(
+                        id=id,
+                        nom_produit=nom,
+                        cat_num =2,
+                        prix=prix,
+                        photo=photo_path
+                    )
+                    
+                    db.session.add(produit)
+                    db.session.flush() 
+                    gaz_desc=DetailsGaz(
+                        product_id =produit.id,
+                        type =type,
+                        utilliser=utilliser,
+                        avantage =avantage, 
+                        additifs = additifs,
+                        normes = normes,
+                        recomendation =recommandation,
+                        moteurs='{"h"}'
+
+                    )
+                    
+                    db.session.add(gaz_desc)
+            elif form_type == "lubrifiant":
+                ids = request.form.getlist('id[]')
+                noms = request.form.getlist('nom_produit[]')
+                types= request.form.getlist('type[]')
+                utilisers= request.form.getlist('utilliser[]')
+                avantages= request.form.getlist('avantage[]')
+                additifss=request.form.getlist('additifs[]')
+                normess=request.form.getlist('normes[]')
+                recommandations = request.form.getlist('recommandation[]')
+                prixs = request.form.getlist('prix[]')
+                photos = request.files.getlist('photo[]')
+
+                for j in range(len(noms)):
+                    id = int(ids[j]) if ids[j].strip() else None
+                    nom = noms[j]
+                    type=types[j]
+                    utiliser=utilisers[j]
+                    avantage=avantages[j]
+                    normes= normess[j]
+                    recommandation=recommandations[j]
+                    prix = int(prixs[j]) if prixs[j] else 0
+                    photo = photos[j]
+
+                    photo_path = None
+                    if photo and photo.filename:
+                        filename = secure_filename(photo.filename)
+                        photo_path = os.path.join('uploads', filename)
+                        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    produit = Produit(
+                        id=id,
+                        nom_produit=nom,
+                        cat_num =3,
+                        prix=prix,
+                        photo=photo_path
+                    )
+                    
+                    db.session.add(produit)
+                    db.session.flush() 
+                    lub_desc=DetailsLub(
+                        product_id =produit.id,
+                        type =type,
+                        utiliser=utiliser,
+                        avantage =avantage, 
+                        normes = normes,
+                        recomendation =recommandation,
+                        moteurs='{"h"}'
+
+                    )
+                    
+                    db.session.add(lub_desc)
+            elif form_type == "batteries":
+                ids = request.form.getlist('id[]')
+                noms = request.form.getlist('nom_produit[]')
+                types= request.form.getlist('type[]')
+                utilisers= request.form.getlist('utilliser[]')
+                avantages= request.form.getlist('avantage[]')
+                additifss=request.form.getlist('additifs[]')
+                normess=request.form.getlist('normes[]')
+                recommandations = request.form.getlist('recommandation[]')
+                prixs = request.form.getlist('prix[]')
+                photos = request.files.getlist('photo[]')
+
+                for j in range(len(noms)):
+                    id = int(ids[j]) if ids[j].strip() else None
+                    nom = noms[j]
+                    type=types[j]
+                    utiliser=utilisers[j]
+                    avantage=avantages[j]
+                    normes= normess[j]
+                    recommandation=recommandations[j]
+                    prix = int(prixs[j]) if prixs[j] else 0
+                    photo = photos[j]
+
+                    photo_path = None
+                    if photo and photo.filename:
+                        filename = secure_filename(photo.filename)
+                        photo_path = os.path.join('uploads', filename)
+                        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    produit = Produit(
+                        id=id,
+                        nom_produit=nom,
+                        cat_num =8,
+                        prix=prix,
+                        photo=photo_path
+                    )
+                    
+                    db.session.add(produit)
+                    db.session.flush() 
+                    bat_desc=DetailsBat(
+                        product_id =produit.id,
+                        type =type,
+                        utiliser=utiliser,
+                        avantage =avantage, 
+                        normes = normes,
+                        recomendation =recommandation,
+                        moteurs='{"h"}'
+
+                    )
+                    
+                    db.session.add(bat_desc)
+            elif form_type == "detendeur":
+                ids = request.form.getlist('id[]')
+                noms = request.form.getlist('nom_produit[]')
+                types= request.form.getlist('type[]')
+                utilisers= request.form.getlist('utiliser[]')
+                avantages= request.form.getlist('avantage[]')
+                composants=request.form.getlist('composant[]')
+                compatibilites=request.form.getlist('compatibilite[]')
+                normess=request.form.getlist('norm[]')
+                recomendations = request.form.getlist('recomendation[]')
+                prixs = request.form.getlist('prix[]')
+                photos = request.files.getlist('photo[]')
+
+                for j in range(len(noms)):
+                    id = int(ids[j]) if ids[j].strip() else None
+                    nom = noms[j]
+                    type=types[j]
+                    utiliser=utilisers[j]
+                    avantage=avantages[j]
+                    compatibilite=compatibilites[j]
+                    composant=composants[j]
+                    norm= normess[j]
+                    recomendation=recomendations[j]
+                    prix = int(prixs[j]) if prixs[j] else 0
+                    photo = photos[j]
+
+                    photo_path = None
+                    if photo and photo.filename:
+                        filename = secure_filename(photo.filename)
+                        photo_path = os.path.join('uploads', filename)
+                        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    produit = Produit(
+                        id=id,
+                        nom_produit=nom,
+                        cat_num =7,
+                        prix=prix,
+                        photo=photo_path
+                    )
+                    
+                    db.session.add(produit)
+                    db.session.flush() 
+                    det_desc=DetailsDet(
+                        product_id =produit.id,
+                        type =type,
+                        compatibilite=compatibilite,
+                        composant=composant,
+                        utiliser=utiliser,
+                        avantage =avantage, 
+                        norm=norm,
+                        recomendation =recomendation,
+                        
+
+                    )
+                    
+                    db.session.add(det_desc)
+            elif form_type == "pneumatique":
+                ids = request.form.getlist('id[]')
+                noms = request.form.getlist('nom_produit[]')
+                types= request.form.getlist('type[]')
+                utilisers= request.form.getlist('utiliser[]')
+                avantages= request.form.getlist('avantage[]')
+                dimention=request.form.getlist('dimention[]')
+                recomendations = request.form.getlist('recomendation[]')
+                prixs = request.form.getlist('prix[]')
+                photos = request.files.getlist('photo[]')
+
+                for j in range(len(noms)):
+                    id = int(ids[j]) if ids[j].strip() else None
+                    nom = noms[j]
+                    type=types[j]
+                    utiliser=utilisers[j]
+                    avantage=avantages[j]
+                    dimention=dimention[j]
+                    recomendation=recomendations[j]
+                    prix = int(prixs[j]) if prixs[j] else 0
+                    photo = photos[j]
+
+                    photo_path = None
+                    if photo and photo.filename:
+                        filename = secure_filename(photo.filename)
+                        photo_path = os.path.join('uploads', filename)
+                        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    produit = Produit(
+                        id=id,
+                        nom_produit=nom,
+                        cat_num =4,
+                        prix=prix,
+                        photo=photo_path
+                    )
+                    
+                    db.session.add(produit)
+                    db.session.flush() 
+                    pn_desc=DetailsPneu(
+                        product_id =produit.id,
+                        type =type,
+                        utiliser=utiliser,
+                        avantage =avantage, 
+                        dimention=dimention,
+                        recomendation =recomendation,
+                        
+
+                    )
+                    
+                    db.session.add(pn_desc)
                
+            elif form_type == "refroidissement":
+                ids = request.form.getlist('id[]')
+                noms = request.form.getlist('nom_produit[]')
+                types= request.form.getlist('type[]')
+                utilisers= request.form.getlist('utiliser[]')
+                avantages= request.form.getlist('avantage[]')
+                composant=request.form.getlist('composant[]')
+                normess=request.form.getlist('normes[]')
+                recommandations = request.form.getlist('recommandation[]')
+                prixs = request.form.getlist('prix[]')
+                photos = request.files.getlist('photo[]')
 
+                for j in range(len(noms)):
+                    id = int(ids[j]) if ids[j].strip() else None
+                    nom = noms[j]
+                    type=types[j]
+                    utiliser=utilisers[j]
+                    composant=composant[j]
+                    avantage=avantages[j]
+                    normes= normess[j]
+                    recommandation=recommandations[j]
+                    prix = int(prixs[j]) if prixs[j] else 0
+                    photo = photos[j]
+
+                    photo_path = None
+                    if photo and photo.filename:
+                        filename = secure_filename(photo.filename)
+                        photo_path = os.path.join('uploads', filename)
+                        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    produit = Produit(
+                        id=id,
+                        nom_produit=nom,
+                        cat_num =5,
+                        prix=prix,
+                        photo=photo_path
+                    )
+                    
+                    db.session.add(produit)
+                    db.session.flush() 
+                    re_desc=DetailsRefroi(
+                        product_id =produit.id,
+                        type =type,
+                        utiliser=utiliser,
+                        avantage =avantage, 
+                        norm= normes,
+                        composant=composant,
+                        recomendation =recommandation,
+                        moteurs='{"h"}'
+
+                    )
+                    
+                    db.session.add(re_desc)
+
+            elif form_type == "entretien":
+                ids = request.form.getlist('id[]')
+                noms = request.form.getlist('nom_produit[]')
+                types= request.form.getlist('type[]')
+                utilisers= request.form.getlist('utiliser[]')
+                avantages= request.form.getlist('avantage[]')
+                composant=request.form.getlist('composant[]')
+                instruction=request.form.getlist('instruction[]')
+                recommandations = request.form.getlist('recommandation[]')
+                prixs = request.form.getlist('prix[]')
+                photos = request.files.getlist('photo[]')
+
+                for j in range(len(noms)):
+                    id = int(ids[j]) if ids[j].strip() else None
+                    nom = noms[j]
+                    type=types[j]
+                    utiliser=utilisers[j]
+                    composant=composant[j]
+                    avantage=avantages[j]
+                    instruction=instruction[j]
+                    recommandation=recommandations[j]
+                    prix = int(prixs[j]) if prixs[j] else 0
+                    photo = photos[j]
+
+                    photo_path = None
+                    if photo and photo.filename:
+                        filename = secure_filename(photo.filename)
+                        photo_path = os.path.join('uploads', filename)
+                        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                    produit = Produit(
+                        id=id,
+                        nom_produit=nom,
+                        cat_num =6,
+                        prix=prix,
+                        photo=photo_path
+                    )
+                    
+                    db.session.add(produit)
+                    db.session.flush() 
+                    ent_desc=DetailsEntre(
+                        product_id =produit.id,
+                        type =type,
+                        utiliser=utiliser,
+                        avantage =avantage, 
+                        instruction=instruction,
+                        composant=composant,
+                        recomendation =recommandation,
+                        moteurs='{"h"}'
+
+                    )
+                    
+                    db.session.add(ent_desc)
             db.session.commit()
             message = "✅ Tous les produits ont été ajoutés avec succès !"
             return redirect(url_for('ajouter_produit'))
