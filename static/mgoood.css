@@ -20,6 +20,7 @@ box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
 z-index: 999;
 height: 50px;
 background-color: white;
+width: 100%;
 }  
   
 .logo {
@@ -44,6 +45,7 @@ height: auto;
 .search {
 display: flex;
 justify-content: center;
+margin:0px 50px;
 
 }
 
@@ -61,7 +63,7 @@ border: none;
 padding: 10px 15px;
 font-size: 16px;
 outline: none;
-width: 450px;
+width: 400px;
 border: 2px solid #CCC !important;
 }
 
@@ -84,7 +86,7 @@ background-color: #0056b3;
 .table-container {
 min-width: 1200px;
 margin-left: 1%;
-margin-top: 15%;
+margin-top: 11%;
 min-height: 100vh;
 }
 
@@ -102,7 +104,7 @@ border: 1px solid #000;
 }
 
 th, td {
-padding: 12px;
+padding: 9px;
 text-align: center;
 }
 
@@ -228,7 +230,6 @@ color: white;
 text-decoration: none;
 display: block;
 transition: background 0.3s;
-font-family: 'Lato', sans-serif;
 font-size: 15px;
 letter-spacing: 1px;
 text-transform: uppercase;
@@ -281,7 +282,9 @@ body.sidebar-active span{
 transform: translateX(200px); 
 }
 body.sidebar-active .table-container {
-transform: translateX(100px); 
+   width: 86%;  
+   position:relative ;
+   left:200px;
 }
 nav{
 position: fixed;
@@ -396,37 +399,35 @@ margin-left: 50px;
 position: fixed;
 top: 10x;
 left: 0;
-right: 0;
+width:100%;
 display: flex;
-justify-content: space-between;
+justify-content: center ;
 align-items: center;
 padding: 10px 3%;
 z-index: 90;
 height: 40px;
-background-color: rgb(255, 255, 255);
+background-color: #fff;
 border-color: transparent; 
+
 }
   .sub_title {
-    position: fixed; 
-    top: 160px;
-    left: 500px;
     z-index: 100;
     margin-bottom: 20px;
     
   }
 
   .accor {
-    width: 200px;
+    width: 195px;
     cursor: pointer;  
     text-align: left;
     transition: max-height 0.4s ease;
     overflow: hidden;
     max-height: 40px;
     padding: 2px;
-    position: fixed;
-    top: 145px;
-    left: 800px; 
-    margin-bottom: 20px;
+    margin-top: 180px;
+    background: rgb(red, green, blue);
+    box-shadow: #000;
+  
   }
 
   .sub_title,
@@ -438,12 +439,15 @@ border-color: transparent;
   letter-spacing: 1px;
   text-transform: uppercase;
   line-height: 1;
-  display: block;
+
 
   }
 
 
   .accor .lab{
+    position:absolute;
+    top:-10px;
+    left:890px;
     background-color: #F0B618;
     padding: 15px 12px;
   
@@ -462,7 +466,7 @@ border-color: transparent;
  background-color: white;
   z-index: 10000;
   color:#003366;
-  overflow-y: auto;          /* Active le scroll vertical */
+  overflow-y: auto;          
   overflow-x: hidden;  
   max-height: 0;
 
@@ -479,8 +483,27 @@ border-color: transparent;
 
   .accor.active span .fas.fa-chevron-down {
     transform: rotate(180deg);
-    transition: transform 0.3s ease;
+   
   }
+.back-img {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.2;
+  z-index: -1; 
+}
+
+.back-img img {
+  width: 50%;
+  height: 50%;
+  object-fit: cover; 
+}
+
 @media screen and (max-width: 768px) {
   .accordion .labelle {
     font-size: 14px;

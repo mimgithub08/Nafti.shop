@@ -27,21 +27,29 @@ class Produit(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     nom_produit = db.Column(db.String(100), nullable=False)
     prix = db.Column(db.Integer, nullable=False)
-    cat_num = db.Column(db.Integer, db.ForeignKey('categorie.id', onupdate='CASCADE', ondelete='SET NULL'), nullable=True)
+    cat_num = db.Column(db.Integer, db.ForeignKey('categorie.id', onupdate='CASCADE'), nullable=True)
     photo = db.Column(db.String(200), nullable=True)
 
     #relationship (ORM)
-    carburant = db.relationship('DetailsCarburant', backref='produit')
-    gaz = db.relationship('DetailsGaz', backref='produit')
-    lub = db.relationship('DetailsLub', backref='produit')
-    batterie = db.relationship('DetailsBat', backref='produit')
-    pneu = db.relationship('DetailsPneu', backref='produit')
-    entretien = db.relationship('DetailsEntre', backref='produit')
-    refroidissement = db.relationship('DetailsRefroi', backref='produit')
-    detendeur = db.relationship('DetailsDet', backref='produit')
+    carburant = db.relationship('DetailsCarburant', backref='produit',  cascade="all, delete",
+    passive_deletes=True)
+    gaz = db.relationship('DetailsGaz', backref='produit',  cascade="all, delete",
+    passive_deletes=True)
+    lub = db.relationship('DetailsLub', backref='produit',  cascade="all, delete",
+    passive_deletes=True)
+    batterie = db.relationship('DetailsBat', backref='produit',  cascade="all, delete",
+    passive_deletes=True)
+    pneu = db.relationship('DetailsPneu', backref='produit',  cascade="all, delete",
+    passive_deletes=True)
+    entretien = db.relationship('DetailsEntre', backref='produit',  cascade="all, delete",
+    passive_deletes=True)
+    refroidissement = db.relationship('DetailsRefroi', backref='produit',  cascade="all, delete",
+    passive_deletes=True)
+    detendeur = db.relationship('DetailsDet', backref='produit',  cascade="all, delete",
+    passive_deletes=True)
 class DetailsCarburant(db.Model):
     __tablename__ = 'carburant'
-    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='CASCADE'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     moteurs = db.Column(db.String(1000))
     avantage = db.Column(db.String(1000), nullable=False)
@@ -51,7 +59,7 @@ class DetailsCarburant(db.Model):
 
 class DetailsGaz(db.Model):
     __tablename__ = 'gaz'
-    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utilliser = db.Column(db.String(1000), nullable=False)
     moteurs = db.Column(ARRAY(db.String))
@@ -62,7 +70,7 @@ class DetailsGaz(db.Model):
 
 class DetailsLub(db.Model):
     __tablename__ = 'lubrifiants'
-    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
     moteurs = db.Column(ARRAY(db.String))
@@ -72,7 +80,7 @@ class DetailsLub(db.Model):
 
 class DetailsBat(db.Model):
     __tablename__ = 'batteries'
-    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
     moteurs = db.Column(ARRAY(db.String))
@@ -82,7 +90,7 @@ class DetailsBat(db.Model):
 
 class DetailsPneu(db.Model):
     __tablename__ = 'pneu'
-    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
     avantage = db.Column(db.String(1000), nullable=False)
@@ -91,7 +99,7 @@ class DetailsPneu(db.Model):
 
 class DetailsEntre(db.Model):
     __tablename__ = 'entretien'
-    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
     moteurs = db.Column(ARRAY(db.String))
@@ -102,7 +110,7 @@ class DetailsEntre(db.Model):
 
 class DetailsRefroi(db.Model):
     __tablename__ = 'refroidissement'
-    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
     moteurs = db.Column(ARRAY(db.String))
@@ -113,7 +121,7 @@ class DetailsRefroi(db.Model):
 
 class DetailsDet(db.Model):
     __tablename__ = 'detendeur'
-    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete='SET NULL'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE'), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
     compatibilite = db.Column(db.String(1000), nullable=False)
@@ -136,9 +144,10 @@ def choiserune(table_name):
     ]
 
     if table_name in tables:
-        return render_template(f'admin/{table_name}.html')
+        return render_template(f'admin/ajt_pr_templates/{table_name}.html')
     else:
         return "Page non trouvée", 404
+        
 @app.route('/admin/voila')
 def quide():
     return render_template('admin/choiser.html')
@@ -623,18 +632,21 @@ def chercher_produits():
 @app.route('/delete/<int:id>', methods=['POST'])
 def delete_produit(id):
     if not session.get('is_admin'):
-         return redirect(url_for('login')) 
+        return redirect(url_for('login'))
+    
     produit = Produit.query.get_or_404(id)
     
+    # Delete associated photo if exists
     if produit.photo:
         try:
-            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], os.path.basename(produit.photo)))
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], produit.photo))
         except:
-            pass
+            pass 
     
     db.session.delete(produit)
     db.session.commit()
-    return redirect(url_for('suppremer_produit'))
+    
+    return redirect(url_for('suppremer_produit'))  # Redirect to products list
 
 @app.route('/modifier/<int:id>', methods=['GET', 'POST'])
 def modifier_produit(id):
@@ -672,10 +684,9 @@ def modifier_produit(id):
         except Exception as e:
             message = f"Erreur : {str(e)}"
 
-    
-    produits = Produit.query.all()
 
-    return render_template('admin/changer.html', produits=produits, produit=produit, message=message)
+
+    return render_template('admin/changer.html',  produit=produit, message=message)
 
 @app.route('/admin/changer')
 def changer_details():
