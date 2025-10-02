@@ -84,8 +84,8 @@ background-color: #0056b3;
 
 /*---------------------------------------------------------------------------------*/
 .table-container {
-min-width: 1200px;
-margin-left: 1%;
+min-width: 50vw;
+margin-left: 10px;
 margin-top: 11%;
 min-height: 100vh;
 }
@@ -282,7 +282,7 @@ body.sidebar-active span{
 transform: translateX(200px); 
 }
 body.sidebar-active .table-container {
-   width: 86%;  
+   width: 83vw;  
    position:relative ;
    left:200px;
 }

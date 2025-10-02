@@ -605,7 +605,7 @@ def ajouter_produit():
             message = f"❌ Erreur : {str(e)}"
 
     
-    return render_template('admin/ajt.html', message=message)
+    return render_template('admin/choiser.html', message=message)
 
 
 @app.route('/admin/chercher', methods=['GET', 'POST'])

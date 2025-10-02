@@ -7,7 +7,13 @@
     {% endif %}
 
     <div class="box">
-        <div class="sub_title">ajouter les produits au</div> 
+        <div class="sub_title"> {% if Dis =='ajt' %}
+          ajouter  les produits au
+          {% elsif dis == 'mod'%}
+           modifier  les produits du
+          {% endif %}
+         
+        </div> 
       <div class="accor">
     <div class="lab">categorie<i class="fas fa-chevron-down"></i></div>
     <div class="categorie">
