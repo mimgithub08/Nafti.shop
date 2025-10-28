@@ -1,0 +1,375 @@
+body {
+  margin: 0;
+  display:grid;
+  overflow-x: hidden;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: 70px 1fr 50px;
+  grid-template-areas:
+ "head head " 
+  "side bod"
+  "footer footer"
+ ;
+}
+ header {
+grid-area: head;
+display: grid;
+position: sticky;
+top: 0;
+grid-template-columns: 250px  1fr auto;
+grid-template-rows: auto;
+grid-template-areas:"logo . search" ;
+box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.171);
+padding: 10px;
+z-index: 999;
+background-color: white;
+width: 99%;
+}  
+.logo {
+grid-area:logo;
+display: flex;
+align-items: center;
+font-size: 400;
+}
+.logo a{
+  color:#003366;
+  text-decoration: none;
+  font-weight: bolder;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: "Roboto", sans-serif;
+}
+.logo-img {
+width: 40px;
+height: auto;
+
+}
+
+.search {
+grid-area: search;
+display: flex;
+justify-content: center;
+margin:8px 70px;
+
+}
+
+.search form {
+display: flex;
+background-color: #F0B618;
+border: 2px solid #003366 !important;
+overflow: hidden;
+
+}
+
+
+.search input[type="text"] { 
+border: none; 
+padding: 10px 15px; 
+font-size: 16px;
+outline: none;
+width: 350px;
+border: 2px solid #CCC !important;  
+}
+
+.search button {
+border:none;
+background-color: #003366;
+font-size: 18px;
+padding: 0 18px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+border-radius: 0%;
+}
+
+.search button:hover {
+background-color: #0056b3;
+}
+
+aside{
+  grid-area:side;
+
+}
+.sidebar {
+  min-height: 100vh; 
+  background-color:#003366; 
+  transition: left 0.3s ease; 
+  -webkit-transition: left 0.3s ease; 
+  -moz-transition: left 0.3s ease;
+  -ms-transition: left 0.3s ease; 
+  -o-transition: left 0.3s ease;
+  position: fixed;      
+  top: 70px;             
+  left: -220px;          
+  width: 200px;         
+  z-index: 1000;        
+}
+
+.element{
+margin-top: 90px;
+}
+.sidebar.show {
+left: 0; 
+}
+
+.sidebar ul {
+list-style-type: none;
+padding: 0;
+}
+
+.sidebar ul li {
+padding: 12px 20px;
+}
+
+.sidebar ul li a {
+color: white;
+text-decoration: none;
+display: block;
+transition: background 0.3s;
+font-size: 15px;
+letter-spacing: 1px;
+text-transform: uppercase;
+line-height: 1;
+font-weight: bolder;
+
+}
+ 
+.sidebar ul li a:hover {
+background-color: #003366;
+border-radius: 5px;
+font-weight: bold;
+
+}
+#toggleBtn {
+display: flex;
+align-items: center;
+gap: 10px;
+top: 90px;
+left: 0px;
+position: absolute;
+position: fixed;
+z-index: 999;
+color: #003366;
+background-color: transparent;
+cursor: pointer;
+font-size: 20px;
+border-radius: 0px;
+border: none;
+background: white;
+width: 100%_;
+}
+
+#toggleBtn.clicked i{
+background-color: transparent;
+color: white;
+
+}
+
+span {
+color: #003366; 
+font-size: 25px;
+font-weight: bold;
+letter-spacing: 1px;
+text-transform: uppercase;
+line-height: 1;
+
+}
+span, .table-container {
+transition: transform 0.3s ease;
+}
+
+body.sidebar-active span{ transform: translateX(170px); -webkit-transform: translateX(170px); -moz-transform: translateX(170px); -ms-transform: translateX(170px); -o-transform: translateX(170px);
+}
+body.sidebar-active .table-container {
+   width: 80vw;  
+   position:relative ;
+   left: 200px;
+}
+.accordion {
+cursor: pointer;
+text-align: left;
+transition: max-height 0.4s ease;
+overflow: hidden;
+max-height: 30px;
+padding: 2px;
+}
+.accordion .labelle{
+color:white;
+font-family: 'Lato', sans-serif;
+font-size: 15px;
+font-weight: bold;
+letter-spacing: 1px;
+text-transform: uppercase;
+line-height: 1;
+
+}
+.accordion .categorie ul a{
+  font-size: small;
+  font-weight: 700;
+  opacity: 1;
+  opacity: 0.7;
+}
+.accordion .categorie ul a:hover{
+  color:#F0B618;
+}
+.accordion .categorie{
+color:white;
+overflow-y: auto;          /* Active le scroll vertical */
+overflow-x: hidden;  
+max-height: 0;
+}
+
+.accordion.active {
+max-height: 900px;
+}
+.accordion.active .categorie{
+max-height: 300px;
+opacity: 1;
+}
+.accordion .categorie::-webkit-scrollbar {
+height: 15px;
+width: 8px;
+margin-left: 3px;
+}
+
+.accordion .categorie::-webkit-scrollbar-thumb {
+background-color: #CCC;
+border-radius: 1px;
+}
+
+.accordion .categorie::-webkit-scrollbar-track {
+background-color:#888;
+}
+.accordion.active  span .fas.fa-chevron-down {
+transform: rotate(180deg);
+}
+.section{
+ grid-area:bod;
+}
+.back-img{
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.2;
+  z-index: -1; 
+}
+
+.back-img img {
+  width: 50%;
+  height: 50%;
+  object-fit: cover; 
+}
+
+.table-container {
+  grid-column: 1 / 3; 
+  grid-row: 2; 
+  margin-top: 80px;
+  margin-left:20px;
+  padding: 20px;
+}
+
+
+table {
+width: 100%;
+margin-top:10px;
+border-collapse: collapse;
+background-color:#ccc;
+box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+}
+
+table, th, td {
+border: 1px solid #000;
+}
+
+th, td {
+padding: 9px;
+text-align: center;
+}
+
+thead th {
+position: sticky;
+top: 0;
+background-color: #003366; 
+color: white;
+z-index: 2; 
+}
+
+td {
+  max-width: 200px;     
+  word-wrap: break-word; 
+  white-space: normal;  
+}
+tbody tr:nth-child(even) {
+background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+background-color: #777;
+}
+
+input, select, textarea {
+width: 100%;
+padding: 8px;
+box-sizing: border-box;
+}
+
+textarea {
+resize: vertical;
+min-height: 60px;
+}
+
+button {
+padding: 8px 12px;
+cursor: pointer;
+border: none;
+border-radius: 4px;
+font-weight: bold;
+}
+.button-row {
+display: flex;
+justify-content: center;  
+gap: 15px;                
+margin-top: 20px;
+}
+.btn-add {
+border-radius: 5px;
+font-size: 17px;
+background-color: #F0B618;
+color: white;
+padding: 12px;
+cursor:pointer;
+
+}
+
+.btn-submit {
+border-radius: 5px;  
+cursor:pointer;
+font-size: 17px;
+background-color: #003366;
+color: white;
+padding: 12px;
+}
+.btn-add:hover{
+background-color: #003366;
+
+}
+.btn-submit:hover{
+background-color: #F0B618;
+}
+.btn-del,
+.btn-mod{
+background-color: #F0B618;
+color: white;
+cursor:pointer;
+}
+.product-image {
+  max-width: 5px!important;
+  max-height: 2px!important;
+  display: block;
+  object-fit: cover;
+} 
+

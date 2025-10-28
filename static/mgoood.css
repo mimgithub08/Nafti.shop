@@ -1,7 +1,7 @@
 body {
 font-family: Arial, sans-serif;
 background-color:white;
-margin: 0;
+margin: 0px;
 padding: 20px;
 padding-top: 70px;
 
@@ -192,14 +192,7 @@ cursor:pointer;
 }
 
 /*--------------drop down list---------------------------------------------------------------------*/
-.sidebar {
-position: fixed;
-top: 70px;
-left: -220px; 
-width: 220px;
-min-height: 100vh;
-background-color: #003366;
-transition: left 0.3s ease;
+.sidebar { position: fixed; top: 70px; left: -220px; width: 220px; min-height: 100vh; background-color: #003366; transition: left 0.3s ease; -webkit-transition: left 0.3s ease; -moz-transition: left 0.3s ease; -ms-transition: left 0.3s ease; -o-transition: left 0.3s ease;
 }
 .element{
 margin-top: 90px;
@@ -210,7 +203,7 @@ left: 0;
 
 
 .sidebar h2 {
-color: white;
+color: rgb(139, 11, 11);
 text-align: center;
 margin-bottom: 20px;
 font-size: 18px;
@@ -396,35 +389,28 @@ margin-left: 50px;
   transform: translateY(2px); 
 }
 .box{
-position: fixed;
-top: 10x;
-left: 0;
-width:100%;
+width:96vw;
 display: flex;
 justify-content: center ;
-align-items: center;
-padding: 10px 3%;
+align-items:baseline;
+padding: 10px;
 z-index: 90;
 height: 40px;
-background-color: #fff;
+background-color: ed;
 border-color: transparent; 
 
 }
   .sub_title {
-    z-index: 100;
-    margin-bottom: 20px;
-    
+    z-index: 100;    
   }
-
   .accor {
-    width: 195px;
+    width: 200px;
     cursor: pointer;  
     text-align: left;
     transition: max-height 0.4s ease;
     overflow: hidden;
     max-height: 40px;
     padding: 2px;
-    margin-top: 180px;
     background: rgb(red, green, blue);
     box-shadow: #000;
   
@@ -436,21 +422,18 @@ border-color: transparent;
   font-family: 'Lato', sans-serif;
   font-size:x-large;
   font-weight: bold;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   line-height: 1;
 
 
   }
-
-
   .accor .lab{
-    position:absolute;
-    top:-10px;
-    left:890px;
+ 
     background-color: #F0B618;
-    padding: 15px 12px;
-  
+    padding:  12px  0px;
+
+
   }
   .accor .categorie ul a{
     font-size:medium;
@@ -469,8 +452,7 @@ border-color: transparent;
   overflow-y: auto;          
   overflow-x: hidden;  
   max-height: 0;
-
-  }
+}
 
   .accor.active {
   max-height: 300px;
@@ -499,17 +481,8 @@ border-color: transparent;
 }
 
 .back-img img {
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: 40%;
   object-fit: cover; 
 }
 
-@media screen and (max-width: 768px) {
-  .accordion .labelle {
-    font-size: 14px;
-  }
-
-  .accordion .categorie {
-    max-height: 150px;
-  }
-}

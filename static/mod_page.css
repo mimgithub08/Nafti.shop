@@ -115,35 +115,3 @@
 .btn-mise button:hover {
   background-color: #e0a800;
 }
-@media (max-width: 600px) {
-  .cate-div1,
-  .cate-div2,
-  .cate-div3,
-  .cate-div4,
-  .cate-div5,
-  .cate-div6 {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 0;
-  }
-
-  .cate-div1 label,
-  .cate-div2 label,
-  .cate-div3 label,
-  .cate-div4 label,
-  .cate-div5 label,
-  .cate-div6 label {
-    width: 100%;
-    margin-bottom: 5px;
-  }
-
-  .cate-div1 input,
-  .cate-div2 input,
-  .cate-div4 input,
-  .cate-div5 input,
-  .cate-div6 input,
-  .cate-div3 textarea {
-    width: 100%;
-    margin-left: 0;
-  }
-}

@@ -40,7 +40,7 @@
         <ul>
           <li><a href="{{ url_for('quide') }}">Ajouter </a></li>
           <li><a href="{{ url_for('suppremer_produit') }}">Supprimer </a></li>
-          <li><a href="{{ url_for('Z') }}">Modifier </a></li>
+          <li><a href="{{ url_for('changer_details') }}">Modifier </a></li>
           <li>
        <div class="accordion">
     <span class="labelle">categorie<i class="fas fa-chevron-down"></i></span>
@@ -57,16 +57,16 @@
   <li><a href="{{ url_for('afficher_produits', nom_categorie=4) }}">Batteries</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=8) }}">Détendeur</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=5) }}">Détendeur</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=5) }}">Pneumatiques</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=6) }}">Pneumatiques</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=6) }}">Produits d'entretien</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=7) }}">Produits d'entretien</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=7) }}">Liquide de refroidissement</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie=8) }}">Liquide de refroidissement</a></li>
   <hr>
 
   <li><a href="{{ url_for('afficher_produits', nom_categorie='all') }}">Tous les produits</a></li>
@@ -79,10 +79,6 @@
       </div>
     </div>
   </nav>
-
-  <div class="back-img">
-  <img src="{{ url_for('static', filename='uploads/logo_preview.png') }}">
-  </div>
   <!--search-->
   <div class="result">
     {% if produit %}
