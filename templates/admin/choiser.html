@@ -21,25 +21,44 @@
     
     
     {# Menu accordéon des catégories #}
+      {% if Dis == 'ajt' %}
     <div class="accor">
         <div class="lab">
             Catégorie
             <i class="fas fa-chevron-down"></i>
         </div>
-        
         <div class="categorie">
 <ul class="categories-list">
-  {% for table in tables %}
-    <li>
-      <a href="{{ url_for('final_step', Dis=Dis , table=table) }}">
-        <p>u</p>
-       <p>{{ tables }}</p>
-      </a>
-      <hr>
-      <hr>
-    </li>
-  {% endfor %}
+  <li><a href="{{ url_for('quide', cate='carburant') }}">Carburant</a></li><hr>
+    <li><a href="{{ url_for('quide', cate='gaz') }}">Gaz</a></li><hr>
+    <li><a href="{{ url_for('quide', cate='detendeur') }}">Détendeur</a></li><hr>
+    <li><a href="{{ url_for('quide', cate='lubrifiant') }}">Lubrifiants</a></li><hr>
+    <li><a href="{{ url_for('quide', cate='pneumatique') }}">Pneumatiques</a></li><hr>
+    <li><a href="{{ url_for('quide', cate='entretien') }}">Entretien</a></li><hr>
+    <li><a href="{{ url_for('quide', cate='refroidissement') }}">Refroidissement</a></li><hr>
+    <li><a href="{{ url_for('quide', cate='batteries') }}">Batteries</a></li><hr>
 </ul>
+   </div>
+    </div>
+   </div>
+   
+            {% elif Dis == 'mod' %}
+             <div class="accor">
+        <div class="lab">
+            Catégorie
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="categorie">
+  <li>Carburants</li><hr>
+  <li>Gaz Butane</li><hr>
+  <li>Lubrifiants</li><hr>
+  <li>Batteries</li><hr>
+  <li>Pneus</li><hr>
+  <li>Entretien Véhicule</li><hr>
+  <li>Detendeur</li><hr>
+   <li>Refroidisment</li><hr>
+  
+            {% endif %}
 
         </div>
     </div>

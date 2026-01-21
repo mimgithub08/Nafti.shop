@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/amazon/Desktop/nafti vetrine/venv/bin/python3" "$0" "$@"
-' '''
+#!/home/amazon/Desktop/pdix/naft_projet/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

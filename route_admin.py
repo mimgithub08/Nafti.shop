@@ -130,46 +130,16 @@ class DetailsDet(db.Model):
     norm = db.Column(db.String(1000), nullable=False)
     recomendation = db.Column(db.String(1000), nullable=False)
 
-@app.route('/admin/choiser/<Dis>')
-def choiser_table(Dis):
-    tables= [
-        "carburant",
-        "pneumatique",
-        "refroidissement",
-        "entretien",
-        "gaz",
-        "batteries",
-        "lubrifiant",
-        "detendeur"
-    ]
- 
-    return render_template('admin/choiser.html', Dis=Dis , tables=tables)
-    
-@app.route('/admin/final/<Dis>/<table_name>')
-def final_step(Dis, table_name):
-    tables = [
-        "carburant",
-        "pneumatique",
-        "refroidissement",
-        "entretien",
-        "gaz",
-        "batteries",
-        "lubrifiant",
-        "detendeur"
-    ]
-    if table_name not in tables:
-        return "Table non trouvée", 404
-    if Dis == 'ajt':
-        return render_template(f'admin/ajt_pr_templates/{table_name}.html')
-    elif Dis == 'mod':
-        return render_template(f'admin/mod_pr_templates/{table_name}.html')
-    else:
-        return "Action non valide", 400
+
+@app.route('/admin/opperation/<Dis>')
+def choiser(Dis):
+     return render_template(f'admin/choiser.html', Dis=Dis)
 
         
-@app.route('/admin/voila/<Dis>')
-def quide(Dis):
-    tables = [
+@app.route('/admin/opperation/<cate>')
+def quide(cate):
+
+    Categorie = [
         "carburant",
         "pneumatique",
         "refroidissement",
@@ -179,8 +149,15 @@ def quide(Dis):
         "lubrifiant",
         "detendeur"
     ]
-    return render_template('admin/choiser.html',Dis=Dis)
 
+    if cate in Categorie:
+        return render_template(f'admin/ajt_pr_templates/{cate}.html', cate=cate)
+    else:
+        return "Page non trouvée", 404
+
+
+
+  
 @app.route('/admin', methods=['GET', 'POST'])
 def login():
     error = ""
