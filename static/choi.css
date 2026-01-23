@@ -57,8 +57,8 @@ margin:40px;
     color:#F0B618;
   }
   .accor .categorie{
- background-color: white;
-  z-index: 10000;
+ background-color: rgba(255, 255, 255, 0.774);
+  z-index: 1000;
   color:#003366;
   overflow-y: auto;          
   overflow-x: hidden;  
