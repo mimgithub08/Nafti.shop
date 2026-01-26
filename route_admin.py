@@ -215,7 +215,8 @@ def init_routes(app):
                     ids = request.form.getlist('id[]')
                     noms = request.form.getlist('nom_produit[]')
                     types= request.form.getlist('type[]')
-                    utilisers= request.form.getlist('utilliser[]')
+                    utilisers= request.form.getlist('utiliser[]')
+                    moteurs= request.form.getlist('moteurs[]')
                     avantages= request.form.getlist('avantage[]')
                     additifss=request.form.getlist('additifs[]')
                     normess=request.form.getlist('normes[]')
@@ -228,6 +229,7 @@ def init_routes(app):
                         nom = noms[j]
                         type=types[j]
                         utiliser=utilisers[j]
+                        moteur=moteurs[j]
                         avantage=avantages[j]
                         normes= normess[j]
                         recommandation=recommandations[j]
@@ -256,7 +258,7 @@ def init_routes(app):
                             avantage =avantage, 
                             normes = normes,
                             recomendation =recommandation,
-                            moteurs='{"h"}'
+                            moteurs=moteur
 
                         )
                         
@@ -505,7 +507,7 @@ def init_routes(app):
                     message = f"Aucun produit trouvé pour « {query} »."
         
         
-        return render_template('admin/home.html', produit=produit, message=message)
+        return render_template('admin/choiser.html', produit=produit, message=message)
 
     @app.route('/delete/<int:id>', methods=['POST'])
     def delete_produit(id):
@@ -526,6 +528,7 @@ def init_routes(app):
         
         return redirect(url_for('suppremer_produit'))  # Redirect to products list
     @app.route('/modifier/<int:id>', methods=['GET', 'POST'])
+
     def modifier_produit(id):
         if not session.get('is_admin'):
             return redirect(url_for('login')) 

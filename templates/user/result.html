@@ -11,15 +11,13 @@
         <hr>
         <ul class="produit">
             <li><a href="{{ url_for('homepage') }}">Accueil</a></li>
-            <li><a href="{{ url_for('produit_cat', nom_categorie='carburant') }}">Carburant</a></li>
-            <li><a href="{{ url_for('produit_cat', nom_categorie='gaz') }}">Gaz</a></li>
-            <li><a href="{{ url_for('produit_cat', nom_categorie='detendeur') }}">Détendeur</a></li>
-            <li><a href="{{ url_for('produit_cat', nom_categorie='lubrifiants') }}">Lubrifiants</a></li>
-            <li><a href="{{ url_for('produit_cat', nom_categorie='pneumatiques') }}">Pneumatiques</a></li>
-            <li><a href="{{ url_for('produit_cat', nom_categorie='entretien') }}">Entretien</a></li>
-            <li><a href="{{ url_for('produit_cat', nom_categorie='refroidissement') }}">Refroidissement</a></li>
-            <li><a href="{{ url_for('produit_cat', nom_categorie='batterie') }}">Batteries</a></li>
-            <li><a href="#">Autres Produits</a></li>
+         <li><a href="{{ url_for('produit_cat', cat_id=1) }}">Carburant</a></li>
+<li><a href="{{ url_for('produit_cat', cat_id=2) }}">Gaz</a></li>
+<li><a href="{{ url_for('produit_cat', cat_id=3) }}">Détendeur</a></li>
+<li><a href="{{ url_for('produit_cat', cat_id=4) }}">Lubrifiants</a></li>
+<li><a href="{{ url_for('produit_cat', cat_id=5) }}">Pneumatiques</a></li>
+<li><a href="{{ url_for('produit_cat', cat_id=6) }}">Entretien</a></li>
+<li><a href="{{ url_for('produit_cat', cat_id=7) }}">Batteries</a></li>
         </ul>
 
         <hr>    

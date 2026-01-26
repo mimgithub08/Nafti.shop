@@ -2,8 +2,10 @@ from flask import Flask
 import os
 
 from model import db
-from route_admin import init_routes
-from route_user import init_routes
+from route_user import init_routes as init_user_routes
+from route_admin import init_routes as init_admin_routes
+
+
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
@@ -14,10 +16,13 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 db.init_app(app)
-init_routes(app)
+
+init_user_routes(app)
+init_admin_routes(app)
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True,port=7000)
+    app.run(debug=True,port=5500)
 
 

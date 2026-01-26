@@ -1,4 +1,5 @@
 .card-form-overlay {
+ 
   display: none;
   position: fixed;
   top: 0; left: 0;
@@ -7,7 +8,8 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
-  padding: 20px;
+  padding: 100px;
+  overflow: scroll;
 }
 
 .card-form-overlay.active {
@@ -16,13 +18,20 @@
 
 .card-form {
   background: #fff;
-  padding: 30px 40px;
+  padding: 60px 40px;
   border-radius: 15px;
   width: 100%;
+   height: auto;
+  max-height: 75vh;
   max-width: 800px;
-  position: relative;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.3s ease;
+  color:#003366;
+  overflow-y: scroll;          
+  overflow-x: hidden;  
+ top: 25px; left: 10px;
+  position: absolute;
+  z-index: 9999;
 }
 
 @keyframes fadeIn {

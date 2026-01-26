@@ -1,5 +1,4 @@
-
-
+{% if Dis == 'ajt' %}
     <div class="table-container">
         <form id="product-form" action="/admin/ajouter" method="POST" enctype="multipart/form-data">
             <table>
@@ -63,4 +62,113 @@
             tbody.appendChild(ligne);
         }
     </script>
+
+{% elif Dis == 'mod' and produits %}
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prix (DA)</th>
+                <th>Photo</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.nom_produit }}</td>
+                <td>{{ produit.prix }}</td>
+                <td>
+                    {% if produit.photo %}
+                        <img src="{{ url_for('static', filename=produit.photo) }}" class="product-img" alt="{{ produit.nom_produit }}" width="120">
+                    {% else %}
+                        Pas d'image
+                    {% endif %}
+                </td>
+                <td>
+                    <button 
+                        class="btn-mod" 
+                        type="button"
+                        data-id="{{ produit.id }}"
+                        data-nom="{{ produit.nom_produit }}"
+                        data-prix="{{ produit.prix }}"
+                        {% if produit.photo %}data-photo="{{ produit.photo }}"{% endif %}
+                    >
+                        Modifier
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modifier Form Overlay -->
+<div class="card-form-overlay" id="cardFormOverlay">
+  <div class="card-form">
+    <span class="close-card" id="closeCard">&times;</span>
+    <h2 class="mod-title">Modifier le produit</h2>
+    <form id="modifierForm" method="POST" enctype="multipart/form-data">
+      <div class="cate-div6">
+        <label>ID</label>
+        <input name="id" id="inputId" readonly>
+      </div>  
+      <div class="cate-div6">
+        <label>Nom du produit</label>
+        <input type="text" name="nom_produit" id="inputNom" required>
+      </div>
+      <div class="cate-div4">
+        <label>Prix</label>
+        <input type="number" name="prix" id="inputPrix" required>
+      </div>
+      <div class="cate-div2">
+        <label>Photo actuelle:</label><br>
+        <img id="currentPhoto" src="" width="120"><br>
+      </div>
+      <div class="cate-div1">
+        <label>Nouvelle photo (facultative):</label><br>
+        <input type="file" name="photo">
+      </div>
+      <div class="btn-mise" style="margin-top:10px;">
+        <button type="submit">Mettre à jour</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const modifierButtons = document.querySelectorAll('.btn-mod');
+const overlay = document.getElementById('cardFormOverlay');
+const form = document.getElementById('modifierForm');
+const closeBtn = document.getElementById('closeCard');
+const currentPhoto = document.getElementById('currentPhoto');
+
+modifierButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const nom = btn.dataset.nom;
+        const prix = btn.dataset.prix;
+        const photo = btn.dataset.photo || '';
+
+        form.setAttribute('action', `/modifier/${id}`);
+        document.getElementById('inputId').value = id;
+        document.getElementById('inputNom').value = nom;
+        document.getElementById('inputPrix').value = prix;
+
+        if(photo) {
+            currentPhoto.src = `/static/${photo}`;
+        } else {
+            currentPhoto.src = '';
+        }
+
+        overlay.classList.add('active');
+    });
+});
+
+closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
+overlay.addEventListener('click', (e) => { if(e.target === overlay) overlay.classList.remove('active'); });
+</script>
 

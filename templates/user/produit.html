@@ -41,7 +41,7 @@
           rendement énergétique, propreté de combustion et compatibilité avec les moteurs modernes.
         </p>
         <p class="examples"><strong>Exemples :</strong> Super Sans Plomb (RON 95), Gasoil 10 ppm, GPL carburant.
-          <br><strong>Pour découvrir nos produits, <a href="{{ url_for('produit_cat', nom_categorie='carburant') }}">cliquez ici</a></strong>
+          <br><strong>Pour découvrir nos produits, <a href="{{ url_for('produit_cat', cate_id=1) }}">cliquez ici</a></strong>
       </div>
       <div class="product-image">
         <img src="{{url_for('static',filename='uploads/carburant.webp')}}" alt="Photo Carburants NAFTAL">
@@ -59,7 +59,7 @@
           pour garantir sécurité, pureté et performance calorifique.
         </p>
         <p class="examples"><strong>Exemples :</strong> Bouteille de butane 13 kg, mini-bouteille 6 kg, solutions GPL.
-          <br><strong>Pour découvrir nos produits,<a href="{{ url_for('produit_cat', nom_categorie='gaz') }}">cliquez ici</a></strong>
+          <br><strong>Pour découvrir nos produits,<a href="{{ url_for('produit_cat', cate_id=2) }}">cliquez ici</a></strong>
         </p>
       </div>
       <div class="product-image">
@@ -83,7 +83,7 @@
         <p class="examples"><strong>Exemples :</strong> Huile moteur NAFTAL SAE 15W-40, huile hydraulique HLP 46,
           graisse Lithium EP2 multi-usage.
           <br><strong>Pour découvrir nos produits,<a href="{{ url_for('produit_cat',
-             nom_categorie='lubrifiants') }}">cliquez ici</a></strong>
+             cate_id=5) }}">cliquez ici</a></strong>
         </p>
       </div>
 
@@ -106,7 +106,7 @@
         </p>
         <p class="examples"><strong>Exemples :</strong> Batterie plomb-acide 12V – 60Ah pour voiture, batterie Heavy
           Duty 12V – 120Ah pour camions. <br><strong>Pour découvrir nos produits, <a href="{{ url_for('produit_cat',
-             nom_categorie='batterie') }}">cliquez
+             cate_id=3) }}">cliquez
               ici</a></strong></p>
       </div>
 
@@ -129,7 +129,7 @@
         </p>
         <p class="examples"><strong>Exemples :</strong> Pneus tourisme 195/65 R15, utilitaires 225/70 R16C, poids lourd
           295/80 R22.5. <br><strong>Pour découvrir nos produits,  <a href="{{ url_for('produit_cat',
-             nom_categorie='pneumatiques') }}">cliquez ici</a></strong>
+             cate_id=2) }}">cliquez ici</a></strong>
         </p>
       </div>
       <div class="product-image">
@@ -151,7 +151,7 @@
         </p>
         <p class="examples"><strong>Exemples :</strong> Nettoyant injecteurs haute performance, liquide lave-glace
           antigel -20°C, polish céramique protecteur, spray anti-grincement. <br><strong>Pour découvrir nos produits,
-             <a href="{{ url_for('produit_cat', nom_categorie='entretien') }}">cliquez ici</a></strong></p>
+             <a href="{{ url_for('produit_cat', cate_id=4) }}">cliquez ici</a></strong></p>
       </div>
       <div class="product-image">
         <img src="{{url_for('static',filename='user/images.jpeg')}}" alt="Photo Produits d’Entretien NAFTAL">
@@ -172,7 +172,7 @@
         </p>
         <p class="examples"><strong>Exemples :</strong> Liquide de refroidissement G12+, antigel -35°C concentré,
           liquide universel longue durée (LLC). <br><strong>Pour découvrir nos produits, 
-             <a href="{{ url_for('produit_cat', nom_categorie='refroidissement') }}">cliquez
+             <a href="{{ url_for('produit_cat', cate_id=3) }}">cliquez
               ici</a></strong></p>
       </div>
 
@@ -193,7 +193,7 @@
           différents débits et pressions d’entrée/sortie, pour usage domestique ou professionnel.
         </p>
         <p class="examples"><strong>Exemples :</strong> Détendeur butane basse pression 28 mbar, détendeur propane 37
-          mbar avec sécurité automatique. <br><strong>Pour découvrir nos produits, <a href="{{ url_for('produit_cat', nom_categorie='detendeur') }}">cliquez
+          mbar avec sécurité automatique. <br><strong>Pour découvrir nos produits, <a href="{{ url_for('produit_cat', cate_id=1) }}">cliquez
               ici</a></strong></p>
       </div>
       <div class="product-image">

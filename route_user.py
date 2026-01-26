@@ -63,7 +63,7 @@ def init_routes(app):
 
     @app.route('/filtrer_ajax')
     def filtrer_ajax():
-        categorie = request.args.get('categorie')
+        categorie = request.args.get('cate_id')
         prix_min = request.args.get('prix_min', type=int)
         prix_max = request.args.get('prix_max', type=int)
         order = request.args.get('order')  
@@ -86,20 +86,31 @@ def init_routes(app):
         return render_template('user/card.html', produits=produits)
 
 
-    @app.route('/categorie/<nom_categorie>')
-    def produit_cat(nom_categorie):
-        produits = Produit.query.filter_by(categorie=nom_categorie).all()
+    @app.route('/categorie/<int:cate_id>')
+    def produit_cat(cate_id):
+
+        cat = Categorie.query.get(cate_id)
+        if not cat:
+            return "Catégorie non trouvée", 404
+
+        produits = Produit.query.filter_by(cat_num=cat.id).all()
         nombre_produits = len(produits)
 
         if nombre_produits > 0:
-            prix_min = db.session.query(func.min(Produit.prix)).filter_by(categorie=nom_categorie).scalar()
-            prix_max = db.session.query(func.max(Produit.prix)).filter_by(categorie=nom_categorie).scalar()
+            prix_min = db.session.query(func.min(Produit.prix)).filter_by(cat_num=cat.id).scalar()
+            prix_max = db.session.query(func.max(Produit.prix)).filter_by(cat_num=cat.id).scalar()
             prix_max_display = prix_max + 1
             step = 1
         else:
             prix_min = prix_max = prix_max_display = 0
             step = 1
 
-
-        return render_template('user/pro_page.html',produits=produits,step=step,
-    prix_min=prix_min,prix_max=prix_max,prix_max_display=prix_max_display,categorie=nom_categorie)
+        return render_template(
+            'user/pro_page.html',
+            produits=produits,
+            step=step,
+            prix_min=prix_min,
+            prix_max=prix_max,
+            prix_max_display=prix_max_display,
+            categorie=cat.name
+        )
