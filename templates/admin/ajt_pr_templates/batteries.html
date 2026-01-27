@@ -41,26 +41,25 @@
 </div>
 
 <script>
-function ajouterLigne() {
-    const tbody = document.getElementById('product-body');
+        function ajouterLigne() {
+            const tbody = document.getElementById('product-body');
+            const ligne = tbody.rows[0].cloneNode(true);
 
-    // Créer une nouvelle ligne vide
-    const ligne = document.createElement('tr');
-    ligne.innerHTML = `
-        <td><input type="number" name="id[]" placeholder="Ex: 101" required></td>
-        <td><input type="text" name="nom_produit[]" placeholder="Ex: Super Sans Plomb" required></td>
-        <td><input type="text" name="type[]" placeholder="" required></td>
-        <td><input type="text" name="utiliser[]" placeholder="" required></td>
-        <td><input type="text" name="moteurs[]" placeholder="" required></td>
-        <td><input type="text" name="avantage[]" placeholder="" required></td>
-        <td><input type="text" name="normes[]" placeholder="" required></td>
-        <td><input type="text" name="recommandation[]" placeholder="" required></td>
-        <td><input type="number" name="prix[]" placeholder="3000" min="0" required></td>
-        <td><input type="file" name="photo[]" accept="image/*"></td>
-    `;
-    tbody.appendChild(ligne);
-}
-</script>
+            // Réinitialise les champs
+            const inputs = ligne.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (input.type === 'file') {
+                    input.value = '';
+                } else if (input.tagName.toLowerCase() === 'select') {
+                    input.selectedIndex = 0;
+                } else {
+                    input.value = '';
+                }
+            });
+
+            tbody.appendChild(ligne);
+        }
+    </script>
 
 {% elif Dis == 'mod' and produits %}
 <div class="table-container">
@@ -130,29 +129,65 @@ function ajouterLigne() {
     <span class="close-card" id="closeCard">&times;</span>
     <h2 class="mod-title">Modifier le produit</h2>
     <form id="modifierForm" method="POST" enctype="multipart/form-data">
-      <div class="cate-div6">
+        <div class="cate">
+      <div class="cate-div0">
         <label>ID</label>
-        <input name="id" id="inputId" readonly>
-      </div>  
-      <div class="cate-div6">
-        <label>Nom du produit</label>
-        <input type="text" name="nom_produit" id="inputNom" required>
-      </div>
-      <div class="cate-div4">
-        <label>Prix</label>
-        <input type="number" name="prix" id="inputPrix" required>
-      </div>
-      <div class="cate-div2">
-        <label>Photo actuelle:</label><br>
-        <img id="currentPhoto" src="" width="120"><br>
-      </div>
-      <div class="cate-div1">
-        <label>Nouvelle photo (facultative):</label><br>
-        <input type="file" name="photo">
-      </div>
+            <input name="id" id="inputId" readonly>
+            </div>  
+            <div class="cate-div1">
+            <label>Nom du produit</label>
+            <input type="text" name="nom_produit" id="inputNom" required>
+            </div>
+
+            <div class="cate-div2">
+            <label>Type</label>
+            <input type="text" name="type" id="inputType">
+            </div>
+
+            <div class="cate-div3">
+            <label>Utiliser</label>
+            <input type="text" name="utiliser" id="inputUtiliser">
+            </div>
+
+            <div class="cate-div4">
+            <label>Moteurs</label>
+            <input type="text" name="moteurs" id="inputMoteurs">
+            </div>
+
+            <div class="cate-div5">
+            <label>Avantage</label>
+            <textarea name="avantage" id="inputAvantage"></textarea>
+            </div>
+
+            <div class="cate-div6">
+            <label>Normes</label>
+            <input type="text" name="normes" id="inputNormes">
+            </div>
+
+            <div class="cate-div7">
+            <label>Recommandation</label>
+            <textarea name="recomendation" id="inputReco"></textarea>
+            </div>
+
+            <div class="cate-div8">
+            <label>Prix</label>
+            <input type="number" name="prix" id="inputPrix" required>
+            </div>
+
+            <div class="cate-div9">
+            <label>Photo actuelle:</label><br>
+            <img id="currentPhoto" src="" width="120"><br>
+            </div>
+
+            <div class="cate-div10">
+            <label>Nouvelle photo (facultative):</label><br>
+            <input type="file" name="photo">
+            </div>
+<div class="btn">
       <div class="btn-mise" style="margin-top:10px;">
         <button type="submit">Mettre à jour</button>
-      </div>
+      </div>      
+</div>
     </form>
   </div>
 </div>

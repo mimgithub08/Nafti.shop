@@ -568,13 +568,7 @@ def init_routes(app):
 
         return render_template('admin/changer.html',  produit=produit, message=message)
 
-    @app.route('/admin/changer')
-    def changer_details():
-        if not session.get('is_admin'):
-            return redirect(url_for('login')) 
-        produits = Produit.query.all()
-        return render_template('admin/changer.html', produits=produits,produit=None)
-
+    
     @app.route('/admin/supremer')
     def suppremer_produit():
         if not session.get('is_admin'):

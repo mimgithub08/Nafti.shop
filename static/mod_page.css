@@ -1,15 +1,13 @@
 .card-form-overlay {
- 
   display: none;
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   z-index: 999;
   padding: 100px;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .card-form-overlay.active {
@@ -23,16 +21,18 @@
   width: 100%;
    height: auto;
   max-height: 75vh;
-  max-width: 800px;
+  max-width: 780px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.3s ease;
   color:#003366;
   overflow-y: scroll;          
   overflow-x: hidden;  
- top: 25px; left: 10px;
-  position: absolute;
+ top: 3%; left: 10px;
+  position: relative;
   z-index: 9999;
+
 }
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
@@ -60,39 +60,42 @@
   letter-spacing: 1px;
 }
 
-.cate-div1,
-.cate-div2,
-.cate-div3,
-.cate-div4,
-.cate-div5,
-.cate-div6 {
-  display: flex;
-  align-items: center;
-  margin-bottom: 18px;
-  margin-left: 20px;
-  flex-wrap: wrap;
-}
+@media (max-width: 768px) {
 
+  .card-form {
+    padding: 30px 20px;
+    max-height: 85vh;
+  }
+
+.cate-div0 label,
 .cate-div1 label,
 .cate-div2 label,
 .cate-div3 label,
 .cate-div4 label,
 .cate-div5 label,
-.cate-div6 label {
+.cate-div6 label ,
+.cate-div7 label, 
+.cate-div8 label,
+.cate-div9 label,
+.cate-div10 label{
   color: #003366;
   font-size: 16px;
-  width: 150px;
+  width: 100%;
   margin-bottom: 5px;
 }
-
+.cate-div0 input,
 .cate-div1 input,
 .cate-div2 input,
 .cate-div4 input,
-.cate-div5 input,
+.cate-div5 textarea,
 .cate-div6 input,
-.cate-div3 textarea {
-  width: calc(100% - 160px);
-  max-width: 460px;
+.cate-div8 input,
+.cate-div9 input,
+.cate-div10 input,
+.cate-div3 input,
+.cate-div7 textarea{
+  width: 70%;
+    max-width: 100%;
   margin-left: 10px;
   padding: 10px;
   border: 1px solid #ccc;
@@ -100,9 +103,12 @@
   font-size: 14px;
 }
 
-.cate-div3 textarea {
+
+.cate-div5 textarea,
+.cate-div7 textarea{
   height: 100px;
   resize: vertical;
+}
 }
 
 .btn-mise {
@@ -120,6 +126,10 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
+  -webkit-transition: background 0.3s ease;
+  -moz-transition: background 0.3s ease;
+  -ms-transition: background 0.3s ease;
+  -o-transition: background 0.3s ease;
 }
 .btn-mise button:hover {
   background-color: #e0a800;
