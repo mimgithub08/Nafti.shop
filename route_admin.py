@@ -21,7 +21,6 @@ def init_routes(app):
         if cate not in CATEGORIES:
                 return "Page non trouvée", 404
 
-            # Si on est en mode modification, on récupère les produits de cette catégorie
         produits = Produit.query.filter_by(cat_num=CATEGORIES.index(cate)+1).all() if Dis == 'mod' else []
 
         return render_template(
@@ -111,9 +110,9 @@ def init_routes(app):
                     ids = request.form.getlist('id[]')
                     noms = request.form.getlist('nom_produit[]')
                     types= request.form.getlist('type[]')
-                    utillisers= request.form.getlist('utilliser[]')
-                    avantages= request.form.getlist('avantage[]')
+                    utilisers= request.form.getlist('utiliser[]')
                     additifss=request.form.getlist('additifs[]')
+                    avantages=request.form.getlist('avantage[]')
                     normess=request.form.getlist('normes[]')
                     recommandations = request.form.getlist('recommandation[]')
                     prixs = request.form.getlist('prix[]')
@@ -123,7 +122,7 @@ def init_routes(app):
                         id = int(ids[j]) if ids[j].strip() else None
                         nom = noms[j]
                         type=types[j]
-                        utilliser=utillisers[j]
+                        utiliser=utilisers[j]
                         avantage=avantages[j]
                         additifs=additifss[j]
                         normes= normess[j]
@@ -150,12 +149,12 @@ def init_routes(app):
                         gaz_desc=DetailsGaz(
                             product_id =produit.id,
                             type =type,
-                            utilliser=utilliser,
+                            utiliser=utiliser,
                             avantage =avantage, 
                             additifs = additifs,
                             normes = normes,
                             recomendation =recommandation,
-                            moteurs='{"h"}'
+                         
 
                         )
                         
@@ -164,9 +163,9 @@ def init_routes(app):
                     ids = request.form.getlist('id[]')
                     noms = request.form.getlist('nom_produit[]')
                     types= request.form.getlist('type[]')
-                    utilisers= request.form.getlist('utilliser[]')
+                    utilisers= request.form.getlist('utiliser[]')
+                    moteurs=request.form.getlist('moteur[]')
                     avantages= request.form.getlist('avantage[]')
-                    additifss=request.form.getlist('additifs[]')
                     normess=request.form.getlist('normes[]')
                     recommandations = request.form.getlist('recommandation[]')
                     prixs = request.form.getlist('prix[]')
@@ -177,8 +176,10 @@ def init_routes(app):
                         nom = noms[j]
                         type=types[j]
                         utiliser=utilisers[j]
+                        moteur=moteurs[j]
                         avantage=avantages[j]
                         normes= normess[j]
+                        moteurs=moteurs
                         recommandation=recommandations[j]
                         prix = int(prixs[j]) if prixs[j] else 0
                         photo = photos[j]
@@ -206,7 +207,7 @@ def init_routes(app):
                             avantage =avantage, 
                             normes = normes,
                             recomendation =recommandation,
-                            moteurs='{"h"}'
+                            moteurs=moteur
 
                         )
                         
@@ -244,7 +245,7 @@ def init_routes(app):
                         produit = Produit(
                             id=id,
                             nom_produit=nom,
-                            cat_num =8,
+                            cat_num =4,
                             prix=prix,
                             photo=photo_path
                         )
@@ -272,7 +273,7 @@ def init_routes(app):
                     composants=request.form.getlist('composant[]')
                     compatibilites=request.form.getlist('compatibilite[]')
                     normess=request.form.getlist('norm[]')
-                    recomendations = request.form.getlist('recomendation[]')
+                    recomendations = request.form.getlist('recommandation[]')
                     prixs = request.form.getlist('prix[]')
                     photos = request.files.getlist('photo[]')
 
@@ -298,7 +299,7 @@ def init_routes(app):
                         produit = Produit(
                             id=id,
                             nom_produit=nom,
-                            cat_num =7,
+                            cat_num =8,
                             prix=prix,
                             photo=photo_path
                         )
@@ -313,7 +314,7 @@ def init_routes(app):
                             utiliser=utiliser,
                             avantage =avantage, 
                             norm=norm,
-                            recomendation =recomendation,
+                            recomendation = recomendation,
                             
 
                         )
@@ -326,7 +327,7 @@ def init_routes(app):
                     utilisers= request.form.getlist('utiliser[]')
                     avantages= request.form.getlist('avantage[]')
                     dimention=request.form.getlist('dimention[]')
-                    recomendations = request.form.getlist('recomendation[]')
+                    recomendations = request.form.getlist('recommandation[]')
                     prixs = request.form.getlist('prix[]')
                     photos = request.files.getlist('photo[]')
 
@@ -350,7 +351,7 @@ def init_routes(app):
                         produit = Produit(
                             id=id,
                             nom_produit=nom,
-                            cat_num =4,
+                            cat_num =5,
                             prix=prix,
                             photo=photo_path
                         )
@@ -363,7 +364,7 @@ def init_routes(app):
                             utiliser=utiliser,
                             avantage =avantage, 
                             dimention=dimention,
-                            recomendation =recomendation,
+                            recomendation=recomendation,
                             
 
                         )
@@ -375,8 +376,9 @@ def init_routes(app):
                     noms = request.form.getlist('nom_produit[]')
                     types= request.form.getlist('type[]')
                     utilisers= request.form.getlist('utiliser[]')
+                    moteur=request.form.getlist('moteurs[]')
                     avantages= request.form.getlist('avantage[]')
-                    composant=request.form.getlist('composant[]')
+                    composant=request.form.getlist('Composant[]')
                     normess=request.form.getlist('normes[]')
                     recommandations = request.form.getlist('recommandation[]')
                     prixs = request.form.getlist('prix[]')
@@ -387,6 +389,7 @@ def init_routes(app):
                         nom = noms[j]
                         type=types[j]
                         utiliser=utilisers[j]
+                        moteurs=moteur[j]
                         composant=composant[j]
                         avantage=avantages[j]
                         normes= normess[j]
@@ -403,7 +406,7 @@ def init_routes(app):
                         produit = Produit(
                             id=id,
                             nom_produit=nom,
-                            cat_num =5,
+                            cat_num =8,
                             prix=prix,
                             photo=photo_path
                         )
@@ -418,7 +421,7 @@ def init_routes(app):
                             norm= normes,
                             composant=composant,
                             recomendation =recommandation,
-                            moteurs='{"h"}'
+                            moteurs=moteurs
 
                         )
                         
@@ -472,7 +475,7 @@ def init_routes(app):
                             instruction=instruction,
                             composant=composant,
                             recomendation =recommandation,
-                            moteurs='{"h"}'
+                          
 
                         )
                         

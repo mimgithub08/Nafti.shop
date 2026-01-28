@@ -13,7 +13,7 @@
         <div class="sub_title">
          
             {% if Dis == 'ajt' %}
-                <p>Ajouter les produits au</p>
+                <p>Ajouter des produits au</p>
             {% elif Dis == 'mod' %}
                 <p>Modifier les produits du</p>
             {% endif %}
@@ -66,8 +66,6 @@
 </div>
 {% if cate %}
 {% include "admin/ajt_pr_templates/" ~ cate ~ ".html" with context %}
-{% else %}
-    <p>👉 اختر فئة من القائمة</p>
 {% endif %}
 
     

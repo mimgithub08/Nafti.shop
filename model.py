@@ -47,8 +47,7 @@ class DetailsGaz(db.Model):
     __tablename__ = 'gaz'
     product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
-    utilliser = db.Column(db.String(1000), nullable=False)
-    moteurs = db.Column(db.String(100))
+    utiliser = db.Column(db.String(1000), nullable=False)
     avantage = db.Column(db.String(1000), nullable=False)
     additifs = db.Column(db.String(1000), nullable=False)
     normes = db.Column(db.String(1000), nullable=False)
@@ -88,7 +87,6 @@ class DetailsEntre(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('p23.id', onupdate='CASCADE', ondelete="CASCADE"), primary_key=True)
     type = db.Column(db.String(1000), nullable=False)
     utiliser = db.Column(db.String(1000), nullable=False)
-    moteurs = db.Column(db.String(100))
     avantage = db.Column(db.String(1000), nullable=False)
     composant = db.Column(db.String(1000), nullable=False)
     instruction = db.Column(db.String(1000), nullable=False)
