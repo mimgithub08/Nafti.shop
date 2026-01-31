@@ -1,36 +1,46 @@
 {% extends "admin/home.html" %}
 {% block content %}
+{% if messege %}
+  <div class="table-container">
+     <p>{{ messege }}</p>
+  </div>
+   
+{% else %}
 <div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>prix</th> 
-                <th style="width: 1px; height: 1px;">Photo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nom_produit }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      {% for col in cols %}
+        <th>{{ col }}</th>
+      {% endfor %}
+      <th>Prix</th>
+      <th>Photo</th>
+    </tr>
+  </thead>
 
-                    {% if produit.photo %}
-                    <img src="{{ url_for('static', filename=produit.photo) }}" width="100">
-                    {% else %}
-                    Pas d'image
-                    {% endif %}
-                </td>
-
-            </tr>
-            {% endfor %}
-
-
-        </tbody>
-    </table>
+  <tbody>
+    {% for produit in produits %}
+      <tr>
+        <td>{{ produit.id }}</td>
+        <td>{{ produit.nom }}</td>
+        {% for col in cols %}
+        <td>{{ produit[col] }}</td>
+        {% endfor %}
+        <td>{{ produit.prix }}</td>
+            <td>
+      {% if produit.photo %}
+      <img src="{{ url_for('static', filename=produit.photo) }}" class="product-img" alt="{{ produit.nom_produit }}"
+        width="120px">
+      {% else %}
+      pas d image
+      {% endif %}
+    </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 </div>
-
+{% endif %}
 {% endblock %}

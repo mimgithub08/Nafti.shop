@@ -43,30 +43,28 @@
     <span class="labelle">categorie<i class="fas fa-chevron-down"></i></span>
     <div class="categorie">
   <ul class="categories-list">
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=1) }}">Carburant</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie='carburant') }}">Carburant</a></li>
   <hr>
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=2) }}">Gaz Butane</a></li>
-  <hr>
-
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=3) }}">Lubrifiants</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie='gaz') }}">Gaz Butane</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=4) }}">Batteries</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie='lub') }}">Lubrifiants</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=8) }}">Détendeur</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie='batterie') }}">Batteries</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=5) }}">Pneumatiques</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie='detendeur') }}">Détendeur</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=6) }}">Produits d'entretien</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie='pneu') }}">Pneumatiques</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie=7) }}">Liquide de refroidissement</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie='entretien') }}">Produits d'entretien</a></li>
   <hr>
 
-  <li><a href="{{ url_for('afficher_produits', nom_categorie='all') }}">Tous les produits</a></li>
+  <li><a href="{{ url_for('afficher_produits', nom_categorie='refroidissement') }}">Liquide de refroidissement</a></li>
+  <hr>
 </ul>
     </div>
   </div>

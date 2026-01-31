@@ -38,7 +38,7 @@ def init_routes(app):
             password = request.form['password']
             if username == 'admin' and password == '12345':
                 session['is_admin'] = True
-                return redirect(url_for('afficher_produits',nom_categorie='all'))  
+                return render_template('admin/choiser.html') 
             else:
                 error = " Identifiants incorrects"
         return render_template('admin/log.html', error=error)
@@ -529,7 +529,7 @@ def init_routes(app):
         db.session.delete(produit)
         db.session.commit()
         
-        return redirect(url_for('suppremer_produit'))  # Redirect to products list
+        return redirect(url_for('suppremer_produit'))  
     @app.route('/modifier/<int:id>', methods=['GET', 'POST'])
 
     def modifier_produit(id):
@@ -580,17 +580,84 @@ def init_routes(app):
         produits = Produit.query.all()
         return render_template('admin/dellet_page.html', produits=produits)
 
-    @app.route('/admin/affiche/<nom_categorie>')
+    @app.route('/admin/affiche/<string:nom_categorie>')
     def afficher_produits(nom_categorie):
         if not session.get('is_admin'):
             return redirect(url_for('login'))
 
-        if nom_categorie == 'all':
-            produits = Produit.query.all()
-        else:
-            produits = Produit.query.filter_by(cat_num=nom_categorie).all()
+        produits = Produit.query.all()
+        messege = "Aucun produit dans cette catégorie"
 
-        return render_template('admin/voir.html', produits=produits)
+        CONFIG = {
+            'carburant': {
+                'rel': 'carburant',
+                'cols': ['type', 'moteurs', 'avantage', 'additifs', 'normes', 'recomendation']
+            },
+            'gaz': {
+                'rel': 'gaz',
+                'cols': ['type', 'utiliser', 'avantage', 'additifs', 'normes', 'recomendation']
+            },
+            'lub': {
+                'rel': 'lub',
+                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
+            },
+            'batterie': {
+                'rel': 'batterie',
+                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
+            },
+            'pneu': {
+                'rel': 'pneu',
+                'cols': ['type', 'utiliser', 'dimention', 'avantage', 'recomendation']
+            },
+            'entretien': {
+                'rel': 'entretien',
+                'cols': ['type', 'utiliser', 'composant', 'avantage', 'instruction', 'recomendation']
+            },
+            'refroidissement': {
+                'rel': 'refroidissement',
+                'cols': ['type', 'utiliser', 'moteurs', 'composant', 'norm', 'recomendation']
+            },
+            'detendeur': {
+                'rel': 'detendeur',
+                'cols': ['type', 'utiliser', 'compatibilite', 'avantage', 'norm', 'recomendation']
+            }
+        }
+
+        conf = CONFIG.get(nom_categorie) 
+        produits_data = []
+
+        for produit in produits:
+            details = getattr(produit, conf['rel'])
+            if not details:
+             continue
+
+            d = details[0]  
+
+            row = {
+                'id': produit.id,
+                'nom': produit.nom_produit,
+                'prix': produit.prix
+            }
+
+            for col in conf['cols']:
+                row[col] = getattr(d, col, '')
+
+            produits_data.append(row)
+
+        if not produits_data:
+             return render_template(
+              'admin/voir.html',
+             messege=messege,
+              nom_categorie=nom_categorie)
+    
+
+        return render_template(
+            'admin/voir.html',
+            produits=produits_data,
+            cols=conf['cols'],
+            nom_categorie=nom_categorie)
+        
+
 
     @app.route('/admin/logout')
     def logout():
