@@ -3,9 +3,10 @@ import os
 from werkzeug.utils import secure_filename
 from flask import session
 from model import db, Produit, Categorie, DetailsCarburant, DetailsGaz, DetailsLub, DetailsBat, DetailsPneu, DetailsEntre, DetailsRefroi, DetailsDet
+from display import get_produits_by_categorie
 
 def init_routes(app):
-        
+
     @app.route('/admin/opperation/<Dis>')
     def choiser(Dis):
         return render_template(f'admin/choiser.html', Dis=Dis, cate=None)
@@ -406,7 +407,7 @@ def init_routes(app):
                         produit = Produit(
                             id=id,
                             nom_produit=nom,
-                            cat_num =8,
+                            cat_num =7,
                             prix=prix,
                             photo=photo_path
                         )
@@ -530,48 +531,6 @@ def init_routes(app):
         db.session.commit()
         
         return redirect(url_for('suppremer_produit'))  
-    @app.route('/modifier/<int:id>', methods=['GET', 'POST'])
-
-    def modifier_produit(id):
-        if not session.get('is_admin'):
-            return redirect(url_for('login')) 
-        produit = Produit.query.get_or_404(id)
-        message = ""
-
-        if request.method == 'POST':
-            try:
-                produit.nom_produit = request.form['nom_produit']
-            #   produit.categorie = request.form['categorie']
-                produit.prix = int(request.form['prix']) 
-            # produit.description = request.form['description']
-                
-                photo = request.files['photo']
-                if photo and photo.filename: 
-                    # Supprimer l'ancienne photo si existante
-                    if produit.photo:
-                        try:
-                            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], os.path.basename(produit.photo)))
-                        except:
-                            pass
-
-                    filename = secure_filename(photo.filename)
-                    photo_path = os.path.join('uploads', filename)
-                    photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    produit.photo = photo_path
-
-                db.session.commit()
-                message = "Produit modifié avec succès !"
-                return redirect(url_for('changer_details'))
-            except ValueError:
-                message = "Erreur : Le prix et la quantité doivent être des nombres valides"
-            except Exception as e:
-                message = f"Erreur : {str(e)}"
-
-
-
-        return render_template('admin/changer.html',  produit=produit, message=message)
-
-    
     @app.route('/admin/supremer')
     def suppremer_produit():
         if not session.get('is_admin'):
@@ -579,84 +538,28 @@ def init_routes(app):
 
         produits = Produit.query.all()
         return render_template('admin/dellet_page.html', produits=produits)
+    
 
     @app.route('/admin/affiche/<string:nom_categorie>')
     def afficher_produits(nom_categorie):
         if not session.get('is_admin'):
             return redirect(url_for('login'))
 
-        produits = Produit.query.all()
-        messege = "Aucun produit dans cette catégorie"
+        produits, cols = get_produits_by_categorie(nom_categorie)
 
-        CONFIG = {
-            'carburant': {
-                'rel': 'carburant',
-                'cols': ['type', 'moteurs', 'avantage', 'additifs', 'normes', 'recomendation']
-            },
-            'gaz': {
-                'rel': 'gaz',
-                'cols': ['type', 'utiliser', 'avantage', 'additifs', 'normes', 'recomendation']
-            },
-            'lub': {
-                'rel': 'lub',
-                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
-            },
-            'batterie': {
-                'rel': 'batterie',
-                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
-            },
-            'pneu': {
-                'rel': 'pneu',
-                'cols': ['type', 'utiliser', 'dimention', 'avantage', 'recomendation']
-            },
-            'entretien': {
-                'rel': 'entretien',
-                'cols': ['type', 'utiliser', 'composant', 'avantage', 'instruction', 'recomendation']
-            },
-            'refroidissement': {
-                'rel': 'refroidissement',
-                'cols': ['type', 'utiliser', 'moteurs', 'composant', 'norm', 'recomendation']
-            },
-            'detendeur': {
-                'rel': 'detendeur',
-                'cols': ['type', 'utiliser', 'compatibilite', 'avantage', 'norm', 'recomendation']
-            }
-        }
-
-        conf = CONFIG.get(nom_categorie) 
-        produits_data = []
-
-        for produit in produits:
-            details = getattr(produit, conf['rel'])
-            if not details:
-             continue
-
-            d = details[0]  
-
-            row = {
-                'id': produit.id,
-                'nom': produit.nom_produit,
-                'prix': produit.prix
-            }
-
-            for col in conf['cols']:
-                row[col] = getattr(d, col, '')
-
-            produits_data.append(row)
-
-        if not produits_data:
-             return render_template(
-              'admin/voir.html',
-             messege=messege,
-              nom_categorie=nom_categorie)
-    
+        if not produits:
+            return render_template(
+                'admin/voir.html',
+                messege="Aucun produit dans cette catégorie",
+                nom_categorie=nom_categorie
+            )
 
         return render_template(
             'admin/voir.html',
-            produits=produits_data,
-            cols=conf['cols'],
-            nom_categorie=nom_categorie)
-        
+            produits=produits,
+            cols=cols,
+            nom_categorie=nom_categorie
+        )
 
 
     @app.route('/admin/logout')

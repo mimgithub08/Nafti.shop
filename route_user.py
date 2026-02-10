@@ -4,7 +4,7 @@ from sqlalchemy import func, and_
 from sqlalchemy import or_
 from sqlalchemy.sql.expression import func
 from model import db, Produit, Categorie, DetailsCarburant, DetailsGaz, DetailsLub, DetailsBat, DetailsPneu, DetailsEntre, DetailsRefroi, DetailsDet
-
+from display import get_produits_by_categorie
 def init_routes(app):
     
     @app.route('/search', methods=['GET', 'POST'])
@@ -85,20 +85,16 @@ def init_routes(app):
 
         return render_template('user/card.html', produits=produits)
 
+    @app.route('/categorie/<nom_categorie>')
+    def produit_cat(nom_categorie):
+        produits, cat = get_produits_by_categorie(nom_categorie)
 
-    @app.route('/categorie/<int:cate_id>')
-    def produit_cat(cate_id):
-
-        cat = Categorie.query.get(cate_id)
         if not cat:
             return "Catégorie non trouvée", 404
-
-        produits = Produit.query.filter_by(cat_num=cat.id).all()
-        nombre_produits = len(produits)
-
-        if nombre_produits > 0:
-            prix_min = db.session.query(func.min(Produit.prix)).filter_by(cat_num=cat.id).scalar()
-            prix_max = db.session.query(func.max(Produit.prix)).filter_by(cat_num=cat.id).scalar()
+        
+        if produits:
+            prix_min = min(p['prix'] for p in produits)
+            prix_max = max(p['prix'] for p in produits)
             prix_max_display = prix_max + 1
             step = 1
         else:
@@ -112,5 +108,5 @@ def init_routes(app):
             prix_min=prix_min,
             prix_max=prix_max,
             prix_max_display=prix_max_display,
-            categorie=cat.name
+            categorie=cat  # Utilisez cat directement puisque c'est déjà une string
         )

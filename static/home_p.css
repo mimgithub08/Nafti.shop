@@ -2,7 +2,7 @@ body {
   margin: 0;
   display:grid;
   overflow-x: hidden;
-  grid-template-columns: 20px 1fr;
+  grid-template-columns: auto 1fr;
   grid-template-rows: 70px 1fr 50px;
   grid-template-areas:
  "head head " 
@@ -48,7 +48,7 @@ height: auto;
 grid-area: search;
 display: flex;
 justify-content: center;
-margin:auto 60px;
+margin:auto 40px;
 
 }
 
@@ -66,7 +66,8 @@ border: none;
 padding: 10px 15px; 
 font-size: 16px;
 outline: none;
-width: 350px;
+max-width: 350px;
+width: 300px;
 border: 2px solid #CCC !important;  
 }
 
@@ -100,7 +101,7 @@ aside{
   position: fixed;      
   top: 70px;             
   left: -220px;          
-  width: 200px;         
+  width: 180px;         
   z-index: 1000;        
 }
 
@@ -155,7 +156,7 @@ font-size: 20px;
 border-radius: 0px;
 border: none;
 background: white;
-width: 100%_;
+width: 100%;
 }
 
 span {
@@ -171,13 +172,17 @@ span, .table-container {
 transition: transform 0.3s ease;
 }
 
-body.sidebar-active span{ transform: translateX(170px); -webkit-transform: translateX(170px); -moz-transform: translateX(170px); -ms-transform: translateX(170px); -o-transform: translateX(170px);
+body.sidebar-active span{
+   transform: translateX(170px); -webkit-transform: translateX(170px); -moz-transform: translateX(170px); -ms-transform: translateX(170px); -o-transform: translateX(170px);
 }
 body.sidebar-active .table-container {
-   width: 80vw;  
-   position:relative ;
-   left: 70px;
+  width: calc(100% - 230px);
+  margin-left: 180px;
 }
+.table-container {
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
 .accordion {
 cursor: pointer;
 text-align: left;
@@ -260,15 +265,14 @@ transform: rotate(180deg);
 
 
 .table-container {
-  margin: 80px auto 0 auto;  
+  margin: 80px auto;   
   padding: 5px;
-  max-width: 1350px;  
- 
- 
- 
+  max-width: 1300px;
+  width: 100%;
+  box-sizing: border-box;
 }
 table {
-  width: 100%;                  
+  width: 100%;              
   border-collapse: collapse; 
 }
 table, th, td {
@@ -363,3 +367,8 @@ cursor:pointer;
   object-fit: cover;
 } 
 
+#toggleBtn i.fa-times {
+  color: #fff;
+  font-size: 20px;
+  z-index: 100000000;
+}

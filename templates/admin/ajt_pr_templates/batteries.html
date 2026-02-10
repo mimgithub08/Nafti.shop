@@ -1,7 +1,7 @@
 {% if Dis == 'ajt' %}
 <div class="table-container">
     <form id="product-form" action="/admin/ajouter" method="POST" enctype="multipart/form-data">
-        <table >
+        <table>
             <thead>
                 <tr>
                     <th>ID Produit</th> 
@@ -63,7 +63,7 @@
 
 {% elif Dis == 'mod' and produits %}
 <div class="table-container">
-    <table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse:collapse;">
+    <table >
         <thead>
             <tr>
                    <th>ID Produit</th> 
@@ -82,15 +82,15 @@
         <tbody>
             {% for produit in produits %}
             <tr>
-                    <td>{{ produit.id }}</td>
-                    <td>{{ produit.nom_produit }}</td>
-                    <td>{{ produit.type}}</td>
-                    <td>{{ produit.utiliser}}</td>
-                    <td>{{ produit.moteurs}}</td>
-                    <td>{{ produit.avantage}}</td>
-                    <td>{{ produit.normes}}</td>
-                    <td>{{ produit.recommandation}}</td>
-                    <td>{{ produit.prix }}</td>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.nom_produit }}</td>
+                <td>{{ produit.type if produit else '' }}</td>
+                <td>{{ produit.utiliser if produit else '' }}</td>
+                <td>{{ produit.moteurs if produit else '' }}</td>
+                <td>{{ produit.avantage if produit else '' }}</td>
+                <td>{{ produit.normes if produit else '' }}</td>
+                <td>{{ produit.recommandation if produit else '' }}</td>
+                <td>{{ produit.prix }}</td>
                 <td>
                     {% if produit.photo %}
                         <img src="{{ url_for('static', filename=produit.photo) }}" class="product-img" alt="{{ produit.nom_produit }}" width="120">
@@ -99,7 +99,7 @@
                     {% endif %}
                 </td>
                 <td>
-                        <button 
+                           <button 
         class="btn-mod"
         type="button"
         data-id="{{ produit.id }}"
@@ -109,6 +109,7 @@
         data-utiliser="{{ produit.utiliser }}"
         data-moteurs="{{ produit.moteurs }}"
         data-avantage="{{ produit.avantage }}"
+        data-additifs="{{ produit.additifs}}"  
         data-normes="{{ produit.normes }}"
         data-recommandation="{{ produit.recommandation }}"
         {% if produit.photo %}data-photo="{{ produit.photo }}"{% endif %}
@@ -191,7 +192,6 @@
     </form>
   </div>
 </div>
-
 <script>
 const modifierButtons = document.querySelectorAll('.btn-mod');
 const overlay = document.getElementById('cardFormOverlay');

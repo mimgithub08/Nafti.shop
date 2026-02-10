@@ -18,27 +18,11 @@
     <img src="{{ url_for('static', filename='uploads/logo_o.jpg') }}" alt="Logo" class="logo-img">
     <a href="{{ url_for('homepage')}}">Naftal Vitrine</a>
 </div>
-{% if show_search %}
-
-  <ul class="element">
-             <li><a href="{{ url_for('page_of_produit') }}">PRODUIT</a></li>
-        </ul>
-
-
-        <ul class="element">
-            <li> <a href="{{ url_for('page_of_footer', nom_page='faq') }}">FAQ</a></li>
-            <li><a href="{{ url_for('page_of_footer', nom_page='apropos') }}">À propos</a></li>
-            <li><a href="{{ url_for('page_of_footer', nom_page='contact') }}">CONTACT</a></li>
-        </ul>
-     
-{% else %}
  <div class="search">
     <form method="POST" action="{{ url_for('chercher_du_produits') }}">
         <input type="text" name="query" placeholder="Entrez nom ou ID">
         <button type="submit">  <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
     </form>
-
-{% endif %}
 </header>
  </div>
 {% block contene %} {% endblock %}

@@ -57,7 +57,8 @@ padding-top: 85px;
   font-size: 15px;
 }
 
-.categorie-content a:hover {
+.categorie-content a:hover ,
+.categorie-icon:hover{
   color: #f0b618;
 }
 
