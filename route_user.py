@@ -4,7 +4,6 @@ from sqlalchemy import func, and_
 from sqlalchemy import or_
 from sqlalchemy.sql.expression import func
 from model import db, Produit, Categorie, DetailsCarburant, DetailsGaz, DetailsLub, DetailsBat, DetailsPneu, DetailsEntre, DetailsRefroi, DetailsDet
-from display import get_produits_by_categorie
 def init_routes(app):
     
     @app.route('/search', methods=['GET', 'POST'])
@@ -45,10 +44,77 @@ def init_routes(app):
 
     @app.route('/')
     def homepage():
-        produits_aleatoires = Produit.query.order_by(func.random()).limit(18).all()
-        photos= ['slider.png','sliderindex.png']
-        return render_template('user/index.html',produits=produits_aleatoires ,photos=photos)
 
+        produits = Produit.query.order_by(func.random()).limit(18).all()
+        CONFIG = {
+            'carburant': {
+                'rel': 'carburant',
+                'cols': ['type', 'moteurs', 'avantage', 'additifs', 'normes', 'recomendation']
+            },
+            'gaz': {
+                'rel': 'gaz',
+                'cols': ['type', 'utiliser', 'avantage', 'additifs', 'normes', 'recomendation']
+            },
+            'lub': {
+                'rel': 'lub',
+                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
+            },
+            'batterie': {
+                'rel': 'batterie',
+                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
+            },
+            'pneu': {
+                'rel': 'pneu',
+                'cols': ['type', 'utiliser', 'dimention', 'avantage', 'recomendation']
+            },
+            'entretien': {
+                'rel': 'entretien',
+                'cols': ['type', 'utiliser', 'composant', 'avantage', 'instruction', 'recomendation']
+            },
+            'refroidissement': {
+                'rel': 'refroidissement',
+                'cols': ['type', 'utiliser', 'moteurs', 'composant', 'norm', 'recomendation']
+            },
+            'detendeur': {
+                'rel': 'detendeur',
+                'cols': ['type', 'utiliser', 'compatibilite', 'avantage', 'norm', 'recomendation']
+            }
+        }
+
+        produits_data = []
+
+        for produit in produits:
+
+            row = {
+                'id': produit.id,
+                'nom': produit.nom_produit,
+                'prix': produit.prix,
+                'photo': produit.photo,
+                'cols': [],
+            }
+
+           
+            for conf in CONFIG.values():
+                details = getattr(produit, conf['rel'])
+                if details:
+                    d = details[0]
+                    row['cols'] = conf['cols']
+                    for col in conf['cols']:
+                        row[col] = getattr(d, col, '')
+                    break
+
+            produits_data.append(row)
+
+        photos = ['slider.png','sliderindex.png']
+
+        return render_template(
+            'user/index.html',
+            produits=produits_data,
+            cols=conf['cols'],
+            photos=photos
+        )
+
+    
     @app.route('/footer/<nom_page>')
     def page_of_footer(nom_page):
         pages_valides = ['faq', 'contact', 'apropos']
@@ -87,26 +153,95 @@ def init_routes(app):
 
     @app.route('/categorie/<nom_categorie>')
     def produit_cat(nom_categorie):
-        produits, cat = get_produits_by_categorie(nom_categorie)
 
-        if not cat:
-            return "Catégorie non trouvée", 404
-        
-        if produits:
-            prix_min = min(p['prix'] for p in produits)
-            prix_max = max(p['prix'] for p in produits)
-            prix_max_display = prix_max + 1
-            step = 1
-        else:
-            prix_min = prix_max = prix_max_display = 0
-            step = 1
+        produits = Produit.query.all()
+        messege = "Aucun produit dans cette catégorie"
+
+        CONFIG = {
+            'carburant': {
+                'rel': 'carburant',
+                'cols': ['type', 'moteurs', 'avantage', 'additifs', 'normes', 'recomendation']
+            },
+            'gaz': {
+                'rel': 'gaz',
+                'cols': ['type', 'utiliser', 'avantage', 'additifs', 'normes', 'recomendation']
+            },
+            'lub': {
+                'rel': 'lub',
+                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
+            },
+            'batterie': {
+                'rel': 'batterie',
+                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
+            },
+            'pneu': {
+                'rel': 'pneu',
+                'cols': ['type', 'utiliser', 'dimention', 'avantage', 'recomendation']
+            },
+            'entretien': {
+                'rel': 'entretien',
+                'cols': ['type', 'utiliser', 'composant', 'avantage', 'instruction', 'recomendation']
+            },
+            'refroidissement': {
+                'rel': 'refroidissement',
+                'cols': ['type', 'utiliser', 'moteurs', 'composant', 'norm', 'recomendation']
+            },
+            'detendeur': {
+                'rel': 'detendeur',
+                'cols': ['type', 'utiliser', 'compatibilite', 'avantage', 'norm', 'recomendation']
+            }
+        }
+
+        conf = CONFIG.get(nom_categorie)
+
+        if not conf:
+            return "Catégorie invalide", 404
+
+        produits_data = []
+
+        for produit in produits:
+            details = getattr(produit, conf['rel'])
+            if not details:
+                continue
+
+            d = details[0]
+
+            row = {
+                'id': produit.id,
+                'nom': produit.nom_produit,
+                'prix': produit.prix
+            }
+
+            for col in conf['cols']:
+                row[col] = getattr(d, col, '')
+
+            produits_data.append(row)
+
+        if not produits_data:
+            return render_template(
+                'user/pro_page.html',
+                messege=messege,
+                nom_categorie=nom_categorie,
+                produits=[],
+                prix_min=0,
+                prix_max=0,
+                prix_max_display=0,
+                step=1
+            )
+
+        prix_min = min(p['prix'] for p in produits_data)
+        prix_max = max(p['prix'] for p in produits_data)
+        prix_max_display = prix_max + 1
+        step = 1
 
         return render_template(
             'user/pro_page.html',
-            produits=produits,
+            produits=produits_data,
             step=step,
             prix_min=prix_min,
             prix_max=prix_max,
             prix_max_display=prix_max_display,
-            categorie=cat  # Utilisez cat directement puisque c'est déjà une string
+            cols=conf['cols'],
+            nom_categorie=nom_categorie
         )
+

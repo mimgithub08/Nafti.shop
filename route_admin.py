@@ -3,8 +3,6 @@ import os
 from werkzeug.utils import secure_filename
 from flask import session
 from model import db, Produit, Categorie, DetailsCarburant, DetailsGaz, DetailsLub, DetailsBat, DetailsPneu, DetailsEntre, DetailsRefroi, DetailsDet
-from display import get_produits_by_categorie
-
 def init_routes(app):
 
     @app.route('/admin/opperation/<Dis>')
@@ -539,34 +537,92 @@ def init_routes(app):
         produits = Produit.query.all()
         return render_template('admin/dellet_page.html', produits=produits)
     
-
-    @app.route('/admin/affiche/<string:nom_categorie>')
-    def afficher_produits(nom_categorie):
-        if not session.get('is_admin'):
-            return redirect(url_for('login'))
-
-        produits, cols = get_produits_by_categorie(nom_categorie)
-
-        if not produits:
-            return render_template(
-                'admin/voir.html',
-                messege="Aucun produit dans cette catégorie",
-                nom_categorie=nom_categorie
-            )
-
-        return render_template(
-            'admin/voir.html',
-            produits=produits,
-            cols=cols,
-            nom_categorie=nom_categorie
-        )
-
-
     @app.route('/admin/logout')
     def logout():
         if not session.get('is_admin'):
             return redirect(url_for('login'))
         session.pop('is_admin', None)
         return redirect(url_for('login'))
+    @app.route('/admin/affiche/<string:nom_categorie>')
+    def afficher_produits(nom_categorie):
 
+        if not session.get('is_admin'):
+            return redirect(url_for('login'))
+
+        produits = Produit.query.all()
+        messege = "Aucun produit dans cette catégorie"
+
+        CONFIG = {
+            'carburant': {
+                'rel': 'carburant',
+                'cols': ['type', 'moteurs', 'avantage', 'additifs', 'normes', 'recomendation']
+            },
+            'gaz': {
+                'rel': 'gaz',
+                'cols': ['type', 'utiliser', 'avantage', 'additifs', 'normes', 'recomendation']
+            },
+            'lub': {
+                'rel': 'lub',
+                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
+            },
+            'batterie': {
+                'rel': 'batterie',
+                'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']
+            },
+            'pneu': {
+                'rel': 'pneu',
+                'cols': ['type', 'utiliser', 'dimention', 'avantage', 'recomendation']
+            },
+            'entretien': {
+                'rel': 'entretien',
+                'cols': ['type', 'utiliser', 'composant', 'avantage', 'instruction', 'recomendation']
+            },
+            'refroidissement': {
+                'rel': 'refroidissement',
+                'cols': ['type', 'utiliser', 'moteurs', 'composant', 'norm', 'recomendation']
+            },
+            'detendeur': {
+                'rel': 'detendeur',
+                'cols': ['type', 'utiliser', 'compatibilite', 'avantage', 'norm', 'recomendation']
+            }
+        }
+
+        conf = CONFIG.get(nom_categorie)
+
+        if not conf:
+            return "Catégorie invalide", 404
+
+        produits_data = []
+
+        for produit in produits:
+            details = getattr(produit, conf['rel'])
+            if not details:
+                continue
+
+            d = details[0]
+
+            row = {
+                'id': produit.id,
+                'nom': produit.nom_produit,
+                'prix': produit.prix
+            }
+
+            for col in conf['cols']:
+                row[col] = getattr(d, col, '')
+
+            produits_data.append(row)
+
+        if not produits_data:
+            return render_template(
+                'admin/voir.html',
+                messege=messege,
+                nom_categorie=nom_categorie
+            )
+
+        return render_template(
+            'admin/voir.html',
+            produits=produits_data,
+            cols=conf['cols'],
+            nom_categorie=nom_categorie
+        )
 

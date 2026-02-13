@@ -7,7 +7,7 @@
 {% block contene %}
 <div class="bg">
     <div class="sidebar" id="sidebar">
-        <div class="title"><h2>CATEGORIES<h2></div>
+        <div class="title"><h2>CATEGORIES</h2></div>
        <ul class="produit">
     <li><a href="{{ url_for('homepage') }}">Accueil</a></li>
  <li><a href="{{ url_for('produit_cat', nom_categorie='carburant') }}">Carburant</a></li>
@@ -51,11 +51,11 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" id="produits">
         <div class="title">
             <h3> nos produit:</h3>
         </div>
-       <div class="produits-container" id="produits" >
+       <div class="produits-container"  >
     {% include "user/card.html" %}
   </div>
     </div>
@@ -64,35 +64,13 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-
 <script>
-  $(document).ready(function () {
-    // Slider slick
-    $('.categorie-slider').slick({
-      dots: true,
-      infinite: true,
-      speed: 300,
-      slidesToShow: 1,
-      adaptiveHeight: true,
-      autoplay: true,
-      autoplaySpeed: 3000,
-      arrows: true,
-      responsive: [
-        {
-          breakpoint: 768,
-          settings: {
-            arrows: false
-          }
-        }
-      ]
-    });
-
+const produitsContainer = document.getElementById('produits');
 const inputMin = document.getElementById('prix-min');
 const inputMax = document.getElementById('prix-max');
 const minLabel = document.getElementById('prix-min-label');
 const maxLabel = document.getElementById('prix-max-label');
-const produitsContainer = document.getElementById('produits');
-const categorie = "{{ categorie }}"; 
+const categorie = "{{ nom_categorie  }}";
 
 function getSelectedOrder() {
   const selected = document.querySelector('input[name="price-filter"]:checked');
@@ -102,10 +80,7 @@ function getSelectedOrder() {
 function updateLabels() {
   let min = Number(inputMin.value);
   let max = Number(inputMax.value);
-
-  if (min > max) {
-    [min, max] = [max, min]; 
-  }
+  if (min > max) [min, max] = [max, min];
 
   minLabel.textContent = min + " DA";
   maxLabel.textContent = max + " DA";
@@ -113,23 +88,26 @@ function updateLabels() {
   const order = getSelectedOrder();
 
   fetch(`/filtrer_ajax?categorie=${categorie}&prix_min=${min}&prix_max=${max}&order=${order}`)
-    .then(response => response.text())
-    .then(data => {
-      produitsContainer.innerHTML = data;
-    });
+    .then(res => res.text())
+    .then(html => produitsContainer.innerHTML = html);
 }
 
+// ✅ debounce
+let debounceTimer = null;
+function debounceUpdate() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(updateLabels, 300);
+}
 
-inputMin.addEventListener('input', updateLabels);
-inputMax.addEventListener('input', updateLabels);
+inputMin.addEventListener('input', debounceUpdate);
+inputMax.addEventListener('input', debounceUpdate);
 
-// radio
 document.querySelectorAll('input[name="price-filter"]').forEach(radio => {
   radio.addEventListener('change', updateLabels);
 });
 
-updateLabels(); })
- 
- </script>
- 
+// **Ne pas appeler updateLabels au départ**, pour garder l’affichage initial
+
+</script>
+
 {% endblock %}
