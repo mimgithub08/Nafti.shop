@@ -51,11 +51,11 @@
             </div>
         </div>
     </div>
-    <div class="container" id="produits">
+    <div class="container" >
         <div class="title">
             <h3> nos produit:</h3>
         </div>
-       <div class="produits-container"  >
+       <div class="produits-container" id="cards-container" >
     {% include "user/card.html" %}
   </div>
     </div>
@@ -65,49 +65,209 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 <script>
-const produitsContainer = document.getElementById('produits');
+const produitsContainer = document.getElementById('cards-container');
 const inputMin = document.getElementById('prix-min');
 const inputMax = document.getElementById('prix-max');
 const minLabel = document.getElementById('prix-min-label');
 const maxLabel = document.getElementById('prix-max-label');
-const categorie = "{{ nom_categorie  }}";
+const categorie = "{{ nom_categorie }}";
+
+// Stocker les cartes et previews originales
+let allProducts = [];
+let allPreviews = [];
+
+// Initialiser après le chargement du DOM
+document.addEventListener('DOMContentLoaded', function() {
+    const containerProduct = produitsContainer.querySelector('.container-product');
+    const previewBox = document.getElementById('previewBox');
+    
+    if (containerProduct) {
+        allProducts = Array.from(containerProduct.querySelectorAll('.product2'));
+        console.log('Nombre de produits trouvés:', allProducts.length);
+    }
+    
+    if (previewBox) {
+        allPreviews = Array.from(previewBox.querySelectorAll('.preview'));
+        console.log('Nombre de previews trouvées:', allPreviews.length);
+    }
+});
 
 function getSelectedOrder() {
-  const selected = document.querySelector('input[name="price-filter"]:checked');
-  return selected ? selected.value : '';
+    const selected = document.querySelector('input[name="price-filter"]:checked');
+    return selected ? selected.value : '';
 }
 
 function updateLabels() {
-  let min = Number(inputMin.value);
-  let max = Number(inputMax.value);
-  if (min > max) [min, max] = [max, min];
+    let min = Number(inputMin.value);
+    let max = Number(inputMax.value);
+    
+    // Échanger si min > max
+    if (min > max) {
+        [min, max] = [max, min];
+        inputMin.value = min;
+        inputMax.value = max;
+    }
 
-  minLabel.textContent = min + " DA";
-  maxLabel.textContent = max + " DA";
+    minLabel.textContent = min + " DA";
+    maxLabel.textContent = max + " DA";
 
-  const order = getSelectedOrder();
-
-  fetch(`/filtrer_ajax?categorie=${categorie}&prix_min=${min}&prix_max=${max}&order=${order}`)
-    .then(res => res.text())
-    .then(html => produitsContainer.innerHTML = html);
+    // Appeler la fonction de filtrage
+    filterAndSortProducts(min, max);
 }
 
-// ✅ debounce
+function filterAndSortProducts(minPrice, maxPrice) {
+    const order = getSelectedOrder();
+    const containerProduct = produitsContainer.querySelector('.container-product');
+    const previewBox = document.getElementById('previewBox');
+    
+    if (!containerProduct) {
+        console.error('Container .container-product non trouvé');
+        return;
+    }
+    
+    console.log('Filtrage: Min=' + minPrice + ', Max=' + maxPrice + ', Order=' + order);
+    
+    // Créer un tableau de produits avec leurs prix
+    let productsWithPrices = allProducts.map(product => {
+        const price = Number(product.getAttribute('data-prix'));
+        
+        return {
+            element: product.cloneNode(true), // Cloner pour éviter de perdre l'original
+            price: price,
+            name: product.getAttribute('data-name')
+        };
+    });
+    
+    // Filtrer par prix
+    let filteredProducts = productsWithPrices.filter(item => {
+        return item.price >= minPrice && item.price <= maxPrice;
+    });
+    
+    console.log('Produits filtrés:', filteredProducts.length + '/' + allProducts.length);
+    
+    // Trier si nécessaire
+    if (order === 'asc') {
+        filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (order === 'desc') {
+        filteredProducts.sort((a, b) => b.price - a.price);
+    }
+    
+    // Vider le conteneur de produits
+    containerProduct.innerHTML = '';
+    
+    // Vider le conteneur de previews (sauf si on veut le garder pour l'animation)
+    if (previewBox) {
+        const previews = previewBox.querySelectorAll('.preview');
+        previews.forEach(preview => preview.remove());
+    }
+    
+    // Ajouter les produits filtrés et triés
+    filteredProducts.forEach(item => {
+        containerProduct.appendChild(item.element);
+        
+        // Ajouter la preview correspondante
+        if (previewBox) {
+            const matchingPreview = allPreviews.find(preview => 
+                preview.getAttribute('data-target') === item.name
+            );
+            if (matchingPreview) {
+                // Cloner la preview aussi pour ne pas perdre l'original
+                previewBox.appendChild(matchingPreview.cloneNode(true));
+            }
+        }
+    });
+    
+    // Réattacher les événements pour les previews
+    reattachPreviewEvents();
+    
+    // Afficher un message si aucun produit
+    if (filteredProducts.length === 0) {
+        containerProduct.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #666;">Aucun produit trouvé dans cette gamme de prix.</p>';
+    }
+}
+
+function reattachPreviewEvents() {
+    const previewBox = document.getElementById('previewBox');
+    if (!previewBox) {
+        console.error('PreviewBox non trouvé');
+        return;
+    }
+    
+    const products = document.querySelectorAll('.product2');
+    const previews = previewBox.querySelectorAll('.preview');
+
+    console.log('Réattachement des événements sur', products.length, 'produits');
+
+    // Réattacher les événements sur les produits
+    products.forEach(product => {
+        product.addEventListener('click', function() {
+            const name = this.getAttribute('data-name');
+            console.log('Produit cliqué:', name);
+            
+            previewBox.classList.add('active');
+            
+            previews.forEach(preview => {
+                preview.classList.remove('active');
+                if (preview.getAttribute('data-target') === name) {
+                    preview.classList.add('active');
+                    console.log('Preview activée pour:', name);
+                }
+            });
+        });
+    });
+
+    // Réattacher les boutons de fermeture
+    const closeBtns = previewBox.querySelectorAll('.close-preview');
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closePreview();
+        });
+    });
+
+    // Événement de fermeture sur le fond (une seule fois)
+    previewBox.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closePreview();
+        }
+    });
+}
+
+function closePreview() {
+    const previewBox = document.getElementById('previewBox');
+    if (previewBox) {
+        previewBox.classList.remove('active');
+        const previews = previewBox.querySelectorAll('.preview');
+        previews.forEach(p => p.classList.remove('active'));
+    }
+}
+
+// Événement clavier pour fermer avec Escape
+document.addEventListener('keydown', function(e) {
+    const previewBox = document.getElementById('previewBox');
+    if (e.key === 'Escape' && previewBox && previewBox.classList.contains('active')) {
+        closePreview();
+    }
+});
+
+// Debounce pour éviter trop d'appels
 let debounceTimer = null;
 function debounceUpdate() {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(updateLabels, 300);
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(updateLabels, 300);
 }
 
+// Écouteurs d'événements pour les filtres
 inputMin.addEventListener('input', debounceUpdate);
 inputMax.addEventListener('input', debounceUpdate);
 
 document.querySelectorAll('input[name="price-filter"]').forEach(radio => {
-  radio.addEventListener('change', updateLabels);
+    radio.addEventListener('change', updateLabels);
 });
 
-// **Ne pas appeler updateLabels au départ**, pour garder l’affichage initial
-
+// Vérification initiale
+console.log('produitsContainer:', produitsContainer);
+console.log('inputMin:', inputMin);
+console.log('inputMax:', inputMax);
 </script>
-
 {% endblock %}
