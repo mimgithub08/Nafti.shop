@@ -18,13 +18,10 @@
       <img src="{{ url_for('static', filename='uploads/logo_o.jpg') }}" alt="Logo" class="logo-img">
       <a href="{{ url_for('afficher_produits',nom_categorie='all') }}">Naftal Vitrine</a>
     </div>
-    <div class="search">
-      <form method="POST" action="{{ url_for('chercher_produits') }}">
-        <input type="text" name="query" placeholder="Entrez nom ou ID">
-        <button type="submit"> <i class="fa-solid fa-magnifying-glass"
-            style="color: #ffffff;"></i></button>
-      </form>
-    </div>
+   <form action="{{ url_for('chercher_du_produits') }}" method="POST">
+    <input type="text" name="query" placeholder="Rechercher un produit...">
+    <button type="submit">Rechercher</button>
+    </form>
   </header>
 
   <nav class="bg">

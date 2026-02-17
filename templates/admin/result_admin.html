@@ -1,0 +1,78 @@
+{% extends "admin/home.html" %}
+{% block content %}
+{% if produit %}
+<h2>Produit trouvé :</h2>
+<table border="1" cellpadding="10">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Catégorie</th>
+      <th>Prix</th>
+      <th>Photo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ produit.id }}</td>
+      <td>{{ produit.nom_produit }}</td>
+      <td>{{ produit.categorie }}</td>  {# ← was missing #}
+      <td>{{ produit.prix }}</td>
+      <td>
+        {% if produit.photo %}
+          <img src="{{ url_for('static', filename=produit.photo) }}"
+               class="product-img"
+               alt="{{ produit.nom_produit }}"
+               width="120px">
+        {% else %}
+          Pas d'image
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% elif query %}
+<!-- 404 -->
+<p style="color: orange;">Aucun produit correspondant à « {{ query }} ».</p>
+{% endif %}
+
+
+<!-- Lecture de la base de données -->
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Photo</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for produit in produits %}
+      <tr>
+        <td>{{ produit.id }}</td>
+        <td>{{ produit.nom_produit }}</td>
+        <td>{{ produit.prix }}</td>
+        <td>
+          {% if produit.photo %}
+            <img src="{{ url_for('static', filename=produit.photo) }}"
+                 class="product-img"
+                 alt="{{ produit.nom_produit }}"
+                 width="120px">
+          {% else %}
+            Pas d'image
+          {% endif %}
+        </td>
+        <td>
+         
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

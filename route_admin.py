@@ -3,14 +3,10 @@ import os
 from werkzeug.utils import secure_filename
 from flask import session
 from model import db, Produit, Categorie, DetailsCarburant, DetailsGaz, DetailsLub, DetailsBat, DetailsPneu, DetailsEntre, DetailsRefroi, DetailsDet
+from search import search_pro
 def init_routes(app):
-
-    @app.route('/admin/opperation/<Dis>')
-    def choiser(Dis):
-        return render_template(f'admin/choiser.html', Dis=Dis, cate=None)
-
-    @app.route('/admin/opperation/<Dis>/<cate>')
-    def quide(cate, Dis):
+   @app.route('/admin/opperation/<Dis>/<cate>')
+   def quide(cate, Dis):
 
         CATEGORIES = [
             "carburant", "gaz", "detendeur", "lubrifiant",
@@ -29,23 +25,23 @@ def init_routes(app):
                 produits=produits
             )
     
-    @app.route('/admin', methods=['GET', 'POST'])
-    def login():
+   @app.route('/admin', methods=['GET', 'POST'])
+   def login():
         error = ""
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
             if username == 'admin' and password == '12345':
                 session['is_admin'] = True
-                return render_template('admin/choiser.html') 
+                return render_template('admin/home.html') 
             else:
                 error = " Identifiants incorrects"
         return render_template('admin/log.html', error=error)
 
 
         
-    @app.route('/admin/ajouter', methods=['GET', 'POST'])
-    def ajouter_produit():
+   @app.route('/admin/ajouter', methods=['GET', 'POST'])
+   def ajouter_produit():
         if not session.get('is_admin'):
             return redirect(url_for('login')) 
         message = ""
@@ -490,8 +486,8 @@ def init_routes(app):
         return render_template('admin/choiser.html', message=message)
 
 
-    @app.route('/admin/chercher', methods=['GET', 'POST'])
-    def chercher_produits():
+   @app.route('/admin/chercher', methods=['GET', 'POST'])
+   def chercher_produits():
         if not session.get('is_admin'):
             return redirect(url_for('login')) 
         produit = None
@@ -511,8 +507,8 @@ def init_routes(app):
         
         return render_template('admin/choiser.html', produit=produit, message=message)
 
-    @app.route('/delete/<int:id>', methods=['POST'])
-    def delete_produit(id):
+   @app.route('/delete/<int:id>', methods=['POST'])
+   def delete_produit(id):
         if not session.get('is_admin'):
             return redirect(url_for('login'))
         
@@ -529,22 +525,22 @@ def init_routes(app):
         db.session.commit()
         
         return redirect(url_for('suppremer_produit'))  
-    @app.route('/admin/supremer')
-    def suppremer_produit():
+   @app.route('/admin/supremer')
+   def suppremer_produit():
         if not session.get('is_admin'):
             return redirect(url_for('login'))
 
         produits = Produit.query.all()
         return render_template('admin/dellet_page.html', produits=produits)
     
-    @app.route('/admin/logout')
-    def logout():
+   @app.route('/admin/logout')
+   def logout():
         if not session.get('is_admin'):
             return redirect(url_for('login'))
         session.pop('is_admin', None)
         return redirect(url_for('login'))
-    @app.route('/admin/affiche/<string:nom_categorie>')
-    def afficher_produits(nom_categorie):
+   @app.route('/admin/affiche/<string:nom_categorie>')
+   def afficher_produits(nom_categorie):
 
         if not session.get('is_admin'):
             return redirect(url_for('login'))
@@ -625,4 +621,21 @@ def init_routes(app):
             cols=conf['cols'],
             nom_categorie=nom_categorie
         )
+    
+   @app.route('/admin/opperation/<Dis>')
+   def choiser(Dis):
+        return render_template(f'admin/choiser.html', Dis=Dis, cate=None)
+    
+   @app.route('/admin/search', methods=['GET', 'POST'])
+   def chercher_du_produits_avancee():
+    if request.method == 'POST':
+        query = request.form.get('query', '').strip()
+    else:
+        query = request.args.get('query', '').strip()
 
+    produits, message, query = search_pro(query)
+
+    return render_template('admin/result_admin.html',
+                           produits=produits,
+                           message=message,
+                           query=query)

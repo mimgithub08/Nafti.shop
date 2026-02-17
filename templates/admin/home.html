@@ -18,7 +18,7 @@
       <a href="{{ url_for('afficher_produits',nom_categorie='all') }}">Naftal Vitrine</a>
     </div>
     <div class="search">
-      <form method="POST" action="{{ url_for('chercher_produits') }}">
+     <form method="POST" action="{{ url_for('chercher_du_produits_avancee') }}">
         <input type="text" name="query" placeholder="Entrez nom ou ID">
         <button type="submit"> <i class="fa-solid fa-magnifying-glass"
             style="color: #ffffff;"></i></button>

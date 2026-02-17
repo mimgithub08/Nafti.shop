@@ -1,142 +1,127 @@
 {% extends "user/nav_footer.html" %}
+
 {% block css %}
-<link rel="stylesheet" href="{{url_for('static',filename='user/pro_page.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='user/card.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='user/pro_page.css') }}">
 {% endblock %}
+
 {% block contene %}
 <div class="bg">
-    <div class="sidebar" id="sidebar">
-        <div class="title"><h2>CATEGORIES</h2></div>
-        <hr>
-        <ul class="produit">
-            <li><a href="{{ url_for('homepage') }}">Accueil</a></li>
-         <li><a href="{{ url_for('produit_cat', cat_id=1) }}">Carburant</a></li>
-<li><a href="{{ url_for('produit_cat', cat_id=2) }}">Gaz</a></li>
-<li><a href="{{ url_for('produit_cat', cat_id=3) }}">Détendeur</a></li>
-<li><a href="{{ url_for('produit_cat', cat_id=4) }}">Lubrifiants</a></li>
-<li><a href="{{ url_for('produit_cat', cat_id=5) }}">Pneumatiques</a></li>
-<li><a href="{{ url_for('produit_cat', cat_id=6) }}">Entretien</a></li>
-<li><a href="{{ url_for('produit_cat', cat_id=7) }}">Batteries</a></li>
-        </ul>
-
-        <hr>    
-        <div class="range-double">
-            <label><div class="title"><h2>Filtrer par prix:</h2></div></label>
-            <br><br>
-            <div class="labels">
-                <span>Min: <span id="prix-min-label">{{ prix_min }} DA</span></span>
-                <span>Max: <span id="prix-max-label">{{ prix_max }} DA</span></span>
-            </div>
-
-            <div class="range-sliders">
-                <input type="range" id="prix-min" min="{{ prix_min }}" max="{{ prix_max }}" value="{{ prix_min }}" step="{{ step }}">
-                <input type="range" id="prix-max" min="{{ prix_min }}" max="{{ prix_max }}" value="{{ prix_max }}" step="{{ step }}">
-            </div>
+    <div class="container">
+        <div class="title">
+            <h3>Résultats de recherche{% if query %} pour "{{ query }}"{% endif %}</h3>
         </div>
-
-        <hr>
-        <div class="filter">
-            <div class="title"><h2>Trier par:</h2></div>
-            <div class="radio-group">
-                <input type="radio" id="price-asc" name="order" value="asc" checked>
-                <label for="price-asc">Prix croissant</label>
-            </div>
-            <div class="radio-group">
-                <input type="radio" id="price-desc" name="order" value="desc">
-                <label for="price-desc">Prix décroissant</label>
-            </div>
+        
+        {% if message %}
+        <div class="search-message">
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="produits-container" id="cards-container">
+            {% if produits %}
+                <!-- Inclure les cartes de produits -->
+                <div class="container-product">
+                    {% for produit in produits %}
+                        <div class="product2" data-name="p-{{ produit.id }}" data-prix="{{ produit.prix }}">
+                            {% if produit.photo %}
+                                <img src="{{ url_for('static', filename=produit.photo) }}" alt="{{ produit.nom_produit }}">
+                            {% else %}
+                                <p>Pas d'image</p>
+                            {% endif %}
+                            
+                            <h3>{{ produit.nom_produit }}</h3>
+                            <div class="price">{{ produit.prix }} DA</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Preview Box -->
+                <div class="product2-preview" id="previewBox">
+                    {% for produit in produits %}
+                        <div class="preview" data-target="p-{{ produit.id }}">
+                            <button class="close-preview">✕</button>
+                            
+                            {% if produit.photo %}
+                                <img src="{{ url_for('static', filename=produit.photo) }}" alt="{{ produit.nom_produit }}">
+                            {% else %}
+                                <p>Pas d'image</p>
+                            {% endif %}
+                            
+                            <h3>{{ produit.nom_produit }}</h3>
+                            
+                            <div class="preview-details">
+                                {% for col in cols %}
+                                    <div class="detail-row">
+                                        <strong>{{ col }}:</strong> {{ produit[col] }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="price">{{ produit.prix }} DA</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="text-align: center; padding: 2rem;">Aucun résultat.</p>
+            {% endif %}
+        </div>
+        
+        <!-- Bouton retour -->
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('homepage') }}" class="btn-retour">Retour à l'accueil</a>
         </div>
     </div>
-   
-    {% if produits %}
-    <div class="cards-container" id="produits-container">
-        {% include "user/card.html" %}
-    </div>
-    {% else %}  
-    <div class="no-products">{{ message }}</div>
-    {% endif %}
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 <script>
-$(document).ready(function() {
-    // Initialisation du slider slick
-    $('.categorie-slider').slick({
-        dots: true,
-        infinite: true,
-        speed: 300,
-        slidesToShow: 1,
-        adaptiveHeight: true,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        arrows: true,
-        responsive: [{
-            breakpoint: 768,
-            settings: {
-                arrows: false
-            }
-        }]
-    });
+const products = document.querySelectorAll('.product2');
+const previewBox = document.getElementById('previewBox');
+const previews = previewBox ? previewBox.querySelectorAll('.preview') : [];
 
-    // Gestion des filtres
-    const inputMin = document.getElementById('prix-min');
-    const inputMax = document.getElementById('prix-max');
-    const minLabel = document.getElementById('prix-min-label');
-    const maxLabel = document.getElementById('prix-max-label');
-    const produitsContainer = document.getElementById('produits-container');
-    const categorie = "{{ categorie | default('') }}";
-
-    function getSelectedOrder() {
-        return document.querySelector('input[name="order"]:checked').value;
-    }
-
-    function updateProducts() {
-        const min = Math.min(inputMin.value, inputMax.value);
-        const max = Math.max(inputMin.value, inputMax.value);
-        const order = getSelectedOrder();
-
-        minLabel.textContent = min + " DA";
-        maxLabel.textContent = max + " DA";
-
-        fetch(`/filtrer_ajax?categorie=${encodeURIComponent(categorie)}&prix_min=${min}&prix_max=${max}&order=${order}`)
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
-            .then(data => {
-                produitsContainer.innerHTML = data;
-                // Réinitialiser slick après le chargement des nouveaux produits si nécessaire
-                $('.categorie-slider').slick('unslick').slick();
-            })
-            .catch(error => {
-                console.error('Error:', error);
+products.forEach(product => {
+    product.addEventListener('click', () => {
+        const name = product.getAttribute('data-name');
+        if (previewBox) {
+            previewBox.classList.add('active');
+            
+            previews.forEach(preview => {
+                preview.classList.remove('active');
+                if (preview.getAttribute('data-target') === name) {
+                    preview.classList.add('active');
+                }
             });
+        }
+    });
+});
+
+if (previewBox) {
+    const closeBtns = previewBox.querySelectorAll('.close-preview');
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            closePreview();
+        });
+    });
+
+    previewBox.addEventListener('click', e => {
+        if (e.target === previewBox) {
+            closePreview();
+        }
+    });
+}
+
+function closePreview() {
+    if (previewBox) {
+        previewBox.classList.remove('active');
+        previews.forEach(p => p.classList.remove('active'));
     }
+}
 
-    // Événements pour les range inputs
-    inputMin.addEventListener('input', () => {
-        if (parseInt(inputMin.value) > parseInt(inputMax.value)) {
-            inputMax.value = inputMin.value;
-        }
-        updateProducts();
-    });
-
-    inputMax.addEventListener('input', () => {
-        if (parseInt(inputMax.value) < parseInt(inputMin.value)) {
-            inputMin.value = inputMax.value;
-        }
-        updateProducts();
-    });
-
-    // Événements pour les radio buttons
-    document.querySelectorAll('input[name="order"]').forEach(radio => {
-        radio.addEventListener('change', updateProducts);
-    });
-
-    // Initialisation
-    updateProducts();
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && previewBox && previewBox.classList.contains('active')) {
+        closePreview();
+    }
 });
 </script>
 {% endblock %}

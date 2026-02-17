@@ -4,44 +4,25 @@ from sqlalchemy import func, and_
 from sqlalchemy import or_
 from sqlalchemy.sql.expression import func
 from model import db, Produit, Categorie, DetailsCarburant, DetailsGaz, DetailsLub, DetailsBat, DetailsPneu, DetailsEntre, DetailsRefroi, DetailsDet
+from search import search_pro
 def init_routes(app):
-    
-    @app.route('/search', methods=['GET', 'POST'])
+    @app.route('/chercher', methods=['GET', 'POST'])
     def chercher_du_produits():
-        produits = []
-        message = ""
+        # Récupérer la query depuis le formulaire
+        query = request.form.get('query', '').strip()
         
-
-        query = request.form.get('query', '').strip() if request.method == 'POST' else request.args.get('query', '').strip()
-        prix_min = request.args.get('prix_min', type=int)
-        prix_max = request.args.get('prix_max', type=int)
-        order = request.args.get('order')
-
-        if query:
-            produits = Produit.query.filter(
-                or_(
-                    Produit.nom_produit.ilike(f"%{query}%"),
-                    Produit.categorie.ilike(f"%{query}%")
-                )
-            )
-
-            if prix_min is not None:
-                produits = produits.filter(Produit.prix >= prix_min)
-            if prix_max is not None:
-                produits = produits.filter(Produit.prix <= prix_max)
-            if order == 'asc':
-                produits = produits.order_by(Produit.prix.asc())
-            elif order == 'desc':
-                produits = produits.order_by(Produit.prix.desc())
-
-            produits = produits.all()
-
-            if not produits:
-                message = f"Aucun produit trouvé pour « {query} »."
-
-        return render_template('user/result.html', produits=produits, message=message)
-
-
+        # Appeler la fonction de recherche
+        produits, message, query = search_pro(query)
+        
+        # Préparer les colonnes pour l'affichage (ajustez selon votre besoin)
+        cols = ['nom_produit', 'categorie', 'prix']  # Ajoutez les colonnes que vous voulez afficher
+        
+        # Afficher le template avec les résultats
+        return render_template('user/result.html', 
+                            produits=produits, 
+                            message=message, 
+                            query=query,
+                            cols=cols)
     @app.route('/')
     def homepage():
 
@@ -126,30 +107,6 @@ def init_routes(app):
     @app.route('/produit')
     def page_of_produit():
      return render_template(f'user/produit.html')
-
-    @app.route('/filtrer_ajax')
-    def filtrer_ajax():
-        categorie = request.args.get('cate_id')
-        prix_min = request.args.get('prix_min', type=int)
-        prix_max = request.args.get('prix_max', type=int)
-        order = request.args.get('order')  
-
-        query = Produit.query.filter(
-            and_(
-                Produit.categorie == categorie,
-                Produit.prix >= prix_min,
-                Produit.prix <= prix_max
-            )
-        )
-
-        if order == 'asc':
-            query = query.order_by(Produit.prix.asc())
-        elif order == 'desc':
-            query = query.order_by(Produit.prix.desc())
-
-        produits = query.all()
-
-        return render_template('user/card.html', produits=produits)
 
     @app.route('/categorie/<nom_categorie>')
     def produit_cat(nom_categorie):
