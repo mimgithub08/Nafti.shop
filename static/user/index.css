@@ -1,39 +1,59 @@
- 
- * {
-margin: 0;
-padding: 0;                                                                                                                                 
-font-family: "Roboto", sans-serif;
+/* ============================================
+   CSS VARIABLES - Colors & Common Values
+   ============================================ */
+:root {
+  --primary-color: #003366;
+  --accent-color: #f0b618;
+  --light-bg: #f9f9f9;
+  --light-gray: #999;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --border-radius: 12px;
+  --transition-smooth: all 0.3s ease;
+  --transition-fast: 0.3s ease-in-out;
+}
 
+/* ============================================
+   GLOBAL & BASE STYLES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
 }
+
 body {
-padding-top: 85px;
- overflow-x: hidden;
+  padding-top: 85px;
+  overflow-x: hidden;
 }
- .categorie-container {
+
+/* ============================================
+   CATEGORY SECTION STYLES
+   ============================================ */
+.categorie-container {
   padding: 40px 10px;
   background-color: #ffffff;
   max-width: 1000px;
-  margin: 0 auto;}  
-   
+  margin: 0 auto;
+}
 
 .categorie-slider {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  border-radius: 12px;
-    border-color: #F0B618;
-
+  border-radius: var(--border-radius);
+  border-color: var(--accent-color);
 }
 
 .categorie-card {
   text-align: center;
-   width: 60px;
+  width: 60px;
   padding: 10px;
   margin: 0 5px;
-  background: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  background: var(--light-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-smooth);
 }
 
 .categorie-card:hover {
@@ -42,8 +62,9 @@ padding-top: 85px;
 
 .categorie-icon {
   font-size: 50px;
-  color: #003366;
+  color: var(--primary-color);
   margin-bottom: 10px;
+  transition: color var(--transition-smooth);
 }
 
 .categorie-content li {
@@ -52,117 +73,133 @@ padding-top: 85px;
 
 .categorie-content a {
   text-decoration: none;
-  color: #003366;
+  color: var(--primary-color);
   font-weight: bold;
   font-size: 15px;
+  transition: color var(--transition-smooth);
 }
 
-.categorie-content a:hover ,
-.categorie-icon:hover{
-  color: #f0b618;
+.categorie-content a:hover,
+.categorie-icon:hover {
+  color: var(--accent-color);
 }
 
+/* Slider Navigation */
 .categorie-slider .slick-prev,
 .categorie-slider .slick-next {
   background: transparent;
-  color: #003366;
+  color: var(--primary-color);
   width: 45px;
   height: 45px;
   z-index: 10;
+  transition: var(--transition-smooth);
 }
+
 .categorie-slider .slick-prev:hover,
 .categorie-slider .slick-next:hover {
- 
   background: transparent;
-  border-color: #003366;
+  border-color: var(--primary-color);
 }
+
 .categorie-slider .slick-prev:before,
 .categorie-slider .slick-next:before {
   font-size: 22px;
-  color: #003366;
+  color: var(--primary-color);
 }
 
-   .title-line {
-      display: flex;
-      align-items: center;
-      text-align: center;
-        justify-content: center;
-      width: 100%;
-      margin: 40px 0;
-       text-transform: uppercase; 
-    }
- 
-
-    .title-line span {
-      text-align: center;
-      padding: 0 20px;
-    font-size: xx-large;
-      color: #999;
-      font-weight: 800;
-      opacity: 0.9;
-
-    }
-
-.slider-container-index {
+/* ============================================
+   TITLE & HEADING STYLES
+   ============================================ */
+.title-line {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 100%;
-  max-width: 1665px;
-  margin: 10px;
-  overflow: hidden;
+  margin: 40px 0;
+  text-transform: uppercase;
+}
+
+.title-line span {
+  padding: 0 20px;
+  font-size: xx-large;
+  color: var(--light-gray);
+  font-weight: 800;
+  opacity: 0.9;
+}
+
+/* ============================================
+   SLIDER STYLES
+   ============================================ */
+.slider-container-index {
+ 
+  width: 100%;
+  
+   margin: auto;
+
   height: 500px;
-  justify-content: center;  
-  align-items: center;  
+
 }
+
 .categorie-slider-index {
-    width: 100%;
-    margin: auto;
+  width: 100%;
+  margin: auto;
 }
+
 .category-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Slick Slider Styles */
 .slick-slide {
-    outline: none;
-    box-sizing: border-box;
+  outline: none;
+  box-sizing: border-box;
 }
 
 .slick-track {
-    display: flex;
+  display: flex;
 }
 
 .slick-dots li button:before {
-    color: #888;
+  color: #888;
 }
 
 .slick-dots li.slick-active button:before {
-    color: #333;
+  color: #333;
 }
 
-.slick-prev, .slick-next {
-    z-index: 2;
+.slick-prev,
+.slick-next {
+  z-index: 2;
 }
 
-.produits-container {
+/* ============================================
+   PRODUCTS CONTAINER
+   ============================================ */
+.produits-container,
+.container-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px; 
+  gap: 20px;
   padding: 20px;
 }
+
 .image-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
+/* Overlay Button */
 .btn-overlay {
   position: absolute;
   bottom: 80px;
   left: 74%;
   transform: translateX(-50%);
-  background-color: #F0B618;
+  background-color: var(--accent-color);
   color: white;
   padding: 12px 24px;
   border: none;
@@ -170,46 +207,44 @@ padding-top: 85px;
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease-in-out;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-fast);
   z-index: 5;
 }
 
-.btn-overlay:hover {
+.btn-overlay:hover,
+.btn-overlay:focus {
   background-color: #d89e00;
   transform: translateX(-50%) scale(1.05);
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
-.container-section{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-}
+
+/* ============================================
+   FEATURED SECTION STYLES
+   ============================================ */
 .carte-cib {
-   margin-top: 10% ;
-  margin-bottom: 50px;;
+  margin-top: 10%;
+  margin-bottom: 50px;
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;  
-  gap: 180px; 
+  justify-content: center;
+  gap: 180px;
   height: 350px;
-  background-color: #003366;
+  background-color: var(--primary-color);
   padding: 0 5%;
 }
 
 .carte-cib img {
-   z-index: 2;
-  
+  z-index: 2;
 }
 
-
- .carte-cib .pragraphe {
- display: flex;
-  flex-direction: column; 
+.carte-cib .pragraphe {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  color: #f9f9f9;
+  color: var(--light-bg);
   font-family: "Roboto", sans-serif;
   max-width: 40%;
 }
@@ -217,44 +252,51 @@ padding-top: 85px;
 .carte-cib .pragraphe p {
   font-size: xx-large;
   font-weight: bolder;
- text-transform: uppercase;
+  text-transform: uppercase;
   text-align: left;
 }
-.carte-cib .pragraphe p span{
-  color:#F0B618;
+
+.carte-cib .pragraphe p span {
+  color: var(--accent-color);
 }
-.carte-cib .pragraphe a{
-  background-color: #f9f9f9;
-  color: #003366;
+
+.carte-cib .pragraphe a {
+  background-color: var(--light-bg);
+  color: var(--primary-color);
   font-size: 1.5rem;
   font-weight: bolder;
   cursor: pointer;
   text-transform: capitalize;
-  transform: none;
   width: 200px;
   padding: 5px;
   text-align: center;
-  
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  border: 2px solid transparent;
 }
 
-.carte-cib .pragraphe a:hover{
-  background-color: #003366;
-  color: #f9f9f9;
-
-  
+.carte-cib .pragraphe a:hover,
+.carte-cib .pragraphe a:focus {
+  background-color: var(--primary-color);
+  color: var(--light-bg);
+  border-color: var(--accent-color);
+  outline: none;
 }
+
+/* ============================================
+   SERVICES SECTION STYLES
+   ============================================ */
 .nftal-khadmate {
-  margin-top: 10% ;
-  margin-bottom: 50px;;
+  margin-top: 10%;
+  margin-bottom: 50px;
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;  
-  gap: 180px; 
+  justify-content: center;
+  gap: 180px;
   height: 310px;
-  background-color: #003366;
+  background-color: var(--primary-color);
   padding: 0 5%;
-  
 }
 
 .nftal-khadmate > img {
@@ -264,13 +306,11 @@ padding-top: 85px;
 
 .nftal-khadmate .pragraphe {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
-  color: #f9f9f9;
+  color: var(--light-bg);
   font-family: "Roboto", sans-serif;
   max-width: 50%;
- 
-
 }
 
 .nftal-khadmate .pragraphe p span {
@@ -279,7 +319,6 @@ padding-top: 85px;
   text-transform: capitalize;
   direction: rtl;
   text-align: right;
-
 }
 
 .nftal-khadmate .pragraphe p {
@@ -291,57 +330,78 @@ padding-top: 85px;
 .nftal-khadmate-image {
   display: flex;
   gap: 10px;
-
 }
 
 .nftal-khadmate-image img {
-  height: 40px; 
+  height: 40px;
 }
 
+/* ============================================
+   CARD GRID STYLES
+   ============================================ */
 .cards {
   display: flex;
   gap: 65px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .card {
-  background-color: #f9f9f9;
+  background-color: var(--light-bg);
   padding: 20px;
   width: 250px;
   text-align: center;
-  transition: transform 0.3s ease;
   position: relative;
   border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-smooth);
 }
 
 .card:hover {
   transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
 }
 
 .card a {
   display: inline-block;
   margin-top: 10px;
   padding: 8px 16px;
-  background-color: #003366;
+  background-color: var(--primary-color);
   color: white;
   text-decoration: none;
   border-radius: 5px;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-smooth);
+  border: 2px solid transparent;
 }
 
-.card:hover a {
+.card a:hover,
+.card a:focus {
   opacity: 1;
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  outline: none;
 }
-.card img{
- width: 120%;
+
+.card img {
+  width: 120%;
   height: 300px;
   object-fit: cover;
   border-radius: 8px;
+  transition: transform var(--transition-smooth);
 }
-@media (max-width: 768px) {
 
-  .carte-cib, .nftal-khadmate {
+.card:hover img {
+  transform: scale(1.02);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+  .carte-cib,
+  .nftal-khadmate {
     flex-direction: column;
     height: auto;
     gap: 20px;
@@ -400,5 +460,4 @@ padding-top: 85px;
     left: 50%;
     bottom: 20px;
   }
-
 }
