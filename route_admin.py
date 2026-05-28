@@ -1,4 +1,4 @@
-from flask import  render_template, request, redirect, url_for
+from flask import  render_template, request, redirect, url_for , flash
 import os
 from werkzeug.utils import secure_filename
 from flask import session
@@ -639,3 +639,56 @@ def init_routes(app):
                            produits=produits,
                            message=message,
                            query=query)
+   
+
+
+   @app.route('/modifier/<int:id>', methods=['POST'])
+   def modifier_produit(id):
+        if not session.get('is_admin'):
+            return redirect(url_for('login'))
+
+        # ─── Récupérer le produit ─────────────────────────────────────────────────
+        produit = Produit.query.get_or_404(id)
+
+        # ─── Champs principaux ────────────────────────────────────────────────────
+        produit.nom_produit = request.form.get('nom_produit', produit.nom_produit)
+        produit.prix        = request.form.get('prix', produit.prix)
+
+        # ─── Photo (facultative) ──────────────────────────────────────────────────
+        photo = request.files.get('photo')
+        if photo and photo.filename != '':
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            produit.photo = f"uploads/{filename}"
+
+        # ─── Champs dynamiques selon la catégorie ─────────────────────────────────
+        CONFIG = {
+            'carburant':       {'rel': 'carburant',       'cols': ['type', 'moteurs', 'avantage', 'additifs', 'normes', 'recomendation']},
+            'gaz':             {'rel': 'gaz',             'cols': ['type', 'utiliser', 'avantage', 'additifs', 'normes', 'recomendation']},
+            'lub':             {'rel': 'lub',             'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']},
+            'batterie':        {'rel': 'batterie',        'cols': ['type', 'utiliser', 'moteurs', 'avantage', 'normes', 'recomendation']},
+            'pneu':            {'rel': 'pneu',            'cols': ['type', 'utiliser', 'dimention', 'avantage', 'recomendation']},
+            'entretien':       {'rel': 'entretien',       'cols': ['type', 'utiliser', 'composant', 'avantage', 'instruction', 'recomendation']},
+            'refroidissement': {'rel': 'refroidissement', 'cols': ['type', 'utiliser', 'moteurs', 'composant', 'norm', 'recomendation']},
+            'detendeur':       {'rel': 'detendeur',       'cols': ['type', 'utiliser', 'compatibilite', 'avantage', 'norm', 'recomendation']},
+        }
+
+        # ─── Trouver la catégorie du produit automatiquement ─────────────────────
+        nom_categorie = None                              # ← initialiser avant la boucle
+
+        for cat, conf in CONFIG.items():
+            details = getattr(produit, conf['rel'])       # ← indentation correcte
+            if details:                                   # ← dans le for, pas dehors !
+                d = details[0]
+                for col in conf['cols']:                  # ← dans le if
+                    val = request.form.get(col)
+                    if val is not None:                   # ← dans le for col
+                        setattr(d, col, val)
+                nom_categorie = cat                       # ← sauvegarder la catégorie
+                break                                     # ← dans le if, pas dans le for col !
+
+        # ─── Sauvegarder ─────────────────────────────────────────────────────────
+        db.session.commit()
+
+        flash("Produit mis à jour avec succès ✅", "success")
+        return redirect(request.referrer or url_for('afficher_produits', nom_categorie=nom_categorie))
